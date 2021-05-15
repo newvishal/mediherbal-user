@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './auth/Pages/signup/signup.module';
 import { LoginModule } from './auth/Pages/login/login.module';
 import { ForgotPasswordModule } from './auth/Pages/forgot-passwword/forgot-password.module';
+import { MaterialModule } from './shared/Module/material/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +17,8 @@ import { ForgotPasswordModule } from './auth/Pages/forgot-passwword/forgot-passw
     SignUpModule,
     LoginModule,
     ForgotPasswordModule,
+    MaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

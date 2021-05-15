@@ -1,1 +1,53 @@
-<p>forgot-passwword works!</p>
+<div class="outer-div">
+  <div class="inner-div">
+    <!--    Form Section starts  -->
+    <div class="form-section">
+      <div class="inner-form-div">
+        <section class="logo-section">
+          <img src="\assets\Images\Logo\onlyLogo.jpg" />
+        </section>
+        <section><h1>Welcome To Mediherbals</h1></section>
+        <section><h3>Reset Password</h3></section>
+        <section style="margin-top: 5%">
+          <!--    Signup Form starts  -->
+          <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Email</mat-label>
+              <input
+                type="email"
+                matInput
+                formControlName="email"
+                placeholder="Email"
+              />
+              <mat-icon color="primary" matSuffix>email</mat-icon>
+            </mat-form-field>
+
+            <section>
+              <p>
+                Don't have an account ?
+                <a routerLink="/sign-up">Register Now</a>
+              </p>
+            </section>
+            <section>
+              <p>
+                Already have an account ?
+                <a routerLink="/login">Login Now</a>
+              </p>
+            </section>
+            <section>
+              <button
+                [disabled]="forgotPasswordForm.invalid"
+                color="primary"
+                type="submit"
+                mat-raised-button
+              >
+                Continue
+              </button>
+            </section>
+          </form>
+          <!--    Signup Form ends  -->
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
