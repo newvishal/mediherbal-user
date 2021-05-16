@@ -53,7 +53,7 @@ export class LoginStart implements Action {
 
 export class LoginSuccess implements Action {
   readonly type = LOGIN_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: User) {}
 }
 export class LoginFail implements Action {
   readonly type = LOGIN_FAIL;

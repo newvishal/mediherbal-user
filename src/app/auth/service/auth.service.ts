@@ -15,11 +15,11 @@ export class AuthService {
     };
     this.store.dispatch(new fromAuthAction.SignUpStart(finalData));
   }
-  userLogin(loginData: { email: string; passwortd: string }) {
+  userLogin(loginData: { email: string; password: string }) {
     this.store.dispatch(
       new fromAuthAction.LoginStart({
         email: loginData.email,
-        password: loginData.passwortd,
+        password: loginData.password,
       })
     );
   }

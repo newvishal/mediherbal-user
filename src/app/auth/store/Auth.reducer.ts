@@ -27,6 +27,21 @@ export function AuthReducer(
   switch (action.type) {
     case fromAuthAction.LOGIN_START:
       return { ...state, loginLoading: true };
+    case fromAuthAction.LOGIN_SUCCESS:
+      const logedINUser = { ...action.payload };
+      return {
+        ...state,
+        user: logedINUser,
+        loginLoading: false,
+      };
+    case fromAuthAction.SIGNUP_START:
+      return { ...state, signupLoading: true };
+    case fromAuthAction.SIGNUP_SUCCESS:
+      return { ...state, signupLoading: false };
+    case fromAuthAction.FORGOT_PASSWORD_START:
+      return { ...state, forgotPasswordLoading: true };
+    case fromAuthAction.FORGOT_PASSWORD_SUCCESS:
+      return { ...state, forgotPasswordLoading: false };
     default:
       return state;
   }
