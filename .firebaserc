@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mediherbal-fa27a": {
+      "hosting": {
+        "mediherbal": [
+          "mediherbal-fa27a"
+        ]
+      }
+    }
+  }
+}

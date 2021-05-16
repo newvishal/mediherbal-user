@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +12,7 @@ export class SignupComponent implements OnInit {
   @description:From Variable
   */
   signUpForm: FormGroup;
-  constructor() {}
+  constructor(private authService: AuthService) {}
   /*
   initializing the signUpForm by form group
   */
@@ -29,6 +30,6 @@ export class SignupComponent implements OnInit {
   */
 
   onSubmit() {
-    console.log(this.signUpForm.value);
+    this.authService.userSingup(this.signUpForm.value);
   }
 }

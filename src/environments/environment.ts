@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDTHNKzjUP_gXnMqdYQUA5l2IHKeGogDN8',
+    authDomain: 'mediherbal-fa27a.firebaseapp.com',
+    databaseURL: 'https://mediherbal-fa27a-default-rtdb.firebaseio.com',
+    projectId: 'mediherbal-fa27a',
+    storageBucket: 'mediherbal-fa27a.appspot.com',
+    messagingSenderId: '521845001517',
+    appId: '1:521845001517:web:9d65aa2f2cf9186b1357a4',
+    measurementId: 'G-SNT89WXD6D',
+  },
 };
 
 /*
