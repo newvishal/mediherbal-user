@@ -17,6 +17,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppReducer } from './store/app.reducer';
 import { AuthEffects } from './auth/store/Auth.effects';
+import { HomeComponent } from './Pages/home/home.component';
+import { HomeModule } from './Pages/home/home.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +36,7 @@ import { AuthEffects } from './auth/store/Auth.effects';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
