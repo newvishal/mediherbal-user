@@ -17,8 +17,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppReducer } from './store/app.reducer';
 import { AuthEffects } from './auth/store/Auth.effects';
-import { HomeComponent } from './Pages/home/home.component';
 import { HomeModule } from './Pages/home/home.module';
+import { ContactUsModule } from './Pages/Contact-us/contact-us.module';
+import { AboutUsModule } from './Pages/About-us/about-us.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +38,8 @@ import { HomeModule } from './Pages/home/home.module';
     AngularFirestoreModule,
     AngularFireAuthModule,
     HomeModule,
+    ContactUsModule,
+    AboutUsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

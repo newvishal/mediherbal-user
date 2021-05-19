@@ -29,6 +29,30 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'about',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./Pages/About-us/about-us.module').then(
+            (m) => m.AboutUsModule
+          ),
+      },
+    ],
+  },
+  {
+    path: 'contact',
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./Pages/Contact-us/contact-us.module').then(
+            (m) => m.ContactUsModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
