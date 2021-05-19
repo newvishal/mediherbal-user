@@ -16,8 +16,6 @@
   scrollbar-width: none; /* Firefox */
 }
 a {
-  text-decoration: none;
-  cursor: pointer;
   color: #4caf50;
   font-weight: bold;
 }
@@ -65,12 +63,9 @@ p {
 }
 h1 {
   text-align: center;
-  font-size: xx-large;
-  font-weight: 500;
 }
 h3 {
   text-align: center;
-  font-size: x-large;
 }
 img {
   height: 100%;

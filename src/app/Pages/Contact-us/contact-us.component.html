@@ -1,1 +1,118 @@
-<p>contact-us works!</p>
+<div class="outer-div">
+  <div class="header">
+    <img src="../../../assets/Images/Contact Us/contact.jpg" />
+    <div class="centered">
+      <h1>Contact Us</h1>
+      <p>
+        We're here to help and answer any question you might have . We look
+        forward to hearing from you .
+      </p>
+    </div>
+  </div>
+  <div class="breadcrumb">
+    <h2 class="center">
+      <a routerLink="/home">Home</a>
+      <mat-icon>chevron_right</mat-icon>
+      <a routerLink="/contact" routerLinkActive="active"> Contact Us</a>
+    </h2>
+  </div>
+  <div class="information-section">
+    <section class="office">
+      <h1>Central Office</h1>
+      <p>
+        Nam eu mi eget velit vulputate tempor gravida quis massa. In malesuada
+        condimentum ultrices. Sed et mauris a purus fermentum elementum. Sed
+        tristique semper enim, et gravida orci iaculis et. Nulla facilisi.
+      </p>
+      <a href="tel:91 9425061638"
+        ><h3><mat-icon color="primary">phone</mat-icon> +91 94250 61638</h3></a
+      >
+      <h3>
+        <mat-icon color="primary">place</mat-icon> 29 Nicolas str, New York,
+        987597-50
+      </h3>
+      <section class="social-section">
+        <a href="https://www.facebook.com/mediherbals"
+          ><button mat-fab color="primary">
+            <mat-icon>facebook</mat-icon>
+          </button></a
+        >
+        <!-- <button mat-fab color="primary">
+          <mat-icon>twitter</mat-icon>
+        </button> -->
+        <a href="mailto:mediherbals1981@gmail.com"
+          ><button mat-fab color="primary">
+            <mat-icon>email</mat-icon>
+          </button></a
+        >
+        <!--    <button mat-fab color="primary">
+          <mat-icon>instagram</mat-icon>
+        </button> -->
+      </section>
+    </section>
+    <section class="opeaning-hours">
+      <h1 style="text-align: center">Opening Hours</h1>
+      <section>
+        <h4><b>Monday</b>: 9:00 – 19:00</h4>
+        <h4><b>Tuesday</b>: 9:00 – 19:00</h4>
+        <h4><b>Wednesday</b>: 9:00 – 19:00</h4>
+        <h4><b>Thursday</b>: 9:00 – 19:00</h4>
+        <h4><b>Monday</b>: 9:00 – 19:00</h4>
+        <h4><b>Tuesday</b>: 9:00 – 19:00</h4>
+        <h4><b>Wednesday</b>: 9:00 – 19:00</h4>
+      </section>
+    </section>
+    <section class="form">
+      <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
+        <h1 style="text-align: center">Get In Touch</h1>
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Name</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="full_name"
+            placeholder="Enter Full Name"
+          />
+          <mat-icon color="primary" matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            placeholder="Email"
+          />
+          <mat-icon color="primary" matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Message</mat-label>
+          <textarea
+            matInput
+            formControlName="message"
+            placeholder="Your Message"
+            type="text"
+          ></textarea>
+        </mat-form-field>
+        <section style="justify-content: center; width: 100%; display: flex">
+          <button
+            [disabled]="contactUsForm.invalid"
+            color="primary"
+            type="submit"
+            mat-raised-button
+          >
+            Continue
+          </button>
+        </section>
+      </form>
+    </section>
+  </div>
+  <div class="map-section">
+    <img
+      style="border-radius: 20px"
+      src="http://www.mapaplan.com/travel-map/london-top-tourist-attractions-map/high-resolution/london-top-tourist-attractions-map-09-google-maps-mashup-high-resolution.jpg"
+    />
+  </div>
+</div>

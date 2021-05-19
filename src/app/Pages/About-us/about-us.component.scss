@@ -1,0 +1,65 @@
+.outer-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  font-family: "Crimson Pro", serif;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+img {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  height: 100%;
+  position: relative;
+  text-align: center;
+  max-height: 550px;
+  h1 {
+    font-size: xxx-large;
+  }
+  p {
+    font-size: initial;
+  }
+}
+.centered {
+  color: rgb(58, 83, 51);
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+h1 {
+  font-size: xx-large;
+}
+.first-section {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .image-section {
+    width: 50%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .text-section {
+    width: 50%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .centered {
+    color: rgb(58, 83, 51);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

@@ -1,16 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap");
 html,
 body {
   height: 100%;
+  font-family: "Crimson Pro", serif;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Crimson Pro", serif;
 }
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
   margin: 0 !important;
+  font-family: "Crimson Pro", serif;
 }
 button {
   color: white !important;
+  font-family: "Crimson Pro", serif;
+}
+h1 {
+  font-size: xx-large;
+  font-weight: 500;
+  font-family: "Crimson Pro", serif !important;
+}
+h3 {
+  font-size: x-large;
+  font-family: "Crimson Pro", serif !important;
+}
+p {
+  font-family: "Crimson Pro", serif !important;
+}
+span {
+  font-family: "Crimson Pro", serif !important;
+}
+.breadcrumb {
+  width: 90%;
+  font-family: "Crimson Pro", serif !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2%;
+  .center {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .active {
+    color: rgb(76, 175, 80);
+  }
+}
+a {
+  text-decoration: none;
+  color: black;
+  font-family: "Crimson Pro", serif !important;
+  cursor: pointer;
 }
