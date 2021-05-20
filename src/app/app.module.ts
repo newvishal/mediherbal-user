@@ -20,6 +20,7 @@ import { AuthEffects } from './auth/store/Auth.effects';
 import { HomeModule } from './Pages/home/home.module';
 import { ContactUsModule } from './Pages/Contact-us/contact-us.module';
 import { AboutUsModule } from './Pages/About-us/about-us.module';
+import { HomeEffects } from './Pages/home/store/home.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,7 @@ import { AboutUsModule } from './Pages/About-us/about-us.module';
     MaterialModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(AppReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, HomeEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
