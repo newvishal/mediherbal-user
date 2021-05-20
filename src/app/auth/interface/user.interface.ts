@@ -6,6 +6,6 @@ export interface User {
   cart?: any[];
   number_of_times_order_Places?: number;
   id?: string;
-  userType:string;
+  user_type:string;
   password?:string
 }

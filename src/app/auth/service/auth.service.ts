@@ -11,7 +11,7 @@ export class AuthService {
       ...UserData,
       cart: [],
       number_of_times_order_Places: 0,
-      userType: 'User',
+      user_type: 'user',
     };
     this.store.dispatch(new fromAuthAction.SignUpStart(finalData));
   }
