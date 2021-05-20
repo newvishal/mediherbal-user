@@ -12,5 +12,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.homeService.fetchComboProducts();
     this.homeService.fetchProducts();
+    this.homeService.getProducts().subscribe((products) => {
+      console.log(products);
+    });
+    this.homeService.getComboProducts().subscribe((comboProducts) => {
+      console.log(comboProducts);
+    });
   }
 }
