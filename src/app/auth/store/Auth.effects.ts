@@ -51,6 +51,10 @@ export class AuthEffects {
       );
     }),
     map((data) => {
+      const userData = { ...data[0] };
+
+      localStorage.setItem('userData', JSON.stringify(userData));
+      this.router.navigate(['/home']);
       return new fromAuthAction.LoginSuccess(data[0]);
     })
   );
