@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
     /* this method dispatch Actions From Service */
     this.homeService.fetchComboProducts();
     this.homeService.fetchProducts();
+
     /* this method return data observable Service */
     this.homeService.getProducts().subscribe((products) => {
       console.log(products);
