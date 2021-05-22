@@ -2,7 +2,7 @@ import * as fromHomeActions from '../store/home.action';
 import * as fromApp from '../../../store/app.reducer';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
 @Injectable()
@@ -19,6 +19,7 @@ export class HomeEffects {
         .collection('products')
         .snapshotChanges()
         .pipe(
+          take(1),
           map((products) =>
             products.map((product) => {
               const data = product.payload.doc.data() as any;
@@ -45,6 +46,7 @@ export class HomeEffects {
         .collection('combo-products')
         .snapshotChanges()
         .pipe(
+          take(1),
           map((combo_products) =>
             combo_products.map((combo_product) => {
               const data = combo_product.payload.doc.data() as any;

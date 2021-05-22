@@ -8,8 +8,6 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 export class ProductCardSliderComponent implements OnInit, OnChanges {
   @Input() images;
   constructor() {}
-  ngOnChanges() {
-    console.log(this.images);
-  }
+  ngOnChanges() {}
   ngOnInit(): void {}
 }

@@ -1,9 +1,6 @@
-<div style="width: 100%; display: flex">
-  <div
-    style="width: 100%; display: flex; padding: 10px"
-    *ngFor="let product of products"
-  >
-    <mat-card class="example-card" style="width: 250px">
+<div class="outer-div">
+  <div class="inner-div" *ngFor="let product of products; let i = index">
+    <mat-card>
       <app-product-card-slider
         [images]="product.products_images"
       ></app-product-card-slider>
@@ -22,6 +19,29 @@
           <span class="fake_price">₹ {{ product.fake_price }}</span>
         </p>
       </mat-card-content>
+      <mat-card-actions>
+        <div class="btn-section">
+          <button
+            color="primary"
+            mat-raised-button
+            *ngIf="!product.addToCart"
+            (click)="addToCart(i)"
+          >
+            Add To Cart &nbsp; <mat-icon>shopping_cart</mat-icon>
+          </button>
+          <section class="cart-section" *ngIf="product.addToCart">
+            <section class="remove-section" (click)="removeQuantity(i)">
+              <mat-icon>remove</mat-icon>
+            </section>
+            <section class="quantity-section">
+              <span style="padding: 2%">{{ product.quantity }}</span>
+            </section>
+            <section class="add-section" (click)="addQuantity(i)">
+              <mat-icon>add</mat-icon>
+            </section>
+          </section>
+        </div>
+      </mat-card-actions>
     </mat-card>
   </div>
 </div>

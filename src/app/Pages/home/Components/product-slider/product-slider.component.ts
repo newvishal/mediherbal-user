@@ -1,7 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ComboProductInterface } from 'src/app/Pages/Interface/combo-products.interface';
-import { ProductInterface } from 'src/app/Pages/Interface/product.interface';
 
 @Component({
   selector: 'app-product-slider',
@@ -9,9 +6,50 @@ import { ProductInterface } from 'src/app/Pages/Interface/product.interface';
   styleUrls: ['./product-slider.component.scss'],
 })
 export class ProductSliderComponent implements OnInit {
-  selectedOption = { price: '', fake_price: '', product_id: '' };
-  @Input() products: ProductInterface[];
+  @Input() products = [];
+  productsList = [];
   constructor() {}
-  ngOnChanges(): void {}
+  ngOnChanges(): void {
+    this.productsList = [];
+    let products = this.products;
+    products.map((res, index) => {
+      this.productsList[index] = {
+        ...res,
+        addToCart: false,
+        quantity: 1,
+        selectedOption: {
+          price: res.product_type[0].price,
+          fake_price: res.product_type[0].fake_price,
+          product_id: res.product_type[0].product_id,
+        },
+      };
+    });
+  }
+  addToCart(index) {
+    this.productsList[index].addToCart = true;
+  }
+  removeQuantity(index) {
+    this.productsList[index].quantity = this.productsList[index].quantity - 1;
+    if (this.productsList[index].quantity == 0) {
+      this.productsList[index].addToCart = false;
+    }
+  }
+  addQuantity(index) {
+    this.productsList[index].quantity = this.productsList[index].quantity + 1;
+  }
+  changeTag1(evt, index) {
+    this.productsList[index].product_type.map((res) => {
+      if (res.product_id === evt) {
+        this.productsList[index].selectedOption = {
+          ...this.productsList[index].selectedOption,
+          price: res.price,
+          fake_price: res.fake_price,
+          product_id: res.product_id,
+        };
+      }
+    });
+    this.productsList[index].addToCart = false;
+    this.productsList[index].quantity = 1;
+  }
   ngOnInit(): void {}
 }

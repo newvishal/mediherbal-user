@@ -1,50 +1,58 @@
-<div style="width: 100%; display: flex">
-  <div
-    style="width: 100%; display: flex; padding: 10px"
-    *ngFor="let product of products"
-  >
-    <mat-card class="example-card" style="width: 250px">
+<div class="outer-div">
+  <div class="inner-div" *ngFor="let product of productsList; let i = index">
+    <mat-card>
       <app-product-card-slider
         [images]="product.products_images"
       ></app-product-card-slider>
       <br />
       <mat-card-title>{{ product.product_name | titlecase }}</mat-card-title>
       <mat-card-subtitle>{{ product.tag_line }}</mat-card-subtitle>
-      <!--  <mat-card-subtitle
-        ><span *ngFor="let i of [1, 2, 3, 4, 5]"
-          ><mat-icon *ngIf="i <= 3" style="color: gold">star</mat-icon>
-          <mat-icon *ngIf="i > 3" style="color: silver">star</mat-icon></span
-        ></mat-card-subtitle
-      > -->
-      <form>
+      <form *ngIf="product.selectedOption">
         <mat-form-field appearance="fill">
           <mat-label>Select Product Type</mat-label>
-          <select matNativeControl required>
-            <option *ngFor="let type of product.product_type" value="type">
+          <select
+            matNativeControl
+            (change)="changeTag1($event.target.value, i)"
+          >
+            <option
+              *ngFor="let type of product.product_type"
+              [value]="type.product_id"
+            >
               {{ type.name | titlecase }}
             </option>
           </select>
         </mat-form-field>
       </form>
-      <mat-card-content>
+      <mat-card-content *ngIf="product.selectedOption">
         <p>
-          <span class="price">₹ {{ product.price }}</span
+          <span class="price">₹ {{ product.selectedOption.price }}</span
           >&nbsp;
-          <span class="fake_price">₹ {{ product.fake_price }}</span>
+          <span class="fake_price"
+            >₹ {{ product.selectedOption.fake_price }}</span
+          >
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <div
-          style="
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <mat-icon>add</mat-icon>
-          <button color="primary" mat-raised-button>Add</button>
-          <mat-icon>add</mat-icon>
+        <div class="button-section">
+          <button
+            color="primary"
+            mat-raised-button
+            *ngIf="!product.addToCart"
+            (click)="addToCart(i)"
+          >
+            Add To Cart &nbsp; <mat-icon>shopping_cart</mat-icon>
+          </button>
+          <section class="add-to-cart-section" *ngIf="product.addToCart">
+            <section class="remove-section" (click)="removeQuantity(i)">
+              <mat-icon>remove</mat-icon>
+            </section>
+            <section class="quantity-section">
+              <span style="padding: 2%">{{ product.quantity }}</span>
+            </section>
+            <section class="add-section" (click)="addQuantity(i)">
+              <mat-icon>add</mat-icon>
+            </section>
+          </section>
         </div>
       </mat-card-actions>
     </mat-card>

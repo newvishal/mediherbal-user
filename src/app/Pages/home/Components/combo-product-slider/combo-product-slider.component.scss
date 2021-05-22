@@ -11,3 +11,57 @@ mat-card-subtitle {
 .price {
   font-size: 20px;
 }
+
+.outer-div {
+  width: 100%;
+  display: flex;
+}
+.inner-div {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+}
+mat-card {
+  width: 250px;
+}
+.btn-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-section {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+.remove-section {
+  width: 30%;
+  background: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.quantity-section {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid green;
+}
+.add-section {
+  width: 30%;
+  background: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
