@@ -1,0 +1,27 @@
+<div style="width: 100%; display: flex">
+  <div
+    style="width: 100%; display: flex; padding: 10px"
+    *ngFor="let product of products"
+  >
+    <mat-card class="example-card" style="width: 250px">
+      <app-product-card-slider
+        [images]="product.products_images"
+      ></app-product-card-slider>
+      <br />
+      <mat-card-title>{{ product.product_name | titlecase }}</mat-card-title>
+      <mat-card-subtitle>{{ product.tag_line }}</mat-card-subtitle>
+      <span *ngFor="let type of product.products" value="type">
+        {{ type?.product_name | titlecase }} ({{
+          type?.product_type | titlecase
+        }})|
+      </span>
+      <mat-card-content>
+        <p>
+          <span class="price">₹ {{ product.price }}</span
+          >&nbsp;
+          <span class="fake_price">₹ {{ product.fake_price }}</span>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

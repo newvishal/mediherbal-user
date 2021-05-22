@@ -63,3 +63,49 @@ h1 {
     transform: translate(-50%, -50%);
   }
 }
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .centered {
+    color: rgb(58, 83, 51);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .first-section {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    .image-section {
+      display: none;
+    }
+    .text-section {
+      width: 90%;
+      height: inherit;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      position: relative;
+    }
+    .centered {
+      color: rgb(58, 83, 51);
+      position: relative;
+    }
+  }
+  .header {
+    height: 100%;
+    position: relative;
+    text-align: center;
+    max-height: 100%;
+    h1 {
+      font-size: large;
+      margin-bottom: 0 !important;
+    }
+    p {
+      font-size: small;
+    }
+  }
+}

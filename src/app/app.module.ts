@@ -21,6 +21,7 @@ import { HomeModule } from './Pages/home/home.module';
 import { ContactUsModule } from './Pages/Contact-us/contact-us.module';
 import { AboutUsModule } from './Pages/About-us/about-us.module';
 import { HomeEffects } from './Pages/home/store/home.effects';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { HomeEffects } from './Pages/home/store/home.effects';
     HomeModule,
     ContactUsModule,
     AboutUsModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

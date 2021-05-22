@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { pluck } from 'rxjs/operators';
+import { pluck, take } from 'rxjs/operators';
 import * as fromApp from '../../../store/app.reducer';
 import * as fromHomeAction from '../store/home.action';
 @Injectable()
@@ -13,9 +13,11 @@ export class HomeService {
     this.store.dispatch(new fromHomeAction.FetchComboProductStart());
   }
   getProducts() {
-    return this.store.select('HomeSection').pipe(pluck('products'));
+    return this.store.select('HomeSection').pipe(take(5), pluck('products'));
   }
   getComboProducts() {
-    return this.store.select('HomeSection').pipe(pluck('comboProduct'));
+    return this.store
+      .select('HomeSection')
+      .pipe(take(5), pluck('comboProduct'));
   }
 }

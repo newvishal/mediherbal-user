@@ -1,0 +1,27 @@
+.outer-div {
+  height: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(244, 252, 244);
+}
+.product-slider::-webkit-scrollbar {
+  display: none;
+}
+.product-slider {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-x: scroll;
+}
+.product-section {
+  width: 95%;
+  display: flex;
+  margin-top: 5%;
+  flex-direction: column;
+  h1 {
+    font-size: 30px;
+  }
+}

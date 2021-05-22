@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatInputModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -21,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatInputModule,
   ],
 })
 export class MaterialModule {}

@@ -1,1 +1,17 @@
-<p>home works!</p>
+<div class="outer-div">
+  <div><app-banner [images]="images"></app-banner></div>
+  <div class="product-section" *ngIf="products.length > 0">
+    <h1>Products</h1>
+    <div class="product-slider">
+      <app-product-slider [products]="products"></app-product-slider>
+    </div>
+  </div>
+  <div class="product-section" *ngIf="comboProducts.length > 0">
+    <h1>Combo Products</h1>
+    <div class="product-slider">
+      <app-combo-product-slider
+        [products]="comboProducts"
+      ></app-combo-product-slider>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tangerine&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Zilla+Slab+Highlight&display=swap");
 html,
 body {
   height: 100%;
@@ -55,3 +57,6 @@ a {
   font-family: "Crimson Pro", serif !important;
   cursor: pointer;
 }
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
