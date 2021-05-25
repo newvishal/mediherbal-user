@@ -22,9 +22,11 @@ import { ContactUsModule } from './Pages/Contact-us/contact-us.module';
 import { AboutUsModule } from './Pages/About-us/about-us.module';
 import { HomeEffects } from './Pages/home/store/home.effects';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HeaderComponent } from './Components/header/header.component';
+import { SideBarComponent } from './Components/side-bar/side-bar.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeaderComponent, SideBarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

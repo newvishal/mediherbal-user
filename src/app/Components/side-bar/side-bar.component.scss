@@ -1,0 +1,30 @@
+a {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  text-decoration: none;
+  color: white;
+}
+a:hover,
+a:active {
+  color: lightgray;
+}
+.navigation-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-caption {
+  display: inline-block;
+  padding-left: 6px;
+}
+.bottom {
+  position: fixed;
+  bottom: 5%;
+}
+.is-active {
+  color: rgb(67, 160, 71);
+  mat-icon {
+    color: rgb(67, 160, 71);
+  }
+}

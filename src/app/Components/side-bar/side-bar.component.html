@@ -1,0 +1,77 @@
+<mat-nav-list role="list">
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/user/"
+    [routerLinkActive]="'is-active'"
+    ><a (click)="sidenavclose()">
+      <mat-icon color="primary">account_circle</mat-icon>
+      <span class="nav-caption">Users</span>
+    </a></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/user/"
+    [routerLinkActive]="'is-active'"
+    ><a (click)="sidenavclose()">
+      <mat-icon color="primary">person</mat-icon>
+      <span class="nav-caption">Users</span>
+    </a></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/cities/city-list"
+    [routerLinkActive]="'is-active'"
+    (click)="sidenavclose()"
+    ><a
+      ><mat-icon color="primary">place</mat-icon>
+      <span class="nav-caption">Cities</span></a
+    ></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/products"
+    [routerLinkActive]="'is-active'"
+    (click)="sidenavclose()"
+    ><a
+      ><mat-icon color="primary">category</mat-icon>
+      <span class="nav-caption">Products</span></a
+    ></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/order"
+    [routerLinkActive]="'is-active'"
+    (click)="sidenavclose()"
+    ><a
+      ><mat-icon color="primary">list_alt</mat-icon>
+      <span class="nav-caption">Orders</span></a
+    ></mat-list-item
+  >
+  <hr />
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/order"
+    [routerLinkActive]="'is-active'"
+    (click)="sidenavclose()"
+    ><a
+      ><mat-icon color="primary">list_alt</mat-icon>
+      <span class="nav-caption">Terms & Conditions</span></a
+    ></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/admin/order"
+    [routerLinkActive]="'is-active'"
+    (click)="sidenavclose()"
+    ><a
+      ><mat-icon color="primary">list_alt</mat-icon>
+      <span class="nav-caption">Privacy Policy</span></a
+    ></mat-list-item
+  >
+  <div class="bottom">
+    <button mat-icon-button>
+      <mat-icon color="primary">directions_run</mat-icon>
+    </button>
+    <span class="nav-caption">Logout</span>
+  </div>
+</mat-nav-list>
