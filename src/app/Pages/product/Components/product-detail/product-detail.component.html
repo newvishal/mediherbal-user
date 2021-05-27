@@ -1,119 +1,121 @@
-<div
-  style="
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex-direction: column;
-    margin-top: 5%;
-  "
->
-  <div style="width: 95%; display: flex; justify-content: space-evenly">
-    <section
-      style="width: 40%; display: flex; justify-content: center; height: 100%"
-    >
-      <section
-        style="
-          width: 20%;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-        "
-      >
-        <img
-          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
-          src="\assets\Images\Contact Us\contact1.jpg"
-        />
-        <img
-          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
-          src="\assets\Images\Contact Us\contact1.jpg"
-        />
-        <img
-          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
-          src="\assets\Images\Contact Us\contact1.jpg"
-        />
-        <img
-          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
-          src="\assets\Images\Contact Us\contact1.jpg"
-        />
+<div class="outer-div">
+  <div class="inner-div" *ngIf="ProductData">
+    <section class="image-section">
+      <section class="full-image">
+        <img [src]="imageShown" />
       </section>
-      <section style="width: 80%; height: 100%; border: 1px solid lightgrey">
+      <section class="imagesList">
         <img
-          style="width: 100%; height: 100%; object-fit: fill"
-          src="\assets\Images\Contact Us\contact1.jpg"
+          (mouseover)="changeImage(image)"
+          *ngFor="let image of ProductData.products_images"
+          [src]="image"
         />
       </section>
     </section>
-    <section
-      style="
-        width: 35%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-direction: column;
-      "
-    >
-      <h1>Product Name</h1>
-      <h3>Tag Line</h3>
+    <section class="text-section">
+      <h1>{{ ProductData.product_name }}</h1>
+      <h3>{{ ProductData.tag_line }}</h3>
       <span
         ><mat-icon *ngFor="let i of [1, 2, 3, 4, 5]" style="color: gold"
           >star</mat-icon
         ></span
       >
-      <h4>
-        <span class="price">₹ product.price </span>&nbsp;
-        <span class="fake_price">₹ product.fake_price </span>
+      <h4 *ngIf="productType === 'combo'">
+        <span class="price">₹ {{ ProductData.price }} </span>&nbsp;
+        <span class="fake_price">₹ {{ ProductData.fake_price }} </span>
       </h4>
-      <h4>In Stock / Out of Stock</h4>
-      <h4>Description</h4>
-      <p>
-        Sold by Denovo Pharma and Fulfilled by Amazon. Natural and Ayurvedic
-        Product No Side Effects Combo Pack: Syrup (200 ml) + Capsules(1X18)
-        DOSAGE: Take two Capsules of Novoston Plus empty stomach in the morning
-        with lime water and two spoonful of Novoston Syrup after meals twice a
-        day.
-      </p>
-      <h4>Indication</h4>
-      <p>
-        Sold by Denovo Pharma and Fulfilled by Amazon. Natural and Ayurvedic
-        Product No Side Effects Combo Pack: Syrup (200 ml) + Capsules(1X18)
-        DOSAGE: Take two Capsules of Novoston Plus empty stomach in the morning
-        with lime water and two spoonful of Novoston Syrup after meals twice a
-        day.
-      </p>
-      <h4>composition</h4>
-      <p>
-        Sold by Denovo Pharma and Fulfilled by Amazon. Natural and Ayurvedic
-        Product No Side Effects Combo Pack: Syrup (200 ml) + Capsules(1X18)
-        DOSAGE: Take two Capsules of Novoston Plus empty stomach in the morning
-        with lime water and two spoonful of Novoston Syrup after meals twice a
-        day.
-      </p>
-    </section>
-    <section style="width: 20%">
-      <mat-card
-        style="
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-        "
-      >
+      <h4 *ngIf="productType === 'single'">
+        <span class="price">₹ {{ ProductData.selectedOption.price }} </span
+        >&nbsp;
+        <span class="fake_price"
+          >₹ {{ ProductData.selectedOption.fake_price }}
+        </span>
+      </h4>
+      <h4>
+        {{ ProductData.product_purchasable ? "In Stock" : "Out of Stock" }}
+      </h4>
+      <mat-card class="set-quantity">
+        <form *ngIf="productType === 'single'">
+          <mat-form-field appearance="fill">
+            <mat-label>Select Product Type</mat-label>
+            <select
+              matNativeControl
+              (change)="changeTag1($event.target.value, i)"
+            >
+              <option
+                *ngFor="let type of ProductData.product_type"
+                [value]="type.product_id"
+              >
+                {{ type.name | titlecase }}
+              </option>
+            </select>
+          </mat-form-field>
+        </form>
         <section class="cart-section">
-          <section class="remove-section">
+          <section (click)="removeItem()" class="remove-section">
             <mat-icon>remove</mat-icon>
           </section>
           <section class="quantity-section">
-            <span style="padding: 2%">2</span>
+            <span style="padding: 2%">{{ ProductData.quantity }}</span>
           </section>
-          <section class="add-section">
+          <section (click)="addItem()" class="add-section">
             <mat-icon>add</mat-icon>
           </section>
         </section>
-        <button mat-raised-button color="primary">Add To Cart</button></mat-card
+        <button mat-raised-button color="primary" (click)="addToCart()">
+          Add To Cart
+        </button></mat-card
       >
+      <h4>Description</h4>
+      <p [innerHTML]="ProductData.product_description"></p>
+      <div *ngIf="productType === 'single'">
+        <h4>Indication</h4>
+        <ul>
+          <li *ngFor="let indicate of ProductData.indication">
+            {{ indicate }}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="productType === 'combo'" style="width: 100%">
+        <h4>Products</h4>
+        <div class="heading-sections">
+          <table class="heading-inner">
+            <tr style="width: 100%">
+              <th class="left-column">Product Name</th>
+              <th style="width: 50%">Product Type</th>
+            </tr>
+            <tr
+              style="width: 100%"
+              *ngFor="let product of ProductData.products"
+            >
+              <td class="left-column">
+                {{ product.product_name }}
+              </td>
+              <td style="width: 50%">{{ product.product_type }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="productType === 'single'" style="width: 100%">
+        <h4>composition</h4>
+        <div class="heading-sections">
+          <table class="heading-inner">
+            <tr style="width: 100%">
+              <th class="left-column">Ingredient</th>
+              <th style="width: 50%">Quantity</th>
+            </tr>
+            <tr
+              style="width: 100%"
+              *ngFor="let composition of ProductData.composition"
+            >
+              <td class="left-column">
+                {{ composition.name }}
+              </td>
+              <td style="width: 50%">{{ composition.quantity }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </section>
   </div>
   <div></div>

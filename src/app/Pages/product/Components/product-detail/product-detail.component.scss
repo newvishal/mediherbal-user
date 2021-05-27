@@ -41,3 +41,133 @@
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+
+.imagesList {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 5%;
+  overflow-x: scroll;
+  img {
+    width: 100px;
+    border: 1px solid lightgrey;
+    margin-right: 5%;
+  }
+}
+.imagesList {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.imagesList::-webkit-scrollbar {
+  display: none;
+}
+.outer-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+  margin-top: 5%;
+}
+p {
+  word-break: break-word;
+}
+li {
+  word-break: break-word;
+}
+.inner-div {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+.image-section {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+.full-image {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  img {
+    height: 500px;
+    object-fit: fill;
+    border: 1px solid lightgrey;
+    /*   height: 550px !important; */
+  }
+}
+.text-section {
+  width: 45%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.set-quantity {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.heading-sections {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.heading-inner {
+  width: 90%;
+  text-align: center;
+  border: 1px solid;
+}
+.left-column {
+  width: 50%;
+  border-right: 1px solid lightgrey;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .inner-div {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .image-section {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+  }
+  .text-section {
+    width: 90%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .image-section {
+    overflow: hidden;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
