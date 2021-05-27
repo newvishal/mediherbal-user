@@ -5,8 +5,12 @@
         [images]="product.products_images"
       ></app-product-card-slider>
       <br />
-      <mat-card-title>{{ product.product_name | titlecase }}</mat-card-title>
-      <mat-card-subtitle>{{ product.tag_line }}</mat-card-subtitle>
+      <mat-card-title (click)="navigateToDeatils(product.id)">{{
+        product.product_name | titlecase
+      }}</mat-card-title>
+      <mat-card-subtitle (click)="navigateToDeatils(product.id)">{{
+        product.tag_line
+      }}</mat-card-subtitle>
       <form *ngIf="product.selectedOption">
         <mat-form-field appearance="fill">
           <mat-label>Select Product Type</mat-label>

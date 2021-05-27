@@ -1,20 +1,21 @@
-<mat-nav-list role="list">
+<mat-nav-list role="list" style="padding: 0 !important">
   <mat-list-item
+    style="background-color: rgb(67, 160, 71)"
     role="listitem"
-    routerLink="/admin/user/"
+    routerLink="/home"
     [routerLinkActive]="'is-active'"
-    ><a (click)="sidenavclose()">
-      <mat-icon color="primary">account_circle</mat-icon>
+    ><a style="color: white" (click)="sidenavclose()">
+      <mat-icon style="color: white">account_circle</mat-icon>
       <span class="nav-caption">Users</span>
     </a></mat-list-item
   >
   <mat-list-item
     role="listitem"
-    routerLink="/admin/user/"
+    routerLink="/home"
     [routerLinkActive]="'is-active'"
     ><a (click)="sidenavclose()">
-      <mat-icon color="primary">person</mat-icon>
-      <span class="nav-caption">Users</span>
+      <mat-icon color="dark">category</mat-icon>
+      <span class="nav-caption">Shop By Type</span>
     </a></mat-list-item
   >
   <mat-list-item
@@ -23,8 +24,8 @@
     [routerLinkActive]="'is-active'"
     (click)="sidenavclose()"
     ><a
-      ><mat-icon color="primary">place</mat-icon>
-      <span class="nav-caption">Cities</span></a
+      ><mat-icon color="dark">shopping_bag</mat-icon>
+      <span class="nav-caption">Orders</span></a
     ></mat-list-item
   >
   <mat-list-item
@@ -33,20 +34,11 @@
     [routerLinkActive]="'is-active'"
     (click)="sidenavclose()"
     ><a
-      ><mat-icon color="primary">category</mat-icon>
-      <span class="nav-caption">Products</span></a
+      ><mat-icon color="dark">help_outline</mat-icon>
+      <span class="nav-caption">FAQs</span></a
     ></mat-list-item
   >
-  <mat-list-item
-    role="listitem"
-    routerLink="/admin/order"
-    [routerLinkActive]="'is-active'"
-    (click)="sidenavclose()"
-    ><a
-      ><mat-icon color="primary">list_alt</mat-icon>
-      <span class="nav-caption">Orders</span></a
-    ></mat-list-item
-  >
+
   <hr />
   <mat-list-item
     role="listitem"
@@ -54,7 +46,7 @@
     [routerLinkActive]="'is-active'"
     (click)="sidenavclose()"
     ><a
-      ><mat-icon color="primary">list_alt</mat-icon>
+      ><mat-icon color="dark">list_alt</mat-icon>
       <span class="nav-caption">Terms & Conditions</span></a
     ></mat-list-item
   >
@@ -64,13 +56,13 @@
     [routerLinkActive]="'is-active'"
     (click)="sidenavclose()"
     ><a
-      ><mat-icon color="primary">list_alt</mat-icon>
+      ><mat-icon color="dark">list_alt</mat-icon>
       <span class="nav-caption">Privacy Policy</span></a
     ></mat-list-item
   >
   <div class="bottom">
     <button mat-icon-button>
-      <mat-icon color="primary">directions_run</mat-icon>
+      <mat-icon color="dark">directions_run</mat-icon>
     </button>
     <span class="nav-caption">Logout</span>
   </div>

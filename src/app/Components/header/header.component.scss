@@ -1,12 +1,18 @@
 a {
   text-decoration: none;
-  color: white;
+  color: black;
+}
+a:hover {
+  color: green;
+}
+.active {
+  color: green;
 }
 button:hover {
   color: lightgray;
 }
 mat-icon {
-  color: white;
+  color: black;
 }
 
 .example-spacer {

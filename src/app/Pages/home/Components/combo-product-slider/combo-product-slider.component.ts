@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ComboProductInterface } from 'src/app/Pages/Interface/combo-products.interface';
 
 @Component({
@@ -8,7 +9,7 @@ import { ComboProductInterface } from 'src/app/Pages/Interface/combo-products.in
 })
 export class ComboProductSliderComponent implements OnInit {
   @Input() products = [];
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnChanges(): void {
     this.products.map((res, index) => {
       this.products[index] = { ...res, addToCart: false, quantity: 1 };
@@ -27,4 +28,7 @@ export class ComboProductSliderComponent implements OnInit {
     this.products[index].quantity = this.products[index].quantity + 1;
   }
   ngOnInit(): void {}
+  navigateToDeatils(id) {
+    this.router.navigate([`/product-detail/${id}`]);
+  }
 }

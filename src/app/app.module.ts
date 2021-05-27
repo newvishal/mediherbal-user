@@ -24,6 +24,7 @@ import { HomeEffects } from './Pages/home/store/home.effects';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './Components/header/header.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
+import { ProductModule } from './Pages/product/product.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, SideBarComponent],
@@ -45,6 +46,7 @@ import { SideBarComponent } from './Components/side-bar/side-bar.component';
     ContactUsModule,
     AboutUsModule,
     NgbModule,
+    ProductModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

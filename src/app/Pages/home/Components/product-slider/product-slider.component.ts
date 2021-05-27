@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-slider',
@@ -8,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProductSliderComponent implements OnInit {
   @Input() products = [];
   productsList = [];
-  constructor() {}
+  constructor(private router: Router) {}
   ngOnChanges(): void {
     this.productsList = [];
     let products = this.products;
@@ -52,4 +53,7 @@ export class ProductSliderComponent implements OnInit {
     this.productsList[index].quantity = 1;
   }
   ngOnInit(): void {}
+  navigateToDeatils(id) {
+    this.router.navigate([`/product-detail/${id}`]);
+  }
 }
