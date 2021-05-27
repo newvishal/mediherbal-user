@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SideBarComponent implements OnInit {
   @Output() closesidenav = new EventEmitter<void>();
+  showItems = false;
   constructor() {}
   sidenavclose() {
     this.closesidenav.emit();

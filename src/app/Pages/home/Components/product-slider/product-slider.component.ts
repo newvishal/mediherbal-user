@@ -54,6 +54,6 @@ export class ProductSliderComponent implements OnInit {
   }
   ngOnInit(): void {}
   navigateToDeatils(id) {
-    this.router.navigate([`/product-detail/${id}`]);
+    this.router.navigate([`/product-detail/single/${id}`]);
   }
 }

@@ -5,7 +5,5 @@ import { HomeService } from '../../home/service/home.service';
   providedIn: 'root',
 })
 export class ProductService {
-  constructor(private homeService: HomeService) {}
-  getComboProductById(id) {}
-  getProductById(id) {}
+  constructor() {}
 }

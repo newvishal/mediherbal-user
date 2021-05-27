@@ -1,1 +1,120 @@
-<p>product-detail works!</p>
+<div
+  style="
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    margin-top: 5%;
+  "
+>
+  <div style="width: 95%; display: flex; justify-content: space-evenly">
+    <section
+      style="width: 40%; display: flex; justify-content: center; height: 100%"
+    >
+      <section
+        style="
+          width: 20%;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+        "
+      >
+        <img
+          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
+          src="\assets\Images\Contact Us\contact1.jpg"
+        />
+        <img
+          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
+          src="\assets\Images\Contact Us\contact1.jpg"
+        />
+        <img
+          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
+          src="\assets\Images\Contact Us\contact1.jpg"
+        />
+        <img
+          style="width: 90%; border: 1px solid lightgrey; margin-bottom: 10%"
+          src="\assets\Images\Contact Us\contact1.jpg"
+        />
+      </section>
+      <section style="width: 80%; height: 100%; border: 1px solid lightgrey">
+        <img
+          style="width: 100%; height: 100%; object-fit: fill"
+          src="\assets\Images\Contact Us\contact1.jpg"
+        />
+      </section>
+    </section>
+    <section
+      style="
+        width: 35%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+      "
+    >
+      <h1>Product Name</h1>
+      <h3>Tag Line</h3>
+      <span
+        ><mat-icon *ngFor="let i of [1, 2, 3, 4, 5]" style="color: gold"
+          >star</mat-icon
+        ></span
+      >
+      <h4>
+        <span class="price">₹ product.price </span>&nbsp;
+        <span class="fake_price">₹ product.fake_price </span>
+      </h4>
+      <h4>In Stock / Out of Stock</h4>
+      <h4>Description</h4>
+      <p>
+        Sold by Denovo Pharma and Fulfilled by Amazon. Natural and Ayurvedic
+        Product No Side Effects Combo Pack: Syrup (200 ml) + Capsules(1X18)
+        DOSAGE: Take two Capsules of Novoston Plus empty stomach in the morning
+        with lime water and two spoonful of Novoston Syrup after meals twice a
+        day.
+      </p>
+      <h4>Indication</h4>
+      <p>
+        Sold by Denovo Pharma and Fulfilled by Amazon. Natural and Ayurvedic
+        Product No Side Effects Combo Pack: Syrup (200 ml) + Capsules(1X18)
+        DOSAGE: Take two Capsules of Novoston Plus empty stomach in the morning
+        with lime water and two spoonful of Novoston Syrup after meals twice a
+        day.
+      </p>
+      <h4>composition</h4>
+      <p>
+        Sold by Denovo Pharma and Fulfilled by Amazon. Natural and Ayurvedic
+        Product No Side Effects Combo Pack: Syrup (200 ml) + Capsules(1X18)
+        DOSAGE: Take two Capsules of Novoston Plus empty stomach in the morning
+        with lime water and two spoonful of Novoston Syrup after meals twice a
+        day.
+      </p>
+    </section>
+    <section style="width: 20%">
+      <mat-card
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+      >
+        <section class="cart-section">
+          <section class="remove-section">
+            <mat-icon>remove</mat-icon>
+          </section>
+          <section class="quantity-section">
+            <span style="padding: 2%">2</span>
+          </section>
+          <section class="add-section">
+            <mat-icon>add</mat-icon>
+          </section>
+        </section>
+        <button mat-raised-button color="primary">Add To Cart</button></mat-card
+      >
+    </section>
+  </div>
+  <div></div>
+</div>

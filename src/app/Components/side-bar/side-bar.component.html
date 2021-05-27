@@ -1,6 +1,6 @@
 <mat-nav-list role="list" style="padding: 0 !important">
   <mat-list-item
-    style="background-color: rgb(67, 160, 71)"
+    style="background-color: rgb(30, 54, 28)"
     role="listitem"
     routerLink="/home"
     [routerLinkActive]="'is-active'"
@@ -14,10 +14,53 @@
     routerLink="/home"
     [routerLinkActive]="'is-active'"
     ><a (click)="sidenavclose()">
-      <mat-icon color="dark">category</mat-icon>
+      <mat-icon color="dark">home</mat-icon>
+      <span class="nav-caption">Home</span>
+    </a></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/about"
+    [routerLinkActive]="'is-active'"
+    ><a (click)="sidenavclose()">
+      <mat-icon color="dark">groups</mat-icon>
+      <span class="nav-caption">About Us</span>
+    </a></mat-list-item
+  >
+  <mat-list-item
+    role="listitem"
+    routerLink="/contact"
+    [routerLinkActive]="'is-active'"
+    ><a (click)="sidenavclose()">
+      <mat-icon color="dark">call</mat-icon>
+      <span class="nav-caption">Contact Us</span>
+    </a></mat-list-item
+  >
+  <mat-list-item role="listitem"
+    ><a>
+      <mat-icon (click)="showItems = !showItems" *ngIf="showItems" color="dark"
+        >expand_less</mat-icon
+      >
+      <mat-icon (click)="showItems = !showItems" *ngIf="!showItems" color="dark"
+        >expand_more</mat-icon
+      >
       <span class="nav-caption">Shop By Type</span>
     </a></mat-list-item
   >
+  <div *ngIf="showItems">
+    <ul class="navigationbar" style="margin-left: 15%">
+      <li (click)="sidenavclose()" class="subItem">
+        <a routerLink="/product" [routerLinkActive]="'is-active'"
+          ><mat-icon>arrow_right</mat-icon>Single Product</a
+        >
+      </li>
+      <li (click)="sidenavclose()" class="subItem">
+        <a routerLink="/product" [routerLinkActive]="'is-active'"
+          ><mat-icon>arrow_right</mat-icon>Combo Product</a
+        >
+      </li>
+    </ul>
+  </div>
   <mat-list-item
     role="listitem"
     routerLink="/admin/cities/city-list"

@@ -1,0 +1,43 @@
+.fake_price {
+  text-decoration: line-through;
+  font-size: 13px;
+}
+.price {
+  font-size: 20px;
+}
+.cart-section {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin-bottom: 10%;
+}
+.remove-section {
+  width: 30%;
+  background: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.quantity-section {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.1%;
+  border: 1px solid green;
+}
+.add-section {
+  width: 30%;
+  background: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
