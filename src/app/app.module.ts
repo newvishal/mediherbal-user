@@ -25,9 +25,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './Components/header/header.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ProductModule } from './Pages/product/product.module';
+import { FooterComponent } from './Components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SideBarComponent],
+  declarations: [AppComponent, HeaderComponent, SideBarComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

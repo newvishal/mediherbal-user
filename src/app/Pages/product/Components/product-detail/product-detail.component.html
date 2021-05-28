@@ -34,7 +34,7 @@
       <h4>
         {{ ProductData.product_purchasable ? "In Stock" : "Out of Stock" }}
       </h4>
-      <mat-card class="set-quantity">
+      <div class="set-quantity">
         <form *ngIf="productType === 'single'">
           <mat-form-field appearance="fill">
             <mat-label>Select Product Type</mat-label>
@@ -51,6 +51,7 @@
             </select>
           </mat-form-field>
         </form>
+        <p>Quantity</p>
         <section class="cart-section">
           <section (click)="removeItem()" class="remove-section">
             <mat-icon>remove</mat-icon>
@@ -63,9 +64,9 @@
           </section>
         </section>
         <button mat-raised-button color="primary" (click)="addToCart()">
-          Add To Cart
-        </button></mat-card
-      >
+          Add To Cart</button
+        ><br />
+      </div>
       <h4>Description</h4>
       <p [innerHTML]="ProductData.product_description"></p>
       <div *ngIf="productType === 'single'">
@@ -97,7 +98,7 @@
         </div>
       </div>
       <div *ngIf="productType === 'single'" style="width: 100%">
-        <h4>composition</h4>
+        <h4>Composition</h4>
         <div class="heading-sections">
           <table class="heading-inner">
             <tr style="width: 100%">
