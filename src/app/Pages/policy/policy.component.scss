@@ -8,8 +8,6 @@ mat-card-title {
 .outer-div {
   width: 100%;
   height: 100%;
-  margin-top: 10%;
-  background-color: rgb(244, 252, 244);
 }
 .inner-div {
   width: 100%;
@@ -21,9 +19,4 @@ mat-card-title {
 }
 mat-card-content {
   text-align: justify;
-}
-@media only screen and (max-width: 600px) {
-  .outer-div {
-    margin-top: 20%;
-  }
 }

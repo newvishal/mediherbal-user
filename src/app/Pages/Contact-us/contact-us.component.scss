@@ -5,7 +5,7 @@
   font-family: "Crimson Pro", serif;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10%;
+  padding-top: 0 !important;
 }
 img {
   width: 100%;
@@ -101,6 +101,7 @@ h1 {
   .outer-div {
     background-image: url("/assets/Images/Login/Login1.jpg");
     background-position: center;
+    padding-top: 0 !important;
   }
   .information-section {
     width: 90%;

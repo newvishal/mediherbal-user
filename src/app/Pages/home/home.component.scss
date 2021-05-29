@@ -5,6 +5,7 @@
   align-items: center;
   flex-direction: column;
   background-color: rgb(244, 252, 244);
+  padding-top: 0 !important;
 }
 .product-slider::-webkit-scrollbar {
   display: none;
@@ -29,4 +30,9 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+@media only screen and (max-width: 600px) {
+  .outer-div {
+    padding-top: 0 !important;
+  }
 }

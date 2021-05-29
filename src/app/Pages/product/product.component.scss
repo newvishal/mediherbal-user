@@ -16,7 +16,6 @@ mat-card-subtitle {
 .outer-div {
   width: 100%;
   display: flex;
-  margin-top: 10%;
   flex-direction: column;
 }
 .header-div {
@@ -86,9 +85,4 @@ mat-card {
   justify-content: center;
   align-items: center;
   margin-bottom: 5%;
-}
-@media only screen and (max-width: 600px) {
-  .outer-div {
-    margin-top: 20%;
-  }
 }
