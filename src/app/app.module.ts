@@ -27,6 +27,7 @@ import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ProductModule } from './Pages/product/product.module';
 import { FooterComponent } from './Components/footer/footer.component';
 import { PolicyComponent } from './Pages/policy/policy.component';
+import { CartModule } from './Pages/cart/cart.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PolicyComponent } from './Pages/policy/policy.component';
     AboutUsModule,
     NgbModule,
     ProductModule,
+    CartModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

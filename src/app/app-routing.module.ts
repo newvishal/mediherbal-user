@@ -69,6 +69,17 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'cart',
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./Pages/cart/cart.module').then((m) => m.CartModule),
+      },
+    ],
+  },
+  {
     path: 'policy/:type',
     component: PolicyComponent,
   },
