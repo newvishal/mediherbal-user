@@ -17,22 +17,7 @@ export class ProductSliderComponent implements OnInit {
   selectedItemIdArray = [];
   userData: User = null;
   constructor(private router: Router, private store: Store<fromApp.AppState>) {}
-  ngOnChanges(): void {
-    this.productsList = [];
-    let products = this.products;
-    products.map((res, index) => {
-      this.productsList[index] = {
-        ...res,
-        addToCart: false,
-        quantity: 0,
-        selectedOption: {
-          price: res.product_type[0].price,
-          fake_price: res.product_type[0].fake_price,
-          product_id: res.product_type[0].product_id,
-        },
-      };
-    });
-  }
+  ngOnChanges(): void {}
   addToCart(index) {
     if (this.productsList[index].quantity == 0) {
       this.productsList[index].addToCart = true;
@@ -45,6 +30,7 @@ export class ProductSliderComponent implements OnInit {
         product_id: this.productsList[index].id,
         selected_product_id: this.productsList[index].selectedOption.product_id,
         quantity: this.productsList[index].quantity,
+        product_type: 'products',
       };
 
       cartItems.push(data);
@@ -59,45 +45,31 @@ export class ProductSliderComponent implements OnInit {
             this.productsList[index].selectedOption.product_id
       );
       console.log(elementPresent);
+      console.log(cartItems[elementPresent]);
+
       if (elementPresent >= 0) {
-        cartItems[elementPresent].quantity =
-          cartItems[elementPresent].quantity + 1;
+        cartItems[elementPresent] = {
+          ...cartItems[elementPresent],
+          quantity: cartItems[elementPresent].quantity + 1,
+        };
+
         this.userData = { ...this.userData, cart: cartItems };
         console.log(this.userData);
+        this.chnageCartDeatils();
       } else if (elementPresent < 0) {
         const data = {
           product_id: this.productsList[index].id,
           selected_product_id:
             this.productsList[index].selectedOption.product_id,
           quantity: this.productsList[index].quantity,
+          product_type: 'products',
         };
 
         cartItems.push(data);
         this.userData = { ...this.userData, cart: cartItems };
         console.log(this.userData);
+        this.chnageCartDeatils();
       }
-      /*      cartItems.forEach((item, itemIndex) => {
-        if (
-          item.product_id === this.productsList[index].id &&
-          item.selected_product_id ===
-            this.productsList[index].selectedOption.product_id
-        ) {
-          cartItems[itemIndex].quantity = cartItems[itemIndex].quantity + 1;
-          this.userData = { ...this.userData, cart: cartItems };
-          console.log(this.userData);
-        } else {
-          const data = {
-            product_id: this.productsList[index].id,
-            selected_product_id:
-              this.productsList[index].selectedOption.product_id,
-            quantity: this.productsList[index].quantity,
-          };
-
-          cartItems.push(data);
-          this.userData = { ...this.userData, cart: cartItems };
-          console.log(this.userData);
-        }
-      }); */
     }
   }
   removeQuantity(index) {
@@ -120,8 +92,21 @@ export class ProductSliderComponent implements OnInit {
         };
       }
     });
-    this.productsList[index].addToCart = false;
-    this.productsList[index].quantity = 0;
+    this.productsList.map((product, index) => {
+      const cartElementIndex = this.userData.cart.findIndex(
+        (cartDetail) =>
+          cartDetail.product_id === this.productsList[index].id &&
+          cartDetail.selected_product_id === evt
+      );
+      if (cartElementIndex >= 0) {
+        this.productsList[index].addToCart = true;
+        this.productsList[index].quantity =
+          this.userData.cart[cartElementIndex].quantity;
+      } else if (cartElementIndex < 0) {
+        this.productsList[index].addToCart = false;
+        this.productsList[index].quantity = 0;
+      }
+    });
   }
   ngOnInit(): void {
     this.store
@@ -132,6 +117,43 @@ export class ProductSliderComponent implements OnInit {
         tap((userData) => {
           this.userData = userData;
           console.log(this.userData);
+          console.log(this.products);
+
+          this.productsList = [];
+          let products = this.products;
+          products.map((product, index) => {
+            const cartElementIndex = this.userData.cart.findIndex(
+              (cartDetail) =>
+                cartDetail.product_id === product.id &&
+                cartDetail.selected_product_id ===
+                  product.product_type[0].product_id
+            );
+
+            if (cartElementIndex >= 0) {
+              this.productsList[index] = {
+                ...product,
+                addToCart: true,
+                quantity: this.userData.cart[cartElementIndex].quantity,
+                selectedOption: {
+                  price: product.product_type[0].price,
+                  fake_price: product.product_type[0].fake_price,
+                  product_id: product.product_type[0].product_id,
+                },
+              };
+            } else if (cartElementIndex < 0) {
+              this.productsList[index] = {
+                ...product,
+                addToCart: false,
+                quantity: 0,
+                selectedOption: {
+                  price: product.product_type[0].price,
+                  fake_price: product.product_type[0].fake_price,
+                  product_id: product.product_type[0].product_id,
+                },
+              };
+            }
+          });
+          console.log(this.productsList);
         })
       )
       .subscribe();
