@@ -28,9 +28,14 @@ export class ProductSliderComponent implements OnInit {
   }
   addToCart(index) {
     this.productsList[index].addToCart = true;
+    if (this.productsList[index].quantity == 0) {
+      this.addQuantity(index);
+    }
   }
   removeQuantity(index) {
-    this.productsList[index].quantity = this.productsList[index].quantity - 1;
+    if (this.productsList[index].quantity >= 1) {
+      this.productsList[index].quantity = this.productsList[index].quantity - 1;
+    }
     if (this.productsList[index].quantity == 0) {
       this.productsList[index].addToCart = false;
     }
@@ -38,6 +43,7 @@ export class ProductSliderComponent implements OnInit {
   addQuantity(index) {
     this.productsList[index].quantity = this.productsList[index].quantity + 1;
   }
+
   changeTag1(evt, index) {
     this.productsList[index].product_type.map((res) => {
       if (res.product_id === evt) {

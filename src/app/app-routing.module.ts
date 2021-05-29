@@ -57,7 +57,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'product',
+    path: 'product/:type',
     canActivateChild: [AuthGuard],
     children: [
       {

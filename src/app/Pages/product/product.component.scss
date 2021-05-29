@@ -1,0 +1,89 @@
+mat-card-title {
+  font-size: 15px;
+  cursor: pointer;
+}
+mat-card-subtitle {
+  font-size: 13px;
+  cursor: pointer;
+}
+.fake_price {
+  text-decoration: line-through;
+  font-size: 13px;
+}
+.price {
+  font-size: 20px;
+}
+.outer-div {
+  width: 100%;
+  display: flex;
+  margin-top: 10%;
+  flex-direction: column;
+}
+.header-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  h1 {
+    font-size: xx-large;
+    font-weight: bold;
+  }
+}
+mat-card {
+  width: 280px;
+}
+.button-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.add-to-cart-section {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+.remove-section {
+  width: 30%;
+  background: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.quantity-section {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid green;
+}
+.add-section {
+  width: 30%;
+  background: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.child {
+  flex: 1 0 21%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5%;
+}

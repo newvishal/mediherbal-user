@@ -12,7 +12,13 @@ import { ComboProductSliderComponent } from './Components/combo-product-slider/c
 
 @NgModule({
   imports: [SharedModule, MaterialModule, HomeRoutingModule, NgbModule],
-  declarations: [HomeComponent, BannerComponent, ProductSliderComponent, ProductCardSliderComponent, ComboProductSliderComponent],
+  declarations: [
+    HomeComponent,
+    BannerComponent,
+    ProductSliderComponent,
+    ProductCardSliderComponent,
+    ComboProductSliderComponent,
+  ],
   providers: [HomeService],
 })
 export class HomeModule {}

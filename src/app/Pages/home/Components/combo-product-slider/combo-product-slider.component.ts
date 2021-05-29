@@ -17,9 +17,14 @@ export class ComboProductSliderComponent implements OnInit {
   }
   addToCart(index) {
     this.products[index].addToCart = true;
+    if (this.products[index].quantity == 0) {
+      this.addQuantity(index);
+    }
   }
   removeQuantity(index) {
-    this.products[index].quantity = this.products[index].quantity - 1;
+    if (this.products[index].quantity >= 1) {
+      this.products[index].quantity = this.products[index].quantity - 1;
+    }
     if (this.products[index].quantity == 0) {
       this.products[index].addToCart = false;
     }

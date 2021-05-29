@@ -6,10 +6,11 @@ import { ProductComponent } from './product.component';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductService } from './Service/product.service';
 import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
+import { ImageSliderComponent } from './Components/image-slider/image-slider.component';
 
 @NgModule({
   imports: [SharedModule, MaterialModule, ProductRoutingModule, NgbModule],
-  declarations: [ProductComponent, ProductDetailComponent],
+  declarations: [ProductComponent, ProductDetailComponent, ImageSliderComponent],
   providers: [ProductService],
 })
 export class ProductModule {}

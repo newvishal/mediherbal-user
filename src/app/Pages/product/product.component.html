@@ -1,1 +1,81 @@
-<p>product works!</p>
+<div class="outer-div">
+  <div class="header-div">
+    <h1>Products</h1>
+  </div>
+  <div class="parent">
+    <div class="child" *ngFor="let product of ProductList; let i = index">
+      <mat-card>
+        <app-image-slider [images]="product.products_images"></app-image-slider>
+        <br />
+        <mat-card-title (click)="navigateToDeatils(product.id)">{{
+          product.product_name | titlecase
+        }}</mat-card-title>
+        <mat-card-subtitle (click)="navigateToDeatils(product.id)">{{
+          product.tag_line
+        }}</mat-card-subtitle>
+        <div *ngIf="productType === 'combo'">
+          <span *ngFor="let type of product.products" value="type">
+            {{ type?.product_name | titlecase }} ({{
+              type?.product_type | titlecase
+            }})|
+          </span>
+        </div>
+        <mat-card-content *ngIf="productType === 'combo'">
+          <p>
+            <span class="price">₹ {{ product.price }}</span
+            >&nbsp;
+            <span class="fake_price">₹ {{ product.fake_price }}</span>
+          </p>
+        </mat-card-content>
+        <form *ngIf="product.selectedOption">
+          <mat-form-field appearance="fill">
+            <mat-label>Select Product Type</mat-label>
+            <select
+              matNativeControl
+              (change)="changeTag1($event.target.value, i)"
+            >
+              <option
+                *ngFor="let type of product.product_type"
+                [value]="type.product_id"
+              >
+                {{ type.name | titlecase }}
+              </option>
+            </select>
+          </mat-form-field>
+        </form>
+        <mat-card-content *ngIf="product.selectedOption">
+          <p>
+            <span class="price">₹ {{ product.selectedOption.price }}</span
+            >&nbsp;
+            <span class="fake_price"
+              >₹ {{ product.selectedOption.fake_price }}</span
+            >
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-section">
+            <button
+              color="primary"
+              mat-raised-button
+              *ngIf="!product.addToCart"
+              (click)="addToCart(i)"
+            >
+              Add To Cart &nbsp; <mat-icon>shopping_cart</mat-icon>
+            </button>
+            <section class="add-to-cart-section" *ngIf="product.addToCart">
+              <section class="remove-section" (click)="removeQuantity(i)">
+                <mat-icon>remove</mat-icon>
+              </section>
+              <section class="quantity-section">
+                <span style="padding: 2%">{{ product.quantity }}</span>
+              </section>
+              <section class="add-section" (click)="addQuantity(i)">
+                <mat-icon>add</mat-icon>
+              </section>
+            </section>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

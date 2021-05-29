@@ -28,7 +28,12 @@ import { ProductModule } from './Pages/product/product.module';
 import { FooterComponent } from './Components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SideBarComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    SideBarComponent,
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

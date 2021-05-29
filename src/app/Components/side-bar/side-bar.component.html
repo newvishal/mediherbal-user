@@ -36,26 +36,22 @@
       <span class="nav-caption">Contact Us</span>
     </a></mat-list-item
   >
-  <mat-list-item role="listitem"
+  <mat-list-item role="listitem" (click)="showItems = !showItems"
     ><a>
-      <mat-icon (click)="showItems = !showItems" *ngIf="showItems" color="dark"
-        >expand_less</mat-icon
-      >
-      <mat-icon (click)="showItems = !showItems" *ngIf="!showItems" color="dark"
-        >expand_more</mat-icon
-      >
+      <mat-icon *ngIf="showItems" color="dark">expand_less</mat-icon>
+      <mat-icon *ngIf="!showItems" color="dark">expand_more</mat-icon>
       <span class="nav-caption">Shop By Type</span>
     </a></mat-list-item
   >
   <div *ngIf="showItems">
     <ul class="navigationbar" style="margin-left: 15%">
       <li (click)="sidenavclose()" class="subItem">
-        <a routerLink="/product" [routerLinkActive]="'is-active'"
+        <a routerLink="/product/single" [routerLinkActive]="'is-active'"
           ><mat-icon>arrow_right</mat-icon>Single Product</a
         >
       </li>
       <li (click)="sidenavclose()" class="subItem">
-        <a routerLink="/product" [routerLinkActive]="'is-active'"
+        <a routerLink="/product/combo" [routerLinkActive]="'is-active'"
           ><mat-icon>arrow_right</mat-icon>Combo Product</a
         >
       </li>
