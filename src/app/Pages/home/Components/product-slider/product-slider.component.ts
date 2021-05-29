@@ -50,22 +50,20 @@ export class ProductSliderComponent implements OnInit {
       this.userData = { ...this.userData, cart: cartItems };
       console.log(this.userData);
     } else {
-      let elementPresent = cartItems.find((item, itemIndex) => {
-        if (
+      let elementPresent = cartItems.findIndex((item, itemIndex) =>
+
           item.product_id === this.productsList[index].id &&
           item.selected_product_id ===
             this.productsList[index].selectedOption.product_id
-        ) {
-          return itemIndex;
-        }
-      });
+
+      );
       console.log(elementPresent);
-      if (elementPresent) {
+      if (elementPresent>=0) {
         cartItems[elementPresent].quantity =
           cartItems[elementPresent].quantity + 1;
         this.userData = { ...this.userData, cart: cartItems };
         console.log(this.userData);
-      } else {
+      } else if(elementPresent<0) {
         const data = {
           product_id: this.productsList[index].id,
           selected_product_id:
