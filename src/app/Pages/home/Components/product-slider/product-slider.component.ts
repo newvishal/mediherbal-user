@@ -13,6 +13,7 @@ import * as fromApp from '../../../../store/app.reducer';
 export class ProductSliderComponent implements OnInit {
   @Input() products = [];
   productsList = [];
+  selectedItemIdArray = [];
   userData: User = null;
   constructor(private router: Router, private store: Store<fromApp.AppState>) {}
   ngOnChanges(): void {
@@ -49,13 +50,40 @@ export class ProductSliderComponent implements OnInit {
       this.userData = { ...this.userData, cart: cartItems };
       console.log(this.userData);
     } else {
-      cartItems.forEach((item, index) => {
+      let elementPresent = cartItems.find((item, itemIndex) => {
         if (
           item.product_id === this.productsList[index].id &&
           item.selected_product_id ===
             this.productsList[index].selectedOption.product_id
         ) {
-          cartItems[index].quantity = cartItems[index].quantity + 1;
+          return itemIndex;
+        }
+      });
+      console.log(elementPresent);
+      if (elementPresent) {
+        cartItems[elementPresent].quantity =
+          cartItems[elementPresent].quantity + 1;
+        this.userData = { ...this.userData, cart: cartItems };
+        console.log(this.userData);
+      } else {
+        const data = {
+          product_id: this.productsList[index].id,
+          selected_product_id:
+            this.productsList[index].selectedOption.product_id,
+          quantity: this.productsList[index].quantity,
+        };
+
+        cartItems.push(data);
+        this.userData = { ...this.userData, cart: cartItems };
+        console.log(this.userData);
+      }
+      /*      cartItems.forEach((item, itemIndex) => {
+        if (
+          item.product_id === this.productsList[index].id &&
+          item.selected_product_id ===
+            this.productsList[index].selectedOption.product_id
+        ) {
+          cartItems[itemIndex].quantity = cartItems[itemIndex].quantity + 1;
           this.userData = { ...this.userData, cart: cartItems };
           console.log(this.userData);
         } else {
@@ -70,7 +98,7 @@ export class ProductSliderComponent implements OnInit {
           this.userData = { ...this.userData, cart: cartItems };
           console.log(this.userData);
         }
-      });
+      }); */
     }
   }
   removeQuantity(index) {
