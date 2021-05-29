@@ -1,1 +1,85 @@
-<div class="outer-div">Hello</div>
+<div class="outer-div">
+  <div class="inner-div">
+    <section class="item-section">
+      <mat-card>
+        <mat-card-title
+          >Check delivery availability in your area</mat-card-title
+        >
+        <mat-card-content>List</mat-card-content>
+      </mat-card>
+      <section class="heading">
+        <h2>My Cart (3 Items)</h2>
+        <h2>Total : 657</h2>
+      </section>
+      <div class="items">
+        <mat-card style="margin-bottom: 3%" *ngFor="let item of [1, 2, 3]">
+          <mat-card-content>
+            <div class="item-detail">
+              <section class="image-section">
+                <img src="\assets\Images\Contact Us\contact4.jpg" />
+              </section>
+              <section class="text-section">
+                <h2>Product Name</h2>
+                <h3>Product Tag Line</h3>
+                <h3>Quantity</h3>
+                <h3>if combo display items</h3>
+                <h3>if single display drop down</h3>
+              </section>
+              <section class="amount-section">
+                <h3>456</h3>
+                <span>
+                  <span class="price">price</span> &nbsp;
+                  <span class="fake_price">fake price</span></span
+                >
+              </section>
+            </div>
+          </mat-card-content>
+          <hr />
+          <mat-card-actions>
+            <button mat-raised-button color="warn">Remove Item</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </section>
+    <section class="total-section">
+      <mat-card>
+        <mat-card-title>Price Detail</mat-card-title>
+        <mat-card-content>
+          <div
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            "
+          >
+            <section
+              style="width: 100%; display: flex; justify-content: space-between"
+            >
+              <h3>Total MRP</h3>
+              <h3>765</h3>
+            </section>
+            <section
+              style="width: 100%; display: flex; justify-content: space-between"
+            >
+              <h3>Discount On MRP</h3>
+              <h3>678</h3>
+            </section>
+            <hr />
+            <section
+              style="width: 100%; display: flex; justify-content: space-between"
+            >
+              <h3 style="font-weight: bold">Total Amount</h3>
+              <h3 style="font-weight: bold">1679</h3>
+            </section>
+          </div>
+          <hr />
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">Place Order</button>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+  </div>
+</div>

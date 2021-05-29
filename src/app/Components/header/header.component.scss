@@ -6,7 +6,10 @@ a:hover {
   color: rgb(238, 237, 233);
 }
 .active {
-  color: rgb(238, 237, 233);
+  color: rgb(240, 226, 169);
+  mat-icon {
+    color: rgb(240, 226, 169);
+  }
 }
 button:hover {
   color: lightgray;
