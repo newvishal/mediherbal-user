@@ -98,11 +98,6 @@ export class ProductComponent implements OnInit {
               });
               this.ProductList = [];
               this.ProductList = this.data;
-              this.ProductList.map((res, index) => {
-                for (let i = 0; i < 10; i++) {
-                  this.ProductList.push(res);
-                }
-              });
             })
           )
           .subscribe((res) => {});

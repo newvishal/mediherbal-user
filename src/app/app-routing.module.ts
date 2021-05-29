@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { PolicyComponent } from './Pages/policy/policy.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -66,6 +67,10 @@ const routes: Routes = [
           import('./Pages/product/product.module').then((m) => m.ProductModule),
       },
     ],
+  },
+  {
+    path: 'policy/:type',
+    component: PolicyComponent,
   },
 ];
 

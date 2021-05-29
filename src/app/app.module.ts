@@ -26,6 +26,7 @@ import { HeaderComponent } from './Components/header/header.component';
 import { SideBarComponent } from './Components/side-bar/side-bar.component';
 import { ProductModule } from './Pages/product/product.module';
 import { FooterComponent } from './Components/footer/footer.component';
+import { PolicyComponent } from './Pages/policy/policy.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FooterComponent } from './Components/footer/footer.component';
     HeaderComponent,
     SideBarComponent,
     FooterComponent,
+    PolicyComponent,
   ],
   imports: [
     BrowserModule,
