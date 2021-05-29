@@ -85,7 +85,7 @@ export class AuthEffects {
       );
     }),
     map(() => {
-      new fromAuthAction.SignUpSuccess();
+     return new fromAuthAction.SignUpSuccess();
     })
   );
   @Effect({

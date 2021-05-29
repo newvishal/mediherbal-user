@@ -3,7 +3,7 @@ export interface User {
   last_name?: string;
   phone_number?: string;
   email?: string;
-  cart?: any[];
+  cart?:any;
   number_of_times_order_Places?: number;
   id?: string;
   user_type:string;

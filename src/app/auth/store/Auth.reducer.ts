@@ -12,7 +12,7 @@ export interface AuthSate {
   ForgotPasswordError: string;
 }
 const initialState: AuthSate = {
-  user: null,
+  user: {},
   loginLoading: false,
   signupLoading: false,
   forgotPasswordLoading: false,
