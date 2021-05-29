@@ -1,3 +1,4 @@
+import { Action } from 'rxjs/internal/scheduler/Action';
 import * as fromAuthAction from './Auth.Actions';
 export interface AuthSate {
   user: any;
@@ -42,6 +43,9 @@ export function AuthReducer(
       return { ...state, forgotPasswordLoading: true };
     case fromAuthAction.FORGOT_PASSWORD_SUCCESS:
       return { ...state, forgotPasswordLoading: false };
+    case fromAuthAction.CHANGE_USER_CART_DETAILS_SUCCESS:
+      const UpdatedCartDeatils = { ...action.playload };
+      return { ...state, user: UpdatedCartDeatils };
     default:
       return state;
   }

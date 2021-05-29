@@ -14,7 +14,10 @@ export const LOGIN_FAIL = '[AUTH SECTION] LOGIN_FAIL';
 export const FORGOT_PASSWORD_START = '[AUTH SECTION] FORGOT_PASSWORD_START';
 export const FORGOT_PASSWORD_SUCCESS = '[AUTH SECTION] FORGOT_PASSWORD_SUCCESS';
 export const FORGOT_PASSWORD_FAIL = '[AUTH SECTION] FORGOT_PASSWORD_FAIL';
-
+export const CHANGE_USER_CART_DETAILS_START =
+  '[AUTH SECTION] CHANGE_USER_CART_DETAILS_START';
+export const CHANGE_USER_CART_DETAILS_SUCCESS =
+  '[AUTH SECTION] CHANGE_USER_CART_DETAILS_SUCCESS';
 /*
 
  AuthAction Type
@@ -28,7 +31,9 @@ export type AuthActionType =
   | LoginFail
   | ForgotPasswordStart
   | ForgotPasswordSuccess
-  | ForgotPasswordFailed;
+  | ForgotPasswordFailed
+  | ChangeUserCartDeatilsStart
+  | ChangeUserCartDeatilsSuccess;
 
 /*
 Auth Action Classes
@@ -40,7 +45,6 @@ export class SignUpStart implements Action {
 
 export class SignUpSuccess implements Action {
   readonly type = SIGNUP_SUCCESS;
-
 }
 export class SignUpFailed implements Action {
   readonly type = SIGNUP_FAIL;
@@ -69,4 +73,14 @@ export class ForgotPasswordSuccess implements Action {
 export class ForgotPasswordFailed implements Action {
   readonly type = FORGOT_PASSWORD_FAIL;
   constructor(public payload: string) {}
+}
+
+/* Cart Action Class */
+export class ChangeUserCartDeatilsStart implements Action {
+  readonly type = CHANGE_USER_CART_DETAILS_START;
+  constructor(public playload: User) {}
+}
+export class ChangeUserCartDeatilsSuccess implements Action {
+  readonly type = CHANGE_USER_CART_DETAILS_SUCCESS;
+  constructor(public playload: User) {}
 }

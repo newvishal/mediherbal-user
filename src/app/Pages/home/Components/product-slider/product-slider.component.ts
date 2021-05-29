@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { pluck, take, tap } from 'rxjs/operators';
 import { User } from 'src/app/auth/interface/user.interface';
 import * as fromApp from '../../../../store/app.reducer';
+import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
 
 @Component({
   selector: 'app-product-slider',
@@ -49,21 +50,21 @@ export class ProductSliderComponent implements OnInit {
       cartItems.push(data);
       this.userData = { ...this.userData, cart: cartItems };
       console.log(this.userData);
+      this.chnageCartDeatils();
     } else {
-      let elementPresent = cartItems.findIndex((item, itemIndex) =>
-
+      let elementPresent = cartItems.findIndex(
+        (item, itemIndex) =>
           item.product_id === this.productsList[index].id &&
           item.selected_product_id ===
             this.productsList[index].selectedOption.product_id
-
       );
       console.log(elementPresent);
-      if (elementPresent>=0) {
+      if (elementPresent >= 0) {
         cartItems[elementPresent].quantity =
           cartItems[elementPresent].quantity + 1;
         this.userData = { ...this.userData, cart: cartItems };
         console.log(this.userData);
-      } else if(elementPresent<0) {
+      } else if (elementPresent < 0) {
         const data = {
           product_id: this.productsList[index].id,
           selected_product_id:
@@ -137,5 +138,10 @@ export class ProductSliderComponent implements OnInit {
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/single/${id}`]);
+  }
+  chnageCartDeatils() {
+    this.store.dispatch(
+      new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
+    );
   }
 }

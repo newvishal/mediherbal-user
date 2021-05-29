@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as fromAuthAction from './Auth.Actions';
 import { map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../interface/user.interface';
 
@@ -85,7 +85,7 @@ export class AuthEffects {
       );
     }),
     map(() => {
-     return new fromAuthAction.SignUpSuccess();
+      return new fromAuthAction.SignUpSuccess();
     })
   );
   @Effect({
@@ -95,6 +95,32 @@ export class AuthEffects {
     ofType(fromAuthAction.SIGNUP_SUCCESS),
     tap(() => {
       this.router.navigate(['/login']);
+    })
+  );
+  @Effect({ dispatch: true })
+  ChnageCartDetails = this.action$.pipe(
+    ofType(fromAuthAction.CHANGE_USER_CART_DETAILS_START),
+    switchMap(
+      (chnageCartDeatilsState: fromAuthAction.ChangeUserCartDeatilsStart) => {
+        let userUpdatedData: User = { ...chnageCartDeatilsState.playload };
+        delete userUpdatedData['id'];
+        console.log(userUpdatedData);
+
+        return of(
+          this.angularFireStore
+            .collection('users')
+            .doc(chnageCartDeatilsState.playload.id)
+            .update(userUpdatedData)
+        ).pipe(
+          mergeMap((reponse) => {
+            return of({ ...chnageCartDeatilsState.playload });
+          })
+        );
+      }
+    ),
+    map((updatedUserState: any) => {
+      console.log(updatedUserState);
+      return new fromAuthAction.ChangeUserCartDeatilsSuccess(updatedUserState);
     })
   );
 }
