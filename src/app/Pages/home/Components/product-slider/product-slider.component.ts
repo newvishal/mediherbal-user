@@ -35,7 +35,7 @@ export class ProductSliderComponent implements OnInit {
 
       cartItems.push(data);
       this.userData = { ...this.userData, cart: cartItems };
-      console.log(this.userData);
+
       this.chnageCartDeatils();
     } else {
       let elementPresent = cartItems.findIndex(
@@ -44,8 +44,6 @@ export class ProductSliderComponent implements OnInit {
           item.selected_product_id ===
             this.productsList[index].selectedOption.product_id
       );
-      console.log(elementPresent);
-      console.log(cartItems[elementPresent]);
 
       if (elementPresent >= 0) {
         cartItems[elementPresent] = {
@@ -54,7 +52,7 @@ export class ProductSliderComponent implements OnInit {
         };
 
         this.userData = { ...this.userData, cart: cartItems };
-        console.log(this.userData);
+
         this.chnageCartDeatils();
       } else if (elementPresent < 0) {
         const data = {
@@ -67,16 +65,17 @@ export class ProductSliderComponent implements OnInit {
 
         cartItems.push(data);
         this.userData = { ...this.userData, cart: cartItems };
-        console.log(this.userData);
+
         this.chnageCartDeatils();
       }
     }
   }
   removeQuantity(index) {
-    if (this.productsList[index].quantity >= 1) {
+    if (this.productsList[index].quantity > 1) {
       this.productsList[index].quantity = this.productsList[index].quantity - 1;
     }
-    if (this.productsList[index].quantity == 0) {
+    if (this.productsList[index].quantity == 1) {
+      this.productsList[index].quantity = this.productsList[index].quantity - 1;
       this.productsList[index].addToCart = false;
     }
   }
@@ -116,8 +115,6 @@ export class ProductSliderComponent implements OnInit {
         take(1),
         tap((userData) => {
           this.userData = userData;
-          console.log(this.userData);
-          console.log(this.products);
 
           this.productsList = [];
           let products = this.products;
@@ -153,7 +150,6 @@ export class ProductSliderComponent implements OnInit {
               };
             }
           });
-          console.log(this.productsList);
         })
       )
       .subscribe();
