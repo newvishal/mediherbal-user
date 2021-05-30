@@ -71,6 +71,22 @@ export class ProductSliderComponent implements OnInit {
     }
   }
   removeQuantity(index) {
+    let cartItems = [...this.userData.cart];
+    const selectedItemIndex = cartItems.findIndex(
+      (item) =>
+        item.product_id === this.productsList[index].id &&
+        item.selected_product_id ===
+          this.productsList[index].selectedOption.product_id
+    );
+    console.log(selectedItemIndex);
+    if (cartItems[selectedItemIndex].quantity > 1) {
+      cartItems[selectedItemIndex] = {
+        ...cartItems[selectedItemIndex],
+        quantity: cartItems[selectedItemIndex].quantity - 1,
+      };
+      console.log(cartItems[selectedItemIndex]);
+    }
+
     if (this.productsList[index].quantity > 1) {
       this.productsList[index].quantity = this.productsList[index].quantity - 1;
     }
