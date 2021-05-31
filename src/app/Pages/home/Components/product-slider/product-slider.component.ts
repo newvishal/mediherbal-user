@@ -18,6 +18,12 @@ export class ProductSliderComponent implements OnInit {
   userData: User = null;
   constructor(private router: Router, private store: Store<fromApp.AppState>) {}
   ngOnChanges(): void {}
+
+  /*
+
+  this method is responsible for adding item from Cart
+
+  */
   addToCart(index) {
     if (this.productsList[index].quantity == 0) {
       this.productsList[index].addToCart = true;
@@ -70,6 +76,10 @@ export class ProductSliderComponent implements OnInit {
       }
     }
   }
+
+  /*
+ this method is responsible for removing item from Cart
+  */
   removeQuantity(index) {
     let cartItems = [...this.userData.cart];
     const selectedItemIndex = cartItems.findIndex(
@@ -82,11 +92,23 @@ export class ProductSliderComponent implements OnInit {
     if (cartItems[selectedItemIndex].quantity > 1) {
       cartItems[selectedItemIndex] = {
         ...cartItems[selectedItemIndex],
-        quantity: cartItems[selectedItemIndex].quantity - 1,
+        quantity: +cartItems[selectedItemIndex].quantity - 1,
       };
       console.log(cartItems[selectedItemIndex]);
-    }
+      this.userData = { ...this.userData, cart: cartItems };
+      this.chnageCartDeatils();
+    } else if (+cartItems[selectedItemIndex].quantity == 1) {
+      console.log("Quantity 1");
 
+      const updatedCart = cartItems.splice(selectedItemIndex, 0);
+      console.log(updatedCart);
+      cartItems=[...updatedCart]
+
+      this.userData = { ...this.userData, cart: cartItems };
+      console.log(this.userData);
+
+      this.chnageCartDeatils();
+    }
     if (this.productsList[index].quantity > 1) {
       this.productsList[index].quantity = this.productsList[index].quantity - 1;
     }
@@ -173,6 +195,10 @@ export class ProductSliderComponent implements OnInit {
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/single/${id}`]);
   }
+
+  /*
+  this method is reponsible for chnaging the user details in store
+  */
   chnageCartDeatils() {
     this.store.dispatch(
       new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
