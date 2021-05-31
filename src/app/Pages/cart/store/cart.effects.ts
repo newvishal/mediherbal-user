@@ -22,13 +22,13 @@ export class CartEffects {
         map((userData) => userData.cart),
         tap((userCart) => {
           console.log(userCart);
-         /*  userCart.map((cartItems) => {
+          userCart.map((cartItems) => {
             this.angularFireStore
               .collection(cartItems.product_type)
               .doc(cartItems.product_id)
               .get()
               .subscribe();
-          });  */
+          });
         })
       );
 
