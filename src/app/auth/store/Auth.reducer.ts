@@ -1,4 +1,5 @@
 import { Action } from 'rxjs/internal/scheduler/Action';
+import { User } from '../interface/user.interface';
 import * as fromAuthAction from './Auth.Actions';
 export interface AuthSate {
   user: any;

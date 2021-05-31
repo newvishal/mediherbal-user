@@ -28,6 +28,7 @@ import { ProductModule } from './Pages/product/product.module';
 import { FooterComponent } from './Components/footer/footer.component';
 import { PolicyComponent } from './Pages/policy/policy.component';
 import { CartModule } from './Pages/cart/cart.module';
+import { CartEffects } from './Pages/cart/store/cart.effects';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { CartModule } from './Pages/cart/cart.module';
     MaterialModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(AppReducer),
-    EffectsModule.forRoot([AuthEffects, HomeEffects]),
+    EffectsModule.forRoot([AuthEffects, HomeEffects,CartEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
