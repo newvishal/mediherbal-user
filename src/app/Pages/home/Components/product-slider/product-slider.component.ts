@@ -5,6 +5,7 @@ import { pluck, take, tap } from 'rxjs/operators';
 import { User } from 'src/app/auth/interface/user.interface';
 import * as fromApp from '../../../../store/app.reducer';
 import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
+import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 
 @Component({
   selector: 'app-product-slider',
@@ -16,7 +17,11 @@ export class ProductSliderComponent implements OnInit {
   productsList = [];
   selectedItemIdArray = [];
   userData: User = null;
-  constructor(private router: Router, private store: Store<fromApp.AppState>) {}
+  constructor(
+    private router: Router,
+    private store: Store<fromApp.AppState>,
+    private snackBar: SnakbarService
+  ) {}
   ngOnChanges(): void {}
 
   /*
@@ -77,6 +82,7 @@ export class ProductSliderComponent implements OnInit {
         this.chnageCartDeatils();
       }
     }
+    this.snackBar.showSnackBar('Item added to cart', 'success-SnackBar');
   }
 
   /*
@@ -111,6 +117,7 @@ export class ProductSliderComponent implements OnInit {
 
       this.chnageCartDeatils();
     }
+    this.snackBar.showSnackBar('Item removed from cart', 'danger-SnackBar');
   }
 
   changeTag1(evt, index) {

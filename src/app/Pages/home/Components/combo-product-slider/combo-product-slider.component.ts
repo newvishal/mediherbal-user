@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { pluck, take, tap } from 'rxjs/operators';
 import * as fromApp from '../../../../store/app.reducer';
 import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
+import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 
 @Component({
   selector: 'app-combo-product-slider',
@@ -15,7 +16,11 @@ export class ComboProductSliderComponent implements OnInit {
   @Input() products = [];
   productsList = [];
   userData: User = null;
-  constructor(private router: Router, private store: Store<fromApp.AppState>) {}
+  constructor(
+    private router: Router,
+    private store: Store<fromApp.AppState>,
+    private snackBar: SnakbarService
+  ) {}
   ngOnChanges(): void {}
   addToCart(index) {
     let cartItems: any[] = [];
@@ -33,9 +38,7 @@ export class ComboProductSliderComponent implements OnInit {
         product_type: 'comboProduct',
       };
 
-      console.log(cartItems);
       cartItems.push({ ...data });
-      console.log(cartItems);
 
       this.userData = { ...this.userData, cart: [...cartItems] };
 
@@ -68,10 +71,9 @@ export class ComboProductSliderComponent implements OnInit {
         this.chnageCartDeatils();
       }
     }
+    this.snackBar.showSnackBar('Item added to cart', 'success-SnackBar');
   }
   chnageCartDeatils() {
-    console.log(this.userData);
-
     this.store.dispatch(
       new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
     );
@@ -100,7 +102,7 @@ export class ComboProductSliderComponent implements OnInit {
 
       this.chnageCartDeatils();
     }
-    console.log(this.userData.cart);
+    this.snackBar.showSnackBar('Item removed from cart', 'danger-SnackBar');
   }
   ngOnInit(): void {
     this.store
