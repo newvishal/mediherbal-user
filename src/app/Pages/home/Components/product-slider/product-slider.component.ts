@@ -25,6 +25,8 @@ export class ProductSliderComponent implements OnInit {
 
   */
   addToCart(index) {
+    console.log(this.productsList[index]);
+
     if (this.productsList[index].quantity == 0) {
       this.productsList[index].addToCart = true;
     }
@@ -88,47 +90,42 @@ export class ProductSliderComponent implements OnInit {
         item.selected_product_id ===
           this.productsList[index].selectedOption.product_id
     );
-    console.log(selectedItemIndex);
-    if (cartItems[selectedItemIndex].quantity > 1) {
+
+    if (this.productsList[index].quantity > 1) {
+      this.productsList[index].quantity = this.productsList[index].quantity - 1;
       cartItems[selectedItemIndex] = {
         ...cartItems[selectedItemIndex],
         quantity: +cartItems[selectedItemIndex].quantity - 1,
       };
-      console.log(cartItems[selectedItemIndex]);
-      this.userData = { ...this.userData, cart: cartItems };
-      this.chnageCartDeatils();
-    } else if (+cartItems[selectedItemIndex].quantity == 1) {
-      console.log("Quantity 1");
-
-      const updatedCart = cartItems.splice(selectedItemIndex, 0);
-      console.log(updatedCart);
-      cartItems=[...updatedCart]
 
       this.userData = { ...this.userData, cart: cartItems };
-      console.log(this.userData);
-
       this.chnageCartDeatils();
-    }
-    if (this.productsList[index].quantity > 1) {
-      this.productsList[index].quantity = this.productsList[index].quantity - 1;
-    }
-    if (this.productsList[index].quantity == 1) {
-      this.productsList[index].quantity = this.productsList[index].quantity - 1;
+    } else {
+      console.log(this.productsList[index]);
+
+      this.productsList[index].quantity = 0;
       this.productsList[index].addToCart = false;
+      cartItems.splice(selectedItemIndex, 1);
+
+      this.userData = { ...this.userData, cart: cartItems };
+
+      this.chnageCartDeatils();
     }
   }
 
   changeTag1(evt, index) {
+    console.log(evt);
+
     this.productsList[index].product_type.map((res) => {
       if (res.product_id === evt) {
         this.productsList[index].selectedOption = {
-          ...this.productsList[index].selectedOption,
           price: res.price,
           fake_price: res.fake_price,
           product_id: res.product_id,
         };
       }
     });
+
     this.productsList.map((product, index) => {
       const cartElementIndex = this.userData.cart.findIndex(
         (cartDetail) =>
@@ -150,7 +147,7 @@ export class ProductSliderComponent implements OnInit {
       .select('AuthSection')
       .pipe(
         pluck('user'),
-        take(1),
+
         tap((userData) => {
           this.userData = userData;
 

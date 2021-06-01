@@ -4,7 +4,7 @@ import * as fromApp from './store/app.reducer';
 import * as fromAuthAction from '../app/auth/store/Auth.Actions';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
         .collection('users', (ref) => ref.where('email', '==', userData.email))
         .snapshotChanges()
         .pipe(
+          take(1),
           map((usersDataObervable) => {
             return usersDataObervable.map((userDetails) => {
               const data = userDetails.payload.doc.data() as any;

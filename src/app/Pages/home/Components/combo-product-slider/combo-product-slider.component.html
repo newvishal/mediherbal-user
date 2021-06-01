@@ -1,5 +1,5 @@
 <div class="outer-div">
-  <div class="inner-div" *ngFor="let product of products; let i = index">
+  <div class="inner-div" *ngFor="let product of productsList; let i = index">
     <mat-card>
       <app-product-card-slider
         [images]="product.products_images"
@@ -40,7 +40,7 @@
             <section class="quantity-section">
               <span style="padding: 2%">{{ product.quantity }}</span>
             </section>
-            <section class="add-section" (click)="addQuantity(i)">
+            <section class="add-section" (click)="addToCart(i)">
               <mat-icon>add</mat-icon>
             </section>
           </section>
