@@ -10,6 +10,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -24,6 +27,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -36,6 +41,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule,
   ],
 })
 export class MaterialModule {}

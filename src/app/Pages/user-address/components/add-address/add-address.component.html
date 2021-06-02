@@ -1,3 +1,67 @@
 <div class="outer-div">
-
+  <form [formGroup]="addressForm">
+    <div class="user_details_div" formGroupName="user_details">
+      <div class="address_heading_div">
+        <span style="font-size: 20px">User Details</span>
+      </div>
+      <div class="User_details_Div">
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>First Name </mat-label>
+          <input matInput type="text" formControlName="first_name" />
+        </mat-form-field>
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>Last Name </mat-label>
+          <input matInput type="text" formControlName="last_name" />
+        </mat-form-field>
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>Phone Number </mat-label>
+          <input
+            matInput
+            type="tel"
+            maxlength="10"
+            minlength="10"
+            formControlName="mobile_number"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div formGroupName="user_address">
+      <div class="address_heading_div">
+        <span style="font-size: 20px">User Address</span>
+      </div>
+      <div class="User_details_Div">
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>House Number </mat-label>
+          <input matInput type="text" formControlName="house_number" />
+        </mat-form-field>
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>Street/Colony Name</mat-label>
+          <input matInput type="text" formControlName="street_colony_name" />
+        </mat-form-field>
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>Landmark </mat-label>
+          <input matInput type="text" formControlName="landmark" />
+        </mat-form-field>
+      </div>
+      <div class="User_details_Div">
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>State </mat-label>
+          <input matInput type="text" formControlName="state" />
+          <mat-autocomplete  #auto="matAutocomplete">
+            <mat-option *ngFor="let option of states" [value]="option.state">
+              {{option.state}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>City</mat-label>
+          <input matInput type="text" formControlName="city" />
+        </mat-form-field>
+        <mat-form-field class="example-form-field" class="input_width">
+          <mat-label>pincode </mat-label>
+          <input matInput type="text" formControlName="pincode" />
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
 </div>
