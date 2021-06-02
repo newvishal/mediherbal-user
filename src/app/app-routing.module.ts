@@ -31,51 +31,39 @@ const routes: Routes = [
         loadChildren: () =>
           import('./Pages/home/home.module').then((m) => m.HomeModule),
       },
-    ],
-  },
-  {
-    path: 'about',
-    children: [
       {
-        path: '',
+        path: 'about-us',
         loadChildren: () =>
           import('./Pages/About-us/about-us.module').then(
             (m) => m.AboutUsModule
           ),
       },
-    ],
-  },
-  {
-    path: 'contact',
-    children: [
       {
-        path: '',
+        path: 'contact',
+
         loadChildren: () =>
           import('./Pages/Contact-us/contact-us.module').then(
             (m) => m.ContactUsModule
           ),
       },
-    ],
-  },
-  {
-    path: 'product/:type',
-    canActivateChild: [AuthGuard],
-    children: [
       {
-        path: '',
+        path: 'product/:type',
+
         loadChildren: () =>
           import('./Pages/product/product.module').then((m) => m.ProductModule),
       },
-    ],
-  },
-  {
-    path: 'cart',
-    canActivateChild: [AuthGuard],
-    children: [
       {
-        path: '',
+        path: 'cart',
+
         loadChildren: () =>
           import('./Pages/cart/cart.module').then((m) => m.CartModule),
+      },
+      {
+        path: 'user-address',
+        loadChildren: () =>
+          import('./Pages/user-address/user-address.module').then(
+            (m) => m.UserAddressModule
+          ),
       },
     ],
   },
