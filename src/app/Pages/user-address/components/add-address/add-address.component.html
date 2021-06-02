@@ -1,5 +1,8 @@
 <div class="outer-div">
-  <form [formGroup]="addressForm">
+  <div class="cancelButton">
+<mat-icon>close</mat-icon>
+  </div>
+  <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
     <div class="user_details_div" formGroupName="user_details">
       <div class="address_heading_div">
         <span style="font-size: 20px">User Details</span>
@@ -46,10 +49,15 @@
       <div class="User_details_Div">
         <mat-form-field class="example-form-field" class="input_width">
           <mat-label>State </mat-label>
-          <input matInput type="text" formControlName="state" />
-          <mat-autocomplete  #auto="matAutocomplete">
+          <input
+            matInput
+            type="text"
+            formControlName="state"
+            [matAutocomplete]="stateauto"
+          />
+          <mat-autocomplete #stateauto="matAutocomplete">
             <mat-option *ngFor="let option of states" [value]="option.state">
-              {{option.state}}
+              {{ option.state }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -62,6 +70,9 @@
           <input matInput type="text" formControlName="pincode" />
         </mat-form-field>
       </div>
+    </div>
+    <div class="submit_button_div">
+      <button mat-raised-button color="primary" type="submit" [disabled]="addressForm.invalid">Sumbit</button>
     </div>
   </form>
 </div>

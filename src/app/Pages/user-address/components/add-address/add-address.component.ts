@@ -42,4 +42,7 @@ export class AddAddressComponent implements OnInit {
       }),
     });
   }
+  onSubmit() {
+    console.log(this.addressForm.value);
+  }
 }
