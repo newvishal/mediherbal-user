@@ -1,0 +1,17 @@
+.outer-div {
+  margin-bottom: 5%;
+  width: 100%;
+}
+.new_address_div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  .button_section {
+    margin-right: 5%;
+  }
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
