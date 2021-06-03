@@ -35,4 +35,25 @@ export class UserAddressService {
       .select('AuthSection')
       .pipe(pluck('user'), pluck('address'));
   }
+  deteleUserAddress(index) {
+    this.store
+      .select('AuthSection')
+      .pipe(
+        pluck('user'),
+        take(1),
+        tap((userDeatils) => {
+          let userDetails = { ...userDeatils };
+          let address = userDeatils.address ? [...userDeatils.address] : [];
+          if (address.length > 0) {
+            address.splice(index, 1);
+            let updatedDetails = { ...userDetails, address: [...address] };
+
+            this.store.dispatch(
+              new fromAuthActions.ChangeUserCartDeatilsStart(updatedDetails)
+            );
+          }
+        })
+      )
+      .subscribe();
+  }
 }

@@ -58,7 +58,5 @@ export class AddAddressComponent implements OnInit {
   cancelDopdown() {
     this.dialog.closeAll();
   }
-  deleteAddress(){
 
-  }
 }

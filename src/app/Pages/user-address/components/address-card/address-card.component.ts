@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { UserAddressService } from '../../service/user-address.service';
 import { AddAddressComponent } from '../add-address/add-address.component';
 
 @Component({
@@ -10,7 +11,10 @@ import { AddAddressComponent } from '../add-address/add-address.component';
 export class AddressCardComponent implements OnInit {
   @Input() useraddress;
   @Input() addressIndex;
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private addressService: UserAddressService
+  ) {}
 
   ngOnInit(): void {}
   editaddress() {
@@ -20,5 +24,8 @@ export class AddressCardComponent implements OnInit {
         addressIndex: this.addressIndex,
       },
     });
+  }
+  deleteAddress() {
+    this.addressService.deteleUserAddress(this.addressIndex);
   }
 }
