@@ -25,8 +25,6 @@ export class AddAddressComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.editAddressData);
-
     for (let statename in this.StateCityData) {
       this.states.push({
         state: statename,
@@ -100,10 +98,10 @@ export class AddAddressComponent implements OnInit {
     if (this.editAddressData) {
       this.addressService.editUserAddressInfo(
         this.addressForm.value,
-        this.editAddressData.address.addressIndex
+        this.editAddressData.addressIndex
       );
       this.dialog.closeAll();
-    } else {
+    } else if (this.editAddressData == null) {
       this.addressService.addnewAddress(this.addressForm.value);
       this.dialog.closeAll();
     }

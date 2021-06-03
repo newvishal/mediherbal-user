@@ -104,7 +104,6 @@ export class AuthEffects {
       (chnageCartDeatilsState: fromAuthAction.ChangeUserCartDeatilsStart) => {
         let userUpdatedData: User = { ...chnageCartDeatilsState.playload };
         delete userUpdatedData['id'];
-        console.log(userUpdatedData);
 
         return of(
           this.angularFireStore
@@ -119,7 +118,6 @@ export class AuthEffects {
       }
     ),
     map((updatedUserState: any) => {
-      console.log(updatedUserState);
       return new fromAuthAction.ChangeUserCartDeatilsSuccess(updatedUserState);
     })
   );

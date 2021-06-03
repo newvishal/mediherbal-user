@@ -65,7 +65,9 @@ export class UserAddressService {
         tap((userDeatils) => {
           let userDetails = { ...userDeatils };
           let address = userDeatils.address ? [...userDeatils.address] : [];
-          address[index] = { ...updatedAddress };
+
+          address[index] = updatedAddress;
+
           let updatedDetails = { ...userDetails, address: [...address] };
 
           this.store.dispatch(
