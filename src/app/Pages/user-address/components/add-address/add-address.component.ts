@@ -5,7 +5,9 @@ import {
   FormGroupName,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { state } from '../../city-data/state-city-list';
+import { UserAddressService } from '../../service/user-address.service';
 
 @Component({
   selector: 'app-add-address',
@@ -16,7 +18,10 @@ export class AddAddressComponent implements OnInit {
   addressForm: FormGroup;
   StateCityData: any = state;
   states: { state: string; cities: string[] }[] = [];
-  constructor() {}
+  constructor(
+    private addressService: UserAddressService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     for (let statename in this.StateCityData) {
@@ -44,5 +49,10 @@ export class AddAddressComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.addressForm.value);
+    this.addressService.addnewAddress(this.addressForm.value);
+    this.dialog.closeAll();
+  }
+  cancelDopdown() {
+    this.dialog.closeAll();
   }
 }

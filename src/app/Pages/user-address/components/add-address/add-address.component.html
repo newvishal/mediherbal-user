@@ -1,6 +1,6 @@
 <div class="outer-div">
   <div class="cancelButton">
-<mat-icon>close</mat-icon>
+    <mat-icon (click)="cancelDopdown()">close</mat-icon>
   </div>
   <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
     <div class="user_details_div" formGroupName="user_details">
@@ -72,7 +72,14 @@
       </div>
     </div>
     <div class="submit_button_div">
-      <button mat-raised-button color="primary" type="submit" [disabled]="addressForm.invalid">Sumbit</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="addressForm.invalid"
+      >
+        Sumbit
+      </button>
     </div>
   </form>
 </div>
