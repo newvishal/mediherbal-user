@@ -1,15 +1,23 @@
 <div class="outer-div">
   <div class="new_address_div">
     <section class="button_section">
-      <button mat-raised-button color="primary" class="center" (click)="addAddress()">
+      <button
+        mat-raised-button
+        color="primary"
+        class="center"
+        (click)="addAddress()"
+      >
         <mat-icon aria-hidden="false">add</mat-icon>
         add address
       </button>
     </section>
   </div>
   <div class="user-address-div">
-<div *ngFor="let address of userAddress">
-{{address['user_address'].pincode}}
-</div>
+    <div
+      *ngFor="let address of userAddress"
+      style="width: 80%; margin-bottom: 2%"
+    >
+      <app-address-card [useraddress]="address"></app-address-card>
+    </div>
   </div>
 </div>

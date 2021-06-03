@@ -1,0 +1,37 @@
+<div class="main_div">
+  <mat-card class="user_deatils_div">
+    <section>
+      <span style="font-size: 20px">User Deatils</span>
+    </section>
+    <section>
+      Name : {{ useraddress["user_details"].first_name | titlecase }}
+      {{ useraddress["user_details"].last_name | titlecase }}
+    </section>
+    <section>
+      Phone Number: {{ useraddress["user_details"].mobile_number }}
+    </section>
+    <section style="margin-top: 1%">
+      <span style="font-size: 20px">User Address</span>
+    </section>
+    <section>
+      House Number: {{ useraddress["user_address"].house_number | titlecase }}
+    </section>
+    <section>
+      street/Colony Name:
+      {{ useraddress["user_address"].street_colony_name | titlecase }}
+    </section>
+    <section>
+      Landmark: {{ useraddress["user_address"].landmark | titlecase }}
+    </section>
+    <section>
+      City:
+      {{ useraddress["user_address"].city | titlecase }}
+    </section>
+    <section>
+      Pincode: {{ useraddress["user_address"].pincode | titlecase }}
+    </section>
+    <section>
+      State: {{ useraddress["user_address"].state | titlecase }}
+    </section>
+  </mat-card>
+</div>

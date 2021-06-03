@@ -1,0 +1,9 @@
+.main_div {
+  width: 100%;
+  .user_deatils_div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
