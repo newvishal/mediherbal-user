@@ -56,4 +56,5 @@ export class UserAddressService {
       )
       .subscribe();
   }
+  editUserAddressInfo(updatedAddress, index) {}
 }
