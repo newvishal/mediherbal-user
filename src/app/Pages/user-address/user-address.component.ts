@@ -15,13 +15,16 @@ export class UserAddressComponent implements OnInit {
     private dialog: MatDialog,
     private userAddressService: UserAddressService
   ) {}
-userAddress:any[]=[]
+  userAddress: any[] = [];
   ngOnInit(): void {
-    this.userAddressService.fetchAllAddress().pipe(tap(userAddess=>{
-      this.userAddress=userAddess
-      console.log(this.userAddress);
-
-    })).subscribe()
+    this.userAddressService
+      .fetchAllAddress()
+      .pipe(
+        tap((userAddess) => {
+          this.userAddress = userAddess;
+        })
+      )
+      .subscribe();
   }
 
   addAddress() {

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   FormGroupName,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { state } from '../../city-data/state-city-list';
 import { UserAddressService } from '../../service/user-address.service';
 
@@ -20,7 +20,8 @@ export class AddAddressComponent implements OnInit {
   states: { state: string; cities: string[] }[] = [];
   constructor(
     private addressService: UserAddressService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public editAddressData: any
   ) {}
 
   ngOnInit(): void {
@@ -30,10 +31,10 @@ export class AddAddressComponent implements OnInit {
         cities: this.StateCityData[statename],
       });
     }
-    console.log(this.states);
+
     this.addressForm = new FormGroup({
       user_details: new FormGroup({
-        first_name: new FormControl('Ayush', [Validators.required]),
+        first_name: new FormControl('', [Validators.required]),
         last_name: new FormControl('', [Validators.required]),
         mobile_number: new FormControl('', [Validators.required]),
       }),
@@ -46,6 +47,8 @@ export class AddAddressComponent implements OnInit {
         pincode: new FormControl('', [Validators.required]),
       }),
     });
+    if (this.editAddressData) {
+    }
   }
   onSubmit() {
     console.log(this.addressForm.value);

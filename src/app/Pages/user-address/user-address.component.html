@@ -14,10 +14,13 @@
   </div>
   <div class="user-address-div">
     <div
-      *ngFor="let address of userAddress"
+      *ngFor="let address of userAddress; let i = index"
       style="width: 80%; margin-bottom: 2%"
     >
-      <app-address-card [useraddress]="address"></app-address-card>
+      <app-address-card
+        [useraddress]="address"
+        [addressIndex]="i"
+      ></app-address-card>
     </div>
   </div>
 </div>

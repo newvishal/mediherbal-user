@@ -1,7 +1,21 @@
 <div class="main_div">
   <mat-card class="user_deatils_div">
-    <section>
-      <span style="font-size: 20px">User Deatils</span>
+    <section style="display: flex; justify-content: space-between; width: 100%">
+      <section>
+        <span style="font-size: 20px">User Deatils</span>
+      </section>
+      <section style="width: 50%; display: flex; justify-content: flex-end">
+        <span
+          ><mat-icon color="primary" style="margin-right: 2%"(click)="editaddress()"
+            >create</mat-icon
+          ></span
+        >&nbsp;&nbsp;&nbsp;
+        <span
+          ><mat-icon color="warn" style="margin-right: 2%"
+            >delete</mat-icon
+          ></span
+        >
+      </section>
     </section>
     <section>
       Name : {{ useraddress["user_details"].first_name | titlecase }}
