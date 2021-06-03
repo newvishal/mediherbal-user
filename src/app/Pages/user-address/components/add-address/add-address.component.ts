@@ -25,6 +25,8 @@ export class AddAddressComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.editAddressData);
+
     for (let statename in this.StateCityData) {
       this.states.push({
         state: statename,
@@ -32,31 +34,81 @@ export class AddAddressComponent implements OnInit {
       });
     }
 
-    this.addressForm = new FormGroup({
-      user_details: new FormGroup({
-        first_name: new FormControl('', [Validators.required]),
-        last_name: new FormControl('', [Validators.required]),
-        mobile_number: new FormControl('', [Validators.required]),
-      }),
-      user_address: new FormGroup({
-        house_number: new FormControl('', [Validators.required]),
-        street_colony_name: new FormControl('', [Validators.required]),
-        landmark: new FormControl('', [Validators.required]),
-        state: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        pincode: new FormControl('', [Validators.required]),
-      }),
-    });
     if (this.editAddressData) {
+      //this.editAddressData.address['user_details'].first_name
+      this.addressForm = new FormGroup({
+        user_details: new FormGroup({
+          first_name: new FormControl(
+            this.editAddressData.address['user_details'].first_name,
+            [Validators.required]
+          ),
+          last_name: new FormControl(
+            this.editAddressData.address['user_details'].last_name,
+            [Validators.required]
+          ),
+          mobile_number: new FormControl(
+            this.editAddressData.address['user_details'].mobile_number,
+            [Validators.required]
+          ),
+        }),
+        user_address: new FormGroup({
+          house_number: new FormControl(
+            this.editAddressData.address['user_address'].house_number,
+            [Validators.required]
+          ),
+          street_colony_name: new FormControl(
+            this.editAddressData.address['user_address'].street_colony_name,
+            [Validators.required]
+          ),
+          landmark: new FormControl(
+            this.editAddressData.address['user_address'].landmark,
+            [Validators.required]
+          ),
+          state: new FormControl(
+            this.editAddressData.address['user_address'].state,
+            [Validators.required]
+          ),
+          city: new FormControl(
+            this.editAddressData.address['user_address'].city,
+            [Validators.required]
+          ),
+          pincode: new FormControl(
+            this.editAddressData.address['user_address'].pincode,
+            [Validators.required]
+          ),
+        }),
+      });
+    } else if (this.editAddressData == null) {
+      this.addressForm = new FormGroup({
+        user_details: new FormGroup({
+          first_name: new FormControl('', [Validators.required]),
+          last_name: new FormControl('', [Validators.required]),
+          mobile_number: new FormControl('', [Validators.required]),
+        }),
+        user_address: new FormGroup({
+          house_number: new FormControl('', [Validators.required]),
+          street_colony_name: new FormControl('', [Validators.required]),
+          landmark: new FormControl('', [Validators.required]),
+          state: new FormControl('', [Validators.required]),
+          city: new FormControl('', [Validators.required]),
+          pincode: new FormControl('', [Validators.required]),
+        }),
+      });
     }
   }
   onSubmit() {
-    console.log(this.addressForm.value);
-    this.addressService.addnewAddress(this.addressForm.value);
-    this.dialog.closeAll();
+    if (this.editAddressData) {
+      this.addressService.editUserAddressInfo(
+        this.addressForm.value,
+        this.editAddressData.address.addressIndex
+      );
+      this.dialog.closeAll();
+    } else {
+      this.addressService.addnewAddress(this.addressForm.value);
+      this.dialog.closeAll();
+    }
   }
   cancelDopdown() {
     this.dialog.closeAll();
   }
-
 }

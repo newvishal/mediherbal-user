@@ -56,5 +56,23 @@ export class UserAddressService {
       )
       .subscribe();
   }
-  editUserAddressInfo(updatedAddress, index) {}
+  editUserAddressInfo(updatedAddress, index) {
+    this.store
+      .select('AuthSection')
+      .pipe(
+        pluck('user'),
+        take(1),
+        tap((userDeatils) => {
+          let userDetails = { ...userDeatils };
+          let address = userDeatils.address ? [...userDeatils.address] : [];
+          address[index] = { ...updatedAddress };
+          let updatedDetails = { ...userDetails, address: [...address] };
+
+          this.store.dispatch(
+            new fromAuthActions.ChangeUserCartDeatilsStart(updatedDetails)
+          );
+        })
+      )
+      .subscribe();
+  }
 }
