@@ -7,4 +7,9 @@
       </button>
     </section>
   </div>
+  <div class="user-address-div">
+<div *ngFor="let address of userAddress">
+{{address['user_address'].pincode}}
+</div>
+  </div>
 </div>
