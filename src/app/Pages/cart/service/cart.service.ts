@@ -19,9 +19,13 @@ export class CartService {
         pluck('user'),
         pluck('cart'),
         map((userCart) => {
+console.log(userCart);
+
           let updatedCartDetails: any[] = [];
           if (userCart) {
             userCart.map((cartitem) => {
+              console.log(cartitem);
+
               if (cartitem.product_type === 'products') {
                 this.angularFireStore
                   .collection('products')
