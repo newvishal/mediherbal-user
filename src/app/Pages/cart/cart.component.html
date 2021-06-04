@@ -1,43 +1,72 @@
 <div class="outer-div">
   <div class="inner-div">
     <section class="item-section">
-      <mat-card>
+      <mat-card *ngIf="cartData.length > 0">
         <mat-card-title
           >Check delivery availability in your area</mat-card-title
         >
         <mat-card-content>List</mat-card-content>
       </mat-card>
       <section class="heading">
-        <h2>My Cart (3 Items)</h2>
+        <h2>My Cart ({{ cartData.length }} Items)</h2>
         <h2>Total : 657</h2>
       </section>
       <div class="items">
-        <mat-card style="margin-bottom: 3%" *ngFor="let item of [1, 2, 3]">
+        <mat-card style="margin-bottom: 3%" *ngFor="let item of cartData">
           <mat-card-content>
             <div class="item-detail">
               <section class="image-section">
-                <img src="\assets\Images\Contact Us\contact4.jpg" />
+                <img [src]="item.product_data.products_images[0]" />
               </section>
               <section class="text-section">
-                <h2>Product Name</h2>
-                <h3>Product Tag Line</h3>
-                <h3>Quantity</h3>
-                <h3>if combo display items</h3>
-                <h3>if single display drop down</h3>
+                <h2>{{ item.product_data.product_name }}</h2>
+                <h3>{{ item.product_data.tag_line }}</h3>
+                <h3>{{ item.cartData.quantity }}</h3>
+                <h3 *ngIf="item.cartData.product_type === 'products'">
+                  <span *ngFor="let type of item.product_data.product_type">
+                    <span
+                      *ngIf="
+                        type.product_id === item.cartData.selected_product_id
+                      "
+                    >
+                      {{ type.name }}
+                    </span>
+                  </span>
+                </h3>
               </section>
               <section class="amount-section">
-                <h3>456</h3>
-                <span>
-                  <span class="price">price</span> &nbsp;
-                  <span class="fake_price">fake price</span></span
+                <section>
+                  <mat-icon color="warn">close</mat-icon>
+                </section>
+                <span *ngIf="item.cartData.product_type === 'products'">
+                  <span *ngFor="let type of item.product_data.product_type">
+                    <span
+                      *ngIf="
+                        type.product_id === item.cartData.selected_product_id
+                      "
+                    >
+                      <span class="price">{{ type.price }}</span>
+                      &nbsp;
+                      <span class="fake_price">{{
+                        type.fake_price
+                      }}</span></span
+                    >
+                  </span>
+                </span>
+                <span *ngIf="item.cartData.product_type === 'comboProduct'">
+                  <span class="price">{{ item.product_data.price }}</span>
+                  &nbsp;
+                  <span class="fake_price">{{
+                    item.product_data.fake_price
+                  }}</span></span
                 >
               </section>
             </div>
           </mat-card-content>
-          <hr />
+          <!--   <hr />
           <mat-card-actions>
             <button mat-raised-button color="warn">Remove Item</button>
-          </mat-card-actions>
+          </mat-card-actions> -->
         </mat-card>
       </div>
     </section>
