@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, pluck, switchMap, take, tap } from 'rxjs/operators';
-import * as fromCartAction from '../store/cart.actions';
-import * as fromApp from '../../../store/app.reducer';
-import { of } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { map, pluck, take, tap } from 'rxjs/operators';
+import * as fromApp from '../../../../app/store/app.reducer';
 
-@Injectable()
-export class CartEffects {
+@Injectable({ providedIn: 'root' })
+export class CartService {
   constructor(
-    private action$: Actions,
     private angularFireStore: AngularFirestore,
     private store: Store<fromApp.AppState>
   ) {}
-  @Effect({ dispatch: true })
-  fetchCart = this.action$.pipe(
-    ofType(fromCartAction.FETCH_CART_START),
-    switchMap((cartSartState: any) => {
-      return this.store.select('AuthSection').pipe(
+  CartDeatilsSubject = new BehaviorSubject([]);
+  fetchCart() {
+    this.store
+      .select('AuthSection')
+      .pipe(
         pluck('user'),
         pluck('cart'),
         map((userCart) => {
@@ -42,13 +39,9 @@ export class CartEffects {
                         product_id: id,
                       });
                     }),
-                    tap((cartDetails) => {
-                      console.log(cartDetails);
-
+                    map((cartDetails) => {
                       updatedCartDetails.push({
-                        ...cartDetails.cartData,
-                        ...cartDetails.product_data,
-                        product_id: cartDetails.product_id,
+                        ...cartDetails,
                       });
                     })
                   )
@@ -57,12 +50,11 @@ export class CartEffects {
             });
           }
           return updatedCartDetails;
+        }),
+        map((cartDeatils) => {
+          this.CartDeatilsSubject.next(cartDeatils);
         })
-      );
-    }),
-    map((cartdeatils) => {
-      console.log(cartdeatils);
-      return new fromCartAction.FetchCartSuccess(cartdeatils);
-    })
-  );
+      )
+      .subscribe();
+  }
 }
