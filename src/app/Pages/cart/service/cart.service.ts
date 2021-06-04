@@ -19,7 +19,7 @@ export class CartService {
         pluck('user'),
         pluck('cart'),
         map((userCart) => {
-console.log(userCart);
+          console.log(userCart);
 
           let updatedCartDetails: any[] = [];
           if (userCart) {
