@@ -52,18 +52,23 @@
           </mat-form-field>
         </form>
         <p>Quantity</p>
-        <section class="cart-section">
-          <section (click)="removeItem()" class="remove-section">
+        <section *ngIf="ProductData.addToCart" class="cart-section">
+          <section (click)="removeQuantity()" class="remove-section">
             <mat-icon>remove</mat-icon>
           </section>
           <section class="quantity-section">
             <span style="padding: 2%">{{ ProductData.quantity }}</span>
           </section>
-          <section (click)="addItem()" class="add-section">
+          <section (click)="addToCart()" class="add-section">
             <mat-icon>add</mat-icon>
           </section>
         </section>
-        <button mat-raised-button color="primary" (click)="addToCart()">
+        <button
+          *ngIf="!ProductData.addToCart"
+          mat-raised-button
+          color="primary"
+          (click)="addToCart()"
+        >
           Add To Cart</button
         ><br />
       </div>

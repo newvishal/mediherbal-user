@@ -9,13 +9,36 @@
       </mat-card>
       <section class="heading">
         <h2>My Cart ({{ cartData.length }} Items)</h2>
-        <h2>Total : 657</h2>
+        <h2>
+          Total :<span *ngFor="let item of cartData; let index = index">
+            <span *ngFor="let type of item.product_data.product_type">
+              <span
+                *ngIf="type.product_id === item.cartData.selected_product_id"
+              >
+                <span class="price">{{
+                  type.price * item.cartData.quantity
+                }}</span>
+              </span></span
+            >
+          </span>
+        </h2>
       </section>
       <div class="items">
-        <mat-card style="margin-bottom: 3%" *ngFor="let item of cartData">
+        <mat-card
+          style="margin-bottom: 3%"
+          *ngFor="let item of cartData; let index = index"
+        >
           <mat-card-content>
             <div class="item-detail">
-              <section class="image-section">
+              <section
+                class="image-section"
+                (click)="
+                  navigateToDeatils(
+                    item.cartData.product_id,
+                    item.cartData.product_type
+                  )
+                "
+              >
                 <img [src]="item.product_data.products_images[0]" />
               </section>
               <section class="text-section">
@@ -36,7 +59,12 @@
               </section>
               <section class="amount-section">
                 <section>
-                  <mat-icon color="warn">close</mat-icon>
+                  <mat-icon
+                    (click)="removeQuantity(index)"
+                    style="cursor: pointer"
+                    color="warn"
+                    >close</mat-icon
+                  >
                 </section>
                 <span *ngIf="item.cartData.product_type === 'products'">
                   <span *ngFor="let type of item.product_data.product_type">

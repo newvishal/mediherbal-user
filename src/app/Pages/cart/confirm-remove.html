@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Remove Item Confirmation</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Are you sure you want to remove this item from your cart ?</h3>
+  <div class="items">
+    <mat-card style="margin-bottom: 3%">
+      <mat-card-content>
+        <div class="item-detail">
+          <section class="image-section">
+            <img [src]="data.product_data.products_images[0]" />
+          </section>
+          <section class="text-section">
+            <h2>{{ data.product_data.product_name }}</h2>
+            <h3>{{ data.product_data.tag_line }}</h3>
+            <h3>{{ data.cartData.quantity }}</h3>
+            <h3 *ngIf="data.cartData.product_type === 'products'">
+              <span *ngFor="let type of data.product_data.product_type">
+                <span
+                  *ngIf="
+                    type.product_id === data.cartData.selected_product_id
+                  "
+                >
+                  {{ type.name }}
+                </span>
+              </span>
+            </h3>
+          </section>
+          <section class="amount-section">
+            <section>
+              <mat-icon style="cursor: pointer" color="warn">close</mat-icon>
+            </section>
+            <span *ngIf="data.cartData.product_type === 'products'">
+              <span *ngFor="let type of data.product_data.product_type">
+                <span
+                  *ngIf="
+                    type.product_id === data.cartData.selected_product_id
+                  "
+                >
+                  <span class="price">{{ type.price }}</span>
+                  &nbsp;
+                  <span class="fake_price">{{ type.fake_price }}</span></span
+                >
+              </span>
+            </span>
+            <span *ngIf="data.cartData.product_type === 'comboProduct'">
+              <span class="price">{{ data.product_data.price }}</span>
+              &nbsp;
+              <span class="fake_price"
+                >{{ data.product_data.fake_price }}</span
+              ></span
+            >
+          </section>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button color="warn" mat-raised-button [mat-dialog-close]="true">
+    Remove
+  </button>
+  <button color="primary" mat-raised-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
