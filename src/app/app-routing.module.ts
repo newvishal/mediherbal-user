@@ -65,6 +65,13 @@ const routes: Routes = [
             (m) => m.UserAddressModule
           ),
       },
+      {
+        path: 'checkout',
+        loadChildren: () =>
+          import('./Pages/checkout/checkout.module').then(
+            (m) => m.CheckoutModule
+          ),
+      },
     ],
   },
   {

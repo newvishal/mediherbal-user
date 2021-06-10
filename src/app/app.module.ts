@@ -30,6 +30,8 @@ import { PolicyComponent } from './Pages/policy/policy.component';
 import { CartModule } from './Pages/cart/cart.module';
 import { CartEffects } from './Pages/cart/store/cart.effects';
 import { UserAddressComponent } from './Pages/user-address/user-address.component';
+import { CheckoutComponent } from './Pages/checkout/checkout.component';
+import { CheckoutModule } from './Pages/checkout/checkout.module';
 
 @NgModule({
   declarations: [
@@ -38,18 +40,17 @@ import { UserAddressComponent } from './Pages/user-address/user-address.componen
     SideBarComponent,
     FooterComponent,
     PolicyComponent,
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SignUpModule,
     LoginModule,
-    ForgotPasswordModule,
+    ForgotPasswordModule,CheckoutModule,
     MaterialModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(AppReducer),
-    EffectsModule.forRoot([AuthEffects, HomeEffects,CartEffects]),
+    EffectsModule.forRoot([AuthEffects, HomeEffects, CartEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
