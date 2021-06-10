@@ -11,6 +11,7 @@ import { CheckoutService } from './service/checkout.service';
 export class CheckoutComponent implements OnInit {
   constructor(private checkoutService: CheckoutService) {}
   userAddress: any[] = [];
+  userCart;
   userAddressSubscription: Subscription;
   ngOnInit(): void {
     this.userAddressSubscription = this.checkoutService
@@ -18,6 +19,14 @@ export class CheckoutComponent implements OnInit {
       .pipe(
         tap((userAddress) => {
           this.userAddress = userAddress;
+        })
+      )
+      .subscribe();
+    this.checkoutService.userCart
+      .pipe(
+        tap((usercart) => {
+          console.log(usercart);
+          this.userCart=usercart
         })
       )
       .subscribe();
