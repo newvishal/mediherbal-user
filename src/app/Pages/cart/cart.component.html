@@ -1,25 +1,18 @@
 <div class="outer-div">
   <div class="inner-div">
     <section class="item-section">
-      <mat-card *ngIf="cartData.length > 0">
+      <!--    <mat-card *ngIf="cartData.length > 0">
         <mat-card-title
           >Check delivery availability in your area</mat-card-title
         >
         <mat-card-content>List</mat-card-content>
-      </mat-card>
+      </mat-card> -->
       <section class="heading">
         <h2>My Cart ({{ cartData.length }} Items)</h2>
         <h2>
-          Total :<span *ngFor="let item of cartData; let index = index">
-            <span *ngFor="let type of item.product_data.product_type">
-              <span
-                *ngIf="type.product_id === item.cartData.selected_product_id"
-              >
-                <span class="price">{{
-                  type.price * item.cartData.quantity
-                }}</span>
-              </span></span
-            >
+          Total :
+          <span>
+            <span class="price">{{ AmountDetails.TotalPrice }}</span>
           </span>
         </h2>
       </section>
@@ -115,26 +108,32 @@
               style="width: 100%; display: flex; justify-content: space-between"
             >
               <h3>Total MRP</h3>
-              <h3>765</h3>
+              <h3>{{ AmountDetails.TotalMRP }}</h3>
             </section>
             <section
               style="width: 100%; display: flex; justify-content: space-between"
             >
               <h3>Discount On MRP</h3>
-              <h3>678</h3>
+              <h3>{{ AmountDetails.TotalMRP - AmountDetails.TotalPrice }}</h3>
             </section>
             <hr />
             <section
               style="width: 100%; display: flex; justify-content: space-between"
             >
               <h3 style="font-weight: bold">Total Amount</h3>
-              <h3 style="font-weight: bold">1679</h3>
+              <h3 style="font-weight: bold">{{ AmountDetails.TotalPrice }}</h3>
             </section>
           </div>
           <hr />
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary">Place Order</button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="navigateToCheckout()"
+          >
+            Place Order
+          </button>
         </mat-card-actions>
       </mat-card>
     </section>

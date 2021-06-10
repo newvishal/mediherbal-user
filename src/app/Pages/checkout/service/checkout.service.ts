@@ -15,6 +15,8 @@ export class CheckoutService {
       .pipe(pluck('user'), pluck('address'));
   }
   setUserCart(cart) {
+    console.log(cart);
+
     this.userCart.next(cart);
   }
 }
