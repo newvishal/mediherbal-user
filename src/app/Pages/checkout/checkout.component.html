@@ -1,1 +1,178 @@
-<p>checkout works!</p>
+<div class="outer-div">
+  <div class="inner-div">
+    <section class="item-section">
+      <section class="heading">
+        <h1>Select Delivery Address</h1>
+        <h3>
+          <button mat-raised-button color="primary" (click)="addAddress()">
+            Add New Address
+          </button>
+        </h3>
+      </section>
+      <section style="width: 80%" *ngIf="userAddress.length > 0">
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group"
+          [(ngModel)]="selectedAddress"
+        >
+          <mat-card
+            style="
+              margin-bottom: 10px;
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+            "
+            *ngFor="let o of userAddress"
+          >
+            <mat-radio-button class="example-radio-button" [value]="o">
+              <h3>
+                <b
+                  >{{ o.user_details.first_name | titlecase }}&nbsp;{{
+                    o.user_details.last_name | titlecase
+                  }}</b
+                >
+              </h3>
+              <br />
+              <h4
+                style="width: 100%; word-break: break-word; white-space: normal"
+              >
+                <b>Address </b>:
+                {{ o.user_address.house_number }}&nbsp;,&nbsp;{{
+                  o.user_address.street_colony_name
+                }}&nbsp;,&nbsp;{{ o.user_address.city }}&nbsp;,&nbsp;{{
+                  o.user_address.pincode
+                }}&nbsp;,&nbsp;{{ o.user_address.state }}<br /><b>Mobile</b> :
+                {{ o.user_details.mobile_number }}
+                <br />
+                <b>Landmark </b>: {{ o.user_address.landmark }}
+              </h4>
+              <br />
+              Delivery Available
+            </mat-radio-button>
+          </mat-card>
+        </mat-radio-group>
+      </section>
+    </section>
+    <section class="total-section">
+      <section class="heading">
+        <h3>My Cart ({{ userCart.productList.length }} Items)</h3>
+        <h3>
+          Total :
+          <span>
+            <span class="price">{{ userCart.totalAmount.TotalPrice }}</span>
+          </span>
+        </h3>
+      </section>
+      <div class="items">
+        <mat-card
+          style="margin-bottom: 3%"
+          *ngFor="let item of userCart.productList; let index = index"
+        >
+          <mat-card-content>
+            <div class="item-detail">
+              <section
+                class="image-section"
+                (click)="
+                  navigateToDeatils(
+                    item.cartData.product_id,
+                    item.cartData.product_type
+                  )
+                "
+              >
+                <img [src]="item.product_data.products_images[0]" />
+              </section>
+              <section class="text-section">
+                <h3>{{ item.product_data.product_name }}</h3>
+                <h3>Quantity : {{ item.cartData.quantity }}</h3>
+                <h4 *ngIf="item.cartData.product_type === 'products'">
+                  <span *ngFor="let type of item.product_data.product_type">
+                    <span
+                      *ngIf="
+                        type.product_id === item.cartData.selected_product_id
+                      "
+                    >
+                      Product Type : {{ type.name }}
+                    </span>
+                  </span>
+                </h4>
+              </section>
+              <section class="amount-section">
+                <span *ngIf="item.cartData.product_type === 'products'">
+                  <span *ngFor="let type of item.product_data.product_type">
+                    <span
+                      *ngIf="
+                        type.product_id === item.cartData.selected_product_id
+                      "
+                    >
+                      <span class="price">{{ type.price }}</span>
+                      &nbsp;
+                      <span class="fake_price">{{
+                        type.fake_price
+                      }}</span></span
+                    >
+                  </span>
+                </span>
+                <span *ngIf="item.cartData.product_type === 'comboProduct'">
+                  <span class="price">{{ item.product_data.price }}</span>
+                  &nbsp;
+                  <span class="fake_price">{{
+                    item.product_data.fake_price
+                  }}</span></span
+                >
+              </section>
+            </div>
+          </mat-card-content>
+          <!--   <hr />
+          <mat-card-actions>
+            <button mat-raised-button color="warn">Remove Item</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <mat-card>
+        <mat-card-title>Price Detail</mat-card-title>
+        <mat-card-content>
+          <div
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            "
+          >
+            <section
+              style="width: 100%; display: flex; justify-content: space-between"
+            >
+              <h3>Total MRP</h3>
+              <h3>{{ userCart.totalAmount.TotalMRP }}</h3>
+            </section>
+            <section
+              style="width: 100%; display: flex; justify-content: space-between"
+            >
+              <h3>Discount On MRP</h3>
+              <h3>
+                {{
+                  userCart.totalAmount.TotalMRP -
+                    userCart.totalAmount.TotalPrice
+                }}
+              </h3>
+            </section>
+            <hr />
+            <section
+              style="width: 100%; display: flex; justify-content: space-between"
+            >
+              <h3 style="font-weight: bold">Total Amount</h3>
+              <h3 style="font-weight: bold">
+                {{ userCart.totalAmount.TotalPrice }}
+              </h3>
+            </section>
+          </div>
+          <hr />
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">Continue</button>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+  </div>
+</div>

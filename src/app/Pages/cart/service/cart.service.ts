@@ -19,7 +19,15 @@ export class CartService {
         pluck('user'),
         pluck('cart'),
         map((userCart) => {
+          let cartData = {
+            productList: [],
+            totalAmount: {},
+          };
           let updatedCartDetails: any[] = [];
+          let AmountDetails = {
+            TotalPrice: 0,
+            TotalMRP: 0,
+          };
           if (userCart) {
             userCart.map((cartitem) => {
               if (cartitem.product_type === 'products') {
@@ -40,6 +48,23 @@ export class CartService {
                       });
                     }),
                     map((cartDetails) => {
+                      cartDetails.product_data.product_type.map(
+                        (dataResponse) => {
+                          if (
+                            dataResponse.product_id ===
+                            cartDetails.cartData.selected_product_id
+                          ) {
+                            AmountDetails.TotalPrice =
+                              AmountDetails.TotalPrice +
+                              dataResponse.price *
+                                cartDetails.cartData.quantity;
+                            AmountDetails.TotalMRP =
+                              AmountDetails.TotalMRP +
+                              dataResponse.fake_price *
+                                cartDetails.cartData.quantity;
+                          }
+                        }
+                      );
                       updatedCartDetails.push({
                         ...cartDetails,
                       });
@@ -65,6 +90,15 @@ export class CartService {
                       });
                     }),
                     map((cartDetails) => {
+                      AmountDetails.TotalPrice =
+                        AmountDetails.TotalPrice +
+                        cartDetails.product_data.price *
+                          cartDetails.cartData.quantity;
+                      AmountDetails.TotalMRP =
+                        AmountDetails.TotalMRP +
+                        cartDetails.product_data.fake_price *
+                          cartDetails.cartData.quantity;
+
                       updatedCartDetails.push({
                         ...cartDetails,
                       });
@@ -74,7 +108,9 @@ export class CartService {
               }
             });
           }
-          return updatedCartDetails;
+          cartData.productList = updatedCartDetails;
+          cartData.totalAmount = AmountDetails;
+          return cartData;
         }),
         map((cartDeatils) => {
           const finalData = cartDeatils;

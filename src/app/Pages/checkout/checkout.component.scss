@@ -1,0 +1,94 @@
+.outer-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner-div {
+  width: 90%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+.item-section {
+  width: 65%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.total-section {
+  width: 35%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.fake_price {
+  text-decoration: line-through;
+  font-size: 13px;
+}
+.price {
+  font-size: 20px;
+}
+.heading {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  margin: 2% 0;
+}
+.items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+mat-card {
+  width: 100%;
+}
+.item-detail {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.image-section {
+  width: 20%;
+  img {
+    width: 100%;
+    object-fit: fill;
+  }
+}
+.text-section {
+  width: 60%;
+}
+.amount-section {
+  width: 15%;
+  text-align: right;
+}
+h2 {
+  margin: 0 !important;
+}
+h3 {
+  margin: 0 !important;
+}
+mat-card-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+hr {
+  background-color: rgb(234, 234, 236);
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .inner-div {
+    flex-direction: column;
+  }
+  .item-section {
+    width: 100%;
+  }
+  .total-section {
+    width: 100%;
+  }
+}
