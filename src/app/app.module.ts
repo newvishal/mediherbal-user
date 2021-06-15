@@ -29,8 +29,6 @@ import { FooterComponent } from './Components/footer/footer.component';
 import { PolicyComponent } from './Pages/policy/policy.component';
 import { CartModule } from './Pages/cart/cart.module';
 import { CartEffects } from './Pages/cart/store/cart.effects';
-import { UserAddressComponent } from './Pages/user-address/user-address.component';
-import { CheckoutComponent } from './Pages/checkout/checkout.component';
 import { CheckoutModule } from './Pages/checkout/checkout.module';
 
 @NgModule({
