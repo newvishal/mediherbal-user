@@ -24,7 +24,7 @@
             "
             *ngFor="let o of userAddress"
           >
-            <mat-radio-button class="example-radio-button" [value]="o">
+            <mat-radio-button class="example-radio-button" [value]="o" (change)="changeSelectedUserAddress($event)">
               <h3>
                 <b
                   >{{ o.user_details.first_name | titlecase }}&nbsp;{{
@@ -170,7 +170,7 @@
           <hr />
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary">Continue</button>
+          <button mat-raised-button color="primary" (click)="clickToPay()">Continue</button>
         </mat-card-actions>
       </mat-card>
     </section>
