@@ -7,6 +7,7 @@ import { AddAddressComponent } from '../user-address/components/add-address/add-
 import { CheckoutService } from './service/checkout.service';
 import * as fromApp from '../../store/app.reducer';
 declare var Razorpay: any;
+import * as fromAuthSectionActions from '../../auth/store/Auth.Actions';
 
 @Component({
   selector: 'app-checkout',
@@ -31,7 +32,7 @@ export class CheckoutComponent implements OnInit {
   UserDataSubscription: Subscription;
   RAZORPAY_OPTIONS = {
     key: 'rzp_test_B2nHBKAHakk7vV',
-    amount: '1000',
+    amount: '',
     name: 'Mediherbal',
     order_id: '',
     description: 'Pay for your order',
@@ -53,6 +54,13 @@ export class CheckoutComponent implements OnInit {
       .pipe(
         tap((userData) => {
           this.userData = userData;
+          console.log(this.userData);
+
+          this.RAZORPAY_OPTIONS.prefill.email = this.userData.user.email;
+          this.RAZORPAY_OPTIONS.prefill.contact =
+            this.userData.user.phone_number;
+          this.RAZORPAY_OPTIONS.prefill.name =
+            this.userData.user.first_name + ' ' + this.userData.user.last_name;
         })
       )
       .subscribe();
@@ -60,7 +68,6 @@ export class CheckoutComponent implements OnInit {
       .getUsersAddress()
       .pipe(
         tap((userAddress) => {
-          console.log(userAddress);
           this.selectedAddress = userAddress[0];
           this.userAddress = userAddress;
         })
@@ -80,7 +87,7 @@ export class CheckoutComponent implements OnInit {
   }
   clickToPay() {
     this.RAZORPAY_OPTIONS.amount = 100 + '00';
-
+    /*  this.RAZORPAY_OPTIONS.amount = this.userCart.totalAmount.TotalPrice + '00'; */
     // binding this object to both success and dismiss handler
     this.RAZORPAY_OPTIONS['handler'] = this.razorPaySuccessHandler.bind(this);
 
@@ -93,12 +100,27 @@ export class CheckoutComponent implements OnInit {
   public razorPaySuccessHandler(response) {
     console.log(response);
     this.razorpayResponse = `Razorpay Response`;
+    const data = {
+      order_createdby: this.userData.user.id,
+      paymentId: response.razorpay_payment_id,
+      cart: this.userCart,
+      address: this.selectedAddress,
+    };
+    /*  this.checkoutService.placeOrder(data)
+    console.log(data);
+    this.chnageCartDeatils() */
     this.showModal = true;
     this.cd.detectChanges();
   }
   changeSelectedUserAddress(event) {
     console.log(event);
-
     this.selectedAddress = event.value;
+  }
+  chnageCartDeatils() {
+    this.userData = { ...this.userData.user, cart: [] };
+    console.log(this.userData);
+    this.store.dispatch(
+      new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
+    );
   }
 }
