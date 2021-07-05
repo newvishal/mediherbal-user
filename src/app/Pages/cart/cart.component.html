@@ -1,5 +1,5 @@
 <div class="outer-div">
-  <div class="inner-div">
+  <div class="inner-div" *ngIf="cartData.length > 0">
     <section class="item-section">
       <!--    <mat-card *ngIf="cartData.length > 0">
         <mat-card-title
@@ -137,5 +137,8 @@
         </mat-card-actions>
       </mat-card>
     </section>
+  </div>
+  <div class="inner-div" *ngIf="cartData.length == 0">
+    <img style="width: 100%" src="\assets\Images\cart\Empty-Cart.jpg" />
   </div>
 </div>

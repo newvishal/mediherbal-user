@@ -72,6 +72,11 @@ const routes: Routes = [
             (m) => m.CheckoutModule
           ),
       },
+      {
+        path: 'order',
+        loadChildren: () =>
+          import('./Pages/order/order.module').then((m) => m.OrderModule),
+      },
     ],
   },
   {

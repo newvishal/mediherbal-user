@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddAddressComponent } from 'src/app/Pages/user-address/components/add-address/add-address.component';
 import { MaterialModule } from '../material/material.module';
@@ -13,5 +13,6 @@ import { MaterialModule } from '../material/material.module';
     ReactiveFormsModule,
     AddAddressComponent,
   ],
+  providers: [DatePipe],
 })
 export class SharedModule {}

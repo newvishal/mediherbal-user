@@ -30,6 +30,7 @@ import { PolicyComponent } from './Pages/policy/policy.component';
 import { CartModule } from './Pages/cart/cart.module';
 import { CartEffects } from './Pages/cart/store/cart.effects';
 import { CheckoutModule } from './Pages/checkout/checkout.module';
+import { OrderModule } from './Pages/order/order.module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CheckoutModule } from './Pages/checkout/checkout.module';
     AppRoutingModule,
     SignUpModule,
     LoginModule,
-    ForgotPasswordModule,CheckoutModule,
+    ForgotPasswordModule,
+    CheckoutModule,
     MaterialModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(AppReducer),
@@ -59,6 +61,7 @@ import { CheckoutModule } from './Pages/checkout/checkout.module';
     NgbModule,
     ProductModule,
     CartModule,
+    OrderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

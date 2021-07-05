@@ -1,0 +1,99 @@
+<div class="outer-div">
+  <div class="inner-div" *ngIf="orderList.length > 0">
+    <section class="item-section">
+      <div class="items">
+        <mat-card
+          style="margin-bottom: 3%"
+          *ngFor="let order of orderList; let index = index"
+        >
+          <mat-card-header *ngIf="order.order_status === 'Booked'">
+            <div mat-card-avatar class="booked"></div>
+            <mat-card-title>
+              <mat-chip-list>
+                <mat-chip selected color="secondary">
+                  Booked
+                </mat-chip></mat-chip-list
+              ></mat-card-title
+            >
+
+            <mat-card-subtitle
+              >on {{ order.order_date | date }}</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-header *ngIf="order.order_status === 'Shipped'">
+            <div mat-card-avatar class="shipped"></div>
+            <mat-card-title>
+              <mat-chip-list>
+                <mat-chip selected color="accent">
+                  Shipped
+                </mat-chip></mat-chip-list
+              ></mat-card-title
+            >
+            <mat-card-subtitle
+              >on {{ order.shipping_date | shortDate }}</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-header *ngIf="order.order_status === 'Delivered'">
+            <div mat-card-avatar class="deliverd"></div>
+            <mat-card-title>
+              <mat-chip-list>
+                <mat-chip selected color="primary">
+                  Delivered
+                </mat-chip></mat-chip-list
+              ></mat-card-title
+            >
+            <mat-card-subtitle
+              >on {{ order.delivery_date | shortDate }}</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Total Amount : {{ order.cart.totalAmount.TotalPrice }}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ order.cart.productList.length }} Items
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <mat-card-content
+              *ngFor="let item of order.cart.productList; let index = index"
+            >
+              <div class="item-detail">
+                <section
+                  class="image-section"
+                  (click)="
+                    navigateToDeatils(
+                      item.cartData.product_id,
+                      item.cartData.product_type
+                    )
+                  "
+                >
+                  <img [src]="item.product_data.products_images[0]" />
+                </section>
+                <section class="text-section">
+                  <h2>{{ item.product_data.product_name }}</h2>
+                  <h3>{{ item.product_data.tag_line }}</h3>
+                  <h3>{{ item.cartData.quantity }}</h3>
+                  <h3 *ngIf="item.cartData.product_type === 'products'">
+                    <span *ngFor="let type of item.product_data.product_type">
+                      <span
+                        *ngIf="
+                          type.product_id === item.cartData.selected_product_id
+                        "
+                      >
+                        {{ type.name }}
+                      </span>
+                    </span>
+                  </h3>
+                </section>
+              </div>
+            </mat-card-content>
+          </mat-expansion-panel>
+        </mat-card>
+      </div>
+    </section>
+  </div>
+  <div class="inner-div" *ngIf="orderList.length == 0">
+    <img style="width: 100%" src="\assets\Images\cart\Empty-Cart.jpg" />
+  </div>
+</div>

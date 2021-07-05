@@ -8,6 +8,8 @@ import { CheckoutService } from './service/checkout.service';
 import * as fromApp from '../../store/app.reducer';
 declare var Razorpay: any;
 import * as fromAuthSectionActions from '../../auth/store/Auth.Actions';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
@@ -19,7 +21,9 @@ export class CheckoutComponent implements OnInit {
     private checkoutService: CheckoutService,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private router: Router,
+    private datePipe: DatePipe
   ) {}
   userAddress: any[] = [];
   userCart;
@@ -54,7 +58,6 @@ export class CheckoutComponent implements OnInit {
       .pipe(
         tap((userData) => {
           this.userData = userData;
-          console.log(this.userData);
 
           this.RAZORPAY_OPTIONS.prefill.email = this.userData.user.email;
           this.RAZORPAY_OPTIONS.prefill.contact =
@@ -76,7 +79,6 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.userCart
       .pipe(
         tap((usercart) => {
-          console.log(usercart);
           this.userCart = usercart;
         })
       )
@@ -86,8 +88,8 @@ export class CheckoutComponent implements OnInit {
     this.dialog.open(AddAddressComponent);
   }
   clickToPay() {
-    this.RAZORPAY_OPTIONS.amount = 100 + '00';
-    /*  this.RAZORPAY_OPTIONS.amount = this.userCart.totalAmount.TotalPrice + '00'; */
+    /*  this.RAZORPAY_OPTIONS.amount = 100 + '00'; */
+    this.RAZORPAY_OPTIONS.amount = this.userCart.totalAmount.TotalPrice + '00';
     // binding this object to both success and dismiss handler
     this.RAZORPAY_OPTIONS['handler'] = this.razorPaySuccessHandler.bind(this);
 
@@ -98,27 +100,28 @@ export class CheckoutComponent implements OnInit {
   }
 
   public razorPaySuccessHandler(response) {
-    console.log(response);
     this.razorpayResponse = `Razorpay Response`;
     const data = {
       order_createdby: this.userData.user.id,
       paymentId: response.razorpay_payment_id,
       cart: this.userCart,
       address: this.selectedAddress,
+      order_date: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
+      order_status: 'Booked',
     };
-    /*  this.checkoutService.placeOrder(data)
-    console.log(data);
-    this.chnageCartDeatils() */
+    this.checkoutService.placeOrder(data);
+
+    this.chnageCartDeatils();
     this.showModal = true;
     this.cd.detectChanges();
+    this.router.navigate(['/home/order'], { replaceUrl: true });
   }
   changeSelectedUserAddress(event) {
-    console.log(event);
     this.selectedAddress = event.value;
   }
   chnageCartDeatils() {
     this.userData = { ...this.userData.user, cart: [] };
-    console.log(this.userData);
+
     this.store.dispatch(
       new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
     );
