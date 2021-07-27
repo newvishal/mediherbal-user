@@ -31,6 +31,10 @@ import { CartModule } from './Pages/cart/cart.module';
 import { CartEffects } from './Pages/cart/store/cart.effects';
 import { CheckoutModule } from './Pages/checkout/checkout.module';
 import { OrderModule } from './Pages/order/order.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderComponent } from './shared/Components/loader/loader.component';
+import { AuthInterceptor } from './interceptor/auth-interceptor';
+import { BUCKET } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -39,8 +43,10 @@ import { OrderModule } from './Pages/order/order.module';
     SideBarComponent,
     FooterComponent,
     PolicyComponent,
+    LoaderComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     SignUpModule,
@@ -63,7 +69,14 @@ import { OrderModule } from './Pages/order/order.module';
     CartModule,
     OrderModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    { provide: BUCKET, useValue: 'gs://mediherbal-fa27a.appspot.com' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

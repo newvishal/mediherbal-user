@@ -255,7 +255,7 @@ export class ProductComponent implements OnInit {
         }
       }
     }
-    this.snackBar.showSnackBar('Item added to cart', 'success-SnackBar');
+    this.snackBar.showSnackBar('Item added to cart', 'success');
   }
   chnageCartDeatils() {
     this.store.dispatch(
@@ -317,7 +317,7 @@ export class ProductComponent implements OnInit {
         this.chnageCartDeatils();
       }
     }
-    this.snackBar.showSnackBar('Item removed from cart', 'danger-SnackBar');
+    this.snackBar.showSnackBar('Item removed from cart', 'danger');
   }
   changeTag1(evt, index) {
     this.ProductList[index].product_type.map((res) => {

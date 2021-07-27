@@ -82,9 +82,11 @@ mat-card {
 }
 
 /* Snack BAr Classes */
-.danger-SnackBar {
+.danger {
   background-color: red;
+  color: white;
 }
-.success-SnackBar {
+.success {
   background-color: rgb(76, 175, 80);
+  color: white;
 }

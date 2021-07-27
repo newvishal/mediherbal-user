@@ -3,9 +3,9 @@ export interface User {
   last_name?: string;
   phone_number?: string;
   email?: string;
-  cart?:any;
-  number_of_times_order_Places?: number;
+  cart?: any;
+  number_of_times_order_placed?: number;
   id?: string;
-  user_type:string;
-  password?:string
+  user_type: string;
+  password?: string;
 }

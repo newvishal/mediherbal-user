@@ -10,7 +10,11 @@
         <section><h3>Reset Password</h3></section>
         <section style="margin-top: 5%">
           <!--    Signup Form starts  -->
-          <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmit()">
+          <form
+            [formGroup]="forgotPasswordForm"
+            (ngSubmit)="onSubmit()"
+            *ngIf="!showPassword"
+          >
             <mat-form-field appearance="outline" color="accent">
               <mat-label>Email</mat-label>
               <input
@@ -20,6 +24,45 @@
                 placeholder="Email"
               />
               <mat-icon color="primary" matSuffix>email</mat-icon>
+            </mat-form-field>
+
+            <section>
+              <p>
+                Don't have an account ?
+                <a routerLink="/sign-up">Register Now</a>
+              </p>
+            </section>
+            <section>
+              <p>
+                Already have an account ?
+                <a routerLink="/login">Login Now</a>
+              </p>
+            </section>
+            <section>
+              <button
+                [disabled]="forgotPasswordForm.invalid"
+                color="primary"
+                type="submit"
+                mat-raised-button
+              >
+                Continue
+              </button>
+            </section>
+          </form>
+          <form
+            [formGroup]="passwordChangeForm"
+            (ngSubmit)="onchangePassword()"
+            *ngIf="showPassword"
+          >
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Password</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="password"
+                placeholder="Enter Password"
+              />
+              <mat-icon color="primary" matSuffix>lock</mat-icon>
             </mat-form-field>
 
             <section>

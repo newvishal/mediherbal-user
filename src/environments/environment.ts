@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  base_url: 'https://manish-mediherbal-1981.herokuapp.com/',
   firebase: {
     apiKey: 'AIzaSyDTHNKzjUP_gXnMqdYQUA5l2IHKeGogDN8',
     authDomain: 'mediherbal-fa27a.firebaseapp.com',

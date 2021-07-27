@@ -82,7 +82,7 @@ export class ProductSliderComponent implements OnInit {
         this.chnageCartDeatils();
       }
     }
-    this.snackBar.showSnackBar('Item added to cart', 'success-SnackBar');
+    this.snackBar.showSnackBar('Item added to cart', 'success');
   }
 
   /*
@@ -117,7 +117,7 @@ export class ProductSliderComponent implements OnInit {
 
       this.chnageCartDeatils();
     }
-    this.snackBar.showSnackBar('Item removed from cart', 'danger-SnackBar');
+    this.snackBar.showSnackBar('Item removed from cart', 'danger');
   }
 
   changeTag1(evt, index) {

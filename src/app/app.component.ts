@@ -5,6 +5,7 @@ import * as fromAuthAction from '../app/auth/store/Auth.Actions';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map, take, tap } from 'rxjs/operators';
+import { UserDataService } from './shared/service/userData.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,33 +13,13 @@ import { map, take, tap } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private store: Store<fromApp.AppState>,
-    private router: Router,
-    private angularFireStore: AngularFirestore
+    private userDataService: UserDataService,
+    private router: Router
   ) {}
   ngOnInit() {
     const userData = JSON.parse(localStorage.getItem('userData'));
     if (userData) {
-      this.angularFireStore
-        .collection('users', (ref) => ref.where('email', '==', userData.email))
-        .snapshotChanges()
-        .pipe(
-          take(1),
-          map((usersDataObervable) => {
-            return usersDataObervable.map((userDetails) => {
-              const data = userDetails.payload.doc.data() as any;
-              const id = userDetails.payload.doc.id;
-
-              return { id: id, ...data };
-            });
-          }),
-          tap((finalUserData: any) => {
-            this.store.dispatch(
-              new fromAuthAction.LoginSuccess(finalUserData[0])
-            );
-          })
-        )
-        .subscribe();
+      this.userDataService.setUserData(userData);
     } else {
       this.router.navigate(['/login']);
     }

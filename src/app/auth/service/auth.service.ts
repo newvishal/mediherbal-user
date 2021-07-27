@@ -1,29 +1,37 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interface/user.interface';
-import * as fromAuthAction from '../store/Auth.Actions';
-import * as fromApp from '../../store/app.reducer';
-import { Store } from '@ngrx/store';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private http: HttpClient) {}
   userSingup(UserData: User) {
     const finalData: User = {
       ...UserData,
-      cart: [],
-      number_of_times_order_Places: 0,
+      number_of_times_order_placed: 0,
       user_type: 'user',
     };
-    this.store.dispatch(new fromAuthAction.SignUpStart(finalData));
-  }
-  userLogin(loginData: { email: string; password: string }) {
-    this.store.dispatch(
-      new fromAuthAction.LoginStart({
-        email: loginData.email,
-        password: loginData.password,
-      })
+    return this.http.post<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/create-user`,
+      finalData
     );
   }
-  userForgotPassword(email) {
-    this.store.dispatch(new fromAuthAction.ForgotPasswordStart(email));
+  userLogin(loginData) {
+    return this.http.post<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/login`,
+      loginData
+    );
+  }
+  userForgotPassword(data) {
+    return this.http.post<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/forgot-password`,
+      data
+    );
+  }
+  changePassword(data, id) {
+    return this.http.post<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/change-password/${id}`,
+      data
+    );
   }
 }

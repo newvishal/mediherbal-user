@@ -68,7 +68,7 @@ export class CartComponent implements OnInit {
         this.userData = { ...this.userData, cart: cartItems };
 
         this.chnageCartDeatils();
-        this.snackBar.showSnackBar('Item removed from cart', 'danger-SnackBar');
+        this.snackBar.showSnackBar('Item removed from cart', 'danger');
       }
     });
   }
