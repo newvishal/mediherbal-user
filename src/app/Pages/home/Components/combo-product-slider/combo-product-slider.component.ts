@@ -105,7 +105,7 @@ export class ComboProductSliderComponent implements OnInit {
     this.snackBar.showSnackBar('Item removed from cart', 'danger');
   }
   ngOnInit(): void {
-    this.store
+    /*   this.store
       .select('AuthSection')
       .pipe(
         pluck('user'),
@@ -135,7 +135,7 @@ export class ComboProductSliderComponent implements OnInit {
           });
         })
       )
-      .subscribe();
+      .subscribe(); */
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/combo/${id}`]);

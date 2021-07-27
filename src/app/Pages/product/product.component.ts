@@ -6,6 +6,7 @@ import { map, pluck, take, tap } from 'rxjs/operators';
 import * as fromAuthSectionActions from '../../auth/store/Auth.Actions';
 import { ProductInterface } from '../Interface/product.interface';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
+import { HomeService } from '../home/service/home.service';
 
 @Component({
   selector: 'app-product',
@@ -17,6 +18,7 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
+    private homeService: HomeService,
     private snackBar: SnakbarService
   ) {}
   productType;
@@ -24,7 +26,33 @@ export class ProductComponent implements OnInit {
   data;
   userData;
   ngOnInit(): void {
-    this.store
+    this.activatedRoute.params.subscribe((res) => {
+      if (res.type === 'single') {
+        this.productType = 'single';
+        this.homeService.getProducts().subscribe(
+          (products) => {
+            this.ProductList = products.data;
+          },
+          (err) => {
+            this.snackBar.showSnackBar(err.error.message, 'danger');
+          }
+        );
+      }
+
+      if (res.type === 'combo') {
+        this.productType = 'combo';
+        this.homeService.getComboProducts().subscribe(
+          (comboProduct) => {
+            this.ProductList = comboProduct.data;
+          },
+          (err) => {
+            this.snackBar.showSnackBar(err.error.message, 'danger');
+          }
+        );
+      }
+    });
+
+    /*   this.store
       .select('AuthSection')
       .pipe(
         pluck('user'),
@@ -151,7 +179,7 @@ export class ProductComponent implements OnInit {
           .subscribe((res) => {});
       }
     });
-    console.log(this.ProductList);
+    console.log(this.ProductList); */
   }
   addToCart(index) {
     if (this.productType === 'combo') {

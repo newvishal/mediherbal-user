@@ -1,14 +1,14 @@
-<div class="outer-div">
-  <div class="inner-div" *ngFor="let product of productsList; let i = index">
+<div class="outer-div" style="padding: 2% !important">
+  <div class="inner-div" *ngFor="let product of products; let i = index">
     <mat-card>
       <app-product-card-slider
         [images]="product.products_images"
       ></app-product-card-slider>
       <br />
-      <mat-card-title (click)="navigateToDeatils(product.id)">{{
+      <mat-card-title (click)="navigateToDeatils(product._id)">{{
         product.product_name | titlecase
       }}</mat-card-title>
-      <mat-card-subtitle (click)="navigateToDeatils(product.id)">{{
+      <mat-card-subtitle (click)="navigateToDeatils(product._id)">{{
         product.tag_line
       }}</mat-card-subtitle>
       <span *ngFor="let type of product.products" value="type">

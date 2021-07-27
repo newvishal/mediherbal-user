@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { ComboProductInterface } from '../Interface/combo-products.interface';
 import { ProductInterface } from '../Interface/product.interface';
 import { ComboProductSliderComponent } from './Components/combo-product-slider/combo-product-slider.component';
@@ -10,50 +11,33 @@ import { HomeService } from './service/home.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private homeService: HomeService,
+    private snackbarService: SnakbarService
+  ) {}
   images = ['', 2, 5].map((n) => `/assets/Images/About Us/about${n}.jpg`);
   editCombo = [];
   editedCombo;
   data;
   products = [];
-  comboProducts: ComboProductInterface[] = [];
+  comboProducts = [];
   ngOnInit(): void {
-    /* this method dispatch Actions From Service */
-    this.homeService.fetchComboProducts();
-    this.homeService.fetchProducts();
-
     /* this method return data observable Service */
-    this.homeService.getProducts().subscribe((products) => {
-      this.products = products;
-    });
-    this.homeService.getComboProducts().subscribe((comboProduct) => {
-      this.comboProducts = comboProduct;
-      this.data = [];
-      this.comboProducts.map((products, index) => {
-        this.data.push({ ...products, products: [] });
-      });
-      this.comboProducts.map((res, index) => {
-        if (res.products) {
-          res.products.map((productType, i) => {
-            this.products.map((res, ind) => {
-              if (productType.id === res.id) {
-                res.product_type.map((type) => {
-                  if (type.product_id === productType.product_id) {
-                    this.data[index].products[i] = {
-                      ...this.comboProducts[index].products[i],
-                      product_name: res.product_name,
-                      product_type: type.name,
-                      price: type.price,
-                    };
-                  }
-                });
-              }
-            });
-          });
-        }
-      });
-      this.comboProducts = [];
-      this.comboProducts = this.data;
-    });
+    this.homeService.getProducts().subscribe(
+      (products) => {
+        this.products = products.data;
+      },
+      (err) => {
+        this.snackbarService.showSnackBar(err.error.message, 'danger');
+      }
+    );
+    this.homeService.getComboProducts().subscribe(
+      (comboProduct) => {
+        this.comboProducts = comboProduct.data;
+      },
+      (err) => {
+        this.snackbarService.showSnackBar(err.error.message, 'danger');
+      }
+    );
   }
 }

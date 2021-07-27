@@ -150,7 +150,9 @@ export class ProductSliderComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.store
+    console.log(this.products);
+
+    /*    this.store
       .select('AuthSection')
       .pipe(
         pluck('user'),
@@ -194,7 +196,7 @@ export class ProductSliderComponent implements OnInit {
           });
         })
       )
-      .subscribe();
+      .subscribe(); */
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/single/${id}`]);

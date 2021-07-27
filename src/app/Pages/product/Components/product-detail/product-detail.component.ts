@@ -6,6 +6,7 @@ import { map, pluck, take, tap } from 'rxjs/operators';
 import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { ProductService } from '../../Service/product.service';
+import { HomeService } from 'src/app/Pages/home/service/home.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +15,7 @@ import { ProductService } from '../../Service/product.service';
 })
 export class ProductDetailComponent implements OnInit {
   constructor(
-    private productService: ProductService,
+    private homeService: HomeService,
     private activatedRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
     private snackBar: SnakbarService
@@ -26,7 +27,7 @@ export class ProductDetailComponent implements OnInit {
   productType;
   userData;
   ngOnInit(): void {
-    this.store
+    /*    this.store
       .select('AuthSection')
       .pipe(
         pluck('user'),
@@ -35,8 +36,8 @@ export class ProductDetailComponent implements OnInit {
           this.userData = userData;
         })
       )
-      .subscribe();
-    this.activatedRoute.params.subscribe((res) => {
+      .subscribe(); */
+    /*   this.activatedRoute.params.subscribe((res) => {
       if (res.id) {
         if (res.type === 'single') {
           this.productType = 'single';
@@ -79,15 +80,6 @@ export class ProductDetailComponent implements OnInit {
                     },
                   };
                 }
-                /*        this.ProductData = {
-                  ...product[0],
-                  quantity: 1,
-                  selectedOption: {
-                    price: product[0].product_type[0].price,
-                    fake_price: product[0].product_type[0].fake_price,
-                    product_id: product[0].product_type[0].product_id,
-                  },
-                }; */
                 this.imageShown = this.ProductData.products_images[0];
               })
             )
@@ -123,11 +115,6 @@ export class ProductDetailComponent implements OnInit {
                     quantity: 0,
                   };
                 }
-                /*   this.ProductData = {
-                  ...comboProduct[0],
-                  quantity: 1,
-                  products: [],
-                }; */
                 this.imageShown = this.ProductData.products_images[0];
                 this.data = comboProduct[0];
                 this.data.products.map((productList, index) => {
@@ -160,6 +147,33 @@ export class ProductDetailComponent implements OnInit {
             )
             .subscribe((res) => {});
         }
+      }
+    }); */
+    this.activatedRoute.params.subscribe((res) => {
+      if (res.type === 'single') {
+        this.productType = 'single';
+        this.homeService.getProductsById(res.id).subscribe(
+          (products) => {
+            this.ProductData = products.data;
+            this.imageShown = this.ProductData.products_images[0];
+          },
+          (err) => {
+            this.snackBar.showSnackBar(err.error.message, 'danger');
+          }
+        );
+      }
+
+      if (res.type === 'combo') {
+        this.productType = 'combo';
+        this.homeService.getComboProductsById(res.id).subscribe(
+          (comboProduct) => {
+            this.ProductData = comboProduct.data;
+            this.imageShown = this.ProductData.products_images[0];
+          },
+          (err) => {
+            this.snackBar.showSnackBar(err.error.message, 'danger');
+          }
+        );
       }
     });
     console.log(this.ProductData);

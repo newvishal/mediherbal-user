@@ -1,16 +1,24 @@
 <div class="outer-div">
   <div class="header-div">
+    <h1 *ngIf="productType === 'combo'">Combo &nbsp;</h1>
     <h1>Products</h1>
   </div>
   <div class="parent">
     <div class="child" *ngFor="let product of ProductList; let i = index">
       <mat-card>
-        <app-image-slider [images]="product.products_images"></app-image-slider>
+        <app-image-slider
+          *ngIf="productType === 'combo'"
+          [images]="product.products_images"
+        ></app-image-slider>
+        <app-image-slider
+          *ngIf="productType === 'single'"
+          [images]="product.product_images"
+        ></app-image-slider>
         <br />
-        <mat-card-title (click)="navigateToDeatils(product.id)">{{
+        <mat-card-title (click)="navigateToDeatils(product._id)">{{
           product.product_name | titlecase
         }}</mat-card-title>
-        <mat-card-subtitle (click)="navigateToDeatils(product.id)">{{
+        <mat-card-subtitle (click)="navigateToDeatils(product._id)">{{
           product.tag_line
         }}</mat-card-subtitle>
         <div *ngIf="productType === 'combo'">

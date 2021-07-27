@@ -1,23 +1,41 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { pluck, take } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import * as fromApp from '../../../store/app.reducer';
 import * as fromHomeAction from '../store/home.action';
 @Injectable()
 export class HomeService {
-  constructor(private store: Store<fromApp.AppState>) {}
-  fetchProducts() {
-    this.store.dispatch(new fromHomeAction.FetchProductStart());
-  }
-  fetchComboProducts() {
-    this.store.dispatch(new fromHomeAction.FetchComboProductStart());
-  }
+  constructor(private http: HttpClient) {}
   getProducts() {
-    return this.store.select('HomeSection').pipe(take(5), pluck('products'));
+    let params = new HttpParams();
+    params = params.append('purchasable', 'true');
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}products/get-product`,
+      {
+        params: params,
+      }
+    );
   }
   getComboProducts() {
-    return this.store
-      .select('HomeSection')
-      .pipe(take(5), pluck('comboProduct'));
+    let params = new HttpParams();
+    params = params.append('purchasable', 'true');
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}combo-product`,
+      {
+        params: params,
+      }
+    );
+  }
+  getProductsById(id) {
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}products/get-product/${id}`
+    );
+  }
+  getComboProductsById(id) {
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}combo-product/${id}`
+    );
   }
 }

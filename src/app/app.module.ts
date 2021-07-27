@@ -35,6 +35,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderComponent } from './shared/Components/loader/loader.component';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { BUCKET } from '@angular/fire/storage';
+import { PolicyService } from './Pages/policy/service/policy.service';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { BUCKET } from '@angular/fire/storage';
       multi: true,
     },
     { provide: BUCKET, useValue: 'gs://mediherbal-fa27a.appspot.com' },
+    PolicyService,
   ],
   bootstrap: [AppComponent],
 })
