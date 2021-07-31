@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { pluck, take, tap } from 'rxjs/operators';
+import { map, pluck, take, tap } from 'rxjs/operators';
 import { User } from 'src/app/auth/interface/user.interface';
 import * as fromApp from '../../../../store/app.reducer';
 import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
+import { ProductService } from 'src/app/Pages/product/Service/product.service';
+import { HomeService } from '../../service/home.service';
 
 @Component({
   selector: 'app-product-slider',
@@ -20,7 +22,8 @@ export class ProductSliderComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<fromApp.AppState>,
-    private snackBar: SnakbarService
+    private snackBar: SnakbarService,
+    private homeService: HomeService
   ) {}
   ngOnChanges(): void {}
 
@@ -30,184 +33,65 @@ export class ProductSliderComponent implements OnInit {
 
   */
   addToCart(index) {
-    console.log(this.productsList[index]);
-
-    if (this.productsList[index].quantity == 0) {
-      this.productsList[index].addToCart = true;
-    }
-    this.productsList[index].quantity = this.productsList[index].quantity + 1;
-    let cartItems: any[] = [];
-    cartItems = [...this.userData.cart];
-    if (cartItems.length == 0) {
-      const data = {
-        product_id: this.productsList[index].id,
-        selected_product_id: this.productsList[index].selectedOption.product_id,
-        quantity: this.productsList[index].quantity,
-        product_type: 'products',
-      };
-
-      cartItems.push(data);
-      this.userData = { ...this.userData, cart: cartItems };
-
-      this.chnageCartDeatils();
-    } else {
-      let elementPresent = cartItems.findIndex(
-        (item, itemIndex) =>
-          item.product_id === this.productsList[index].id &&
-          item.selected_product_id ===
-            this.productsList[index].selectedOption.product_id
-      );
-
-      if (elementPresent >= 0) {
-        cartItems[elementPresent] = {
-          ...cartItems[elementPresent],
-          quantity: cartItems[elementPresent].quantity + 1,
-        };
-
-        this.userData = { ...this.userData, cart: cartItems };
-
-        this.chnageCartDeatils();
-      } else if (elementPresent < 0) {
-        const data = {
-          product_id: this.productsList[index].id,
-          selected_product_id:
-            this.productsList[index].selectedOption.product_id,
-          quantity: this.productsList[index].quantity,
-          product_type: 'products',
-        };
-
-        cartItems.push(data);
-        this.userData = { ...this.userData, cart: cartItems };
-
-        this.chnageCartDeatils();
+    const data = {
+      product_id: this.products[index]._id,
+      quantity: 1,
+    };
+    this.homeService.editProductToCart(data).subscribe(
+      (response) => {
+        if (!this.products[index].addToCart) {
+          this.products[index].addToCart = true;
+          this.products[index].quantity = this.products[index].quantity + 1;
+        } else {
+          this.products[index].quantity = this.products[index].quantity + 1;
+        }
+        this.products[index].quantity = response.data.quantity;
+      },
+      (err) => {
+        console.log(err.error.message);
       }
-    }
-    this.snackBar.showSnackBar('Item added to cart', 'success');
-  }
-
-  /*
- this method is responsible for removing item from Cart
-  */
-  removeQuantity(index) {
-    let cartItems = [...this.userData.cart];
-    const selectedItemIndex = cartItems.findIndex(
-      (item) =>
-        item.product_id === this.productsList[index].id &&
-        item.selected_product_id ===
-          this.productsList[index].selectedOption.product_id
     );
-
-    if (this.productsList[index].quantity > 1) {
-      this.productsList[index].quantity = this.productsList[index].quantity - 1;
-      cartItems[selectedItemIndex] = {
-        ...cartItems[selectedItemIndex],
-        quantity: +cartItems[selectedItemIndex].quantity - 1,
+  }
+  removeQuantity(index) {
+    if (this.products[index].quantity > 0) {
+      const data = {
+        product_id: this.products[index]._id,
+        quantity: -1,
       };
-
-      this.userData = { ...this.userData, cart: cartItems };
-      this.chnageCartDeatils();
-    } else {
-      console.log(this.productsList[index]);
-
-      this.productsList[index].quantity = 0;
-      this.productsList[index].addToCart = false;
-      cartItems.splice(selectedItemIndex, 1);
-
-      this.userData = { ...this.userData, cart: cartItems };
-
-      this.chnageCartDeatils();
-    }
-    this.snackBar.showSnackBar('Item removed from cart', 'danger');
-  }
-
-  changeTag1(evt, index) {
-    console.log(evt);
-
-    this.productsList[index].product_type.map((res) => {
-      if (res.product_id === evt) {
-        this.productsList[index].selectedOption = {
-          price: res.price,
-          fake_price: res.fake_price,
-          product_id: res.product_id,
-        };
-      }
-    });
-
-    this.productsList.map((product, index) => {
-      const cartElementIndex = this.userData.cart.findIndex(
-        (cartDetail) =>
-          cartDetail.product_id === this.productsList[index].id &&
-          cartDetail.selected_product_id === evt
+      this.homeService.editProductToCart(data).subscribe(
+        (response) => {
+          if (this.products[index].quantity == 1) {
+            this.products[index].addToCart = false;
+            this.products[index].quantity = this.products[index].quantity - 1;
+          } else {
+            this.products[index].quantity = this.products[index].quantity - 1;
+          }
+          if (response.data) {
+            this.products[index].quantity = response.data.quantity;
+          } else {
+            this.products[index].quantity = 0;
+          }
+        },
+        (err) => {
+          console.log(err.error.message);
+        }
       );
-      if (cartElementIndex >= 0) {
-        this.productsList[index].addToCart = true;
-        this.productsList[index].quantity =
-          this.userData.cart[cartElementIndex].quantity;
-      } else if (cartElementIndex < 0) {
-        this.productsList[index].addToCart = false;
-        this.productsList[index].quantity = 0;
-      }
-    });
+    } else {
+      this.products[index].addToCart = false;
+      this.products[index].quantity = 0;
+    }
   }
+
   ngOnInit(): void {
-    console.log(this.products);
-
-    /*    this.store
-      .select('AuthSection')
-      .pipe(
-        pluck('user'),
-
-        tap((userData) => {
-          this.userData = userData;
-
-          this.productsList = [];
-          let products = this.products;
-          products.map((product, index) => {
-            const cartElementIndex = this.userData.cart.findIndex(
-              (cartDetail) =>
-                cartDetail.product_id === product.id &&
-                cartDetail.selected_product_id ===
-                  product.product_type[0].product_id
-            );
-
-            if (cartElementIndex >= 0) {
-              this.productsList[index] = {
-                ...product,
-                addToCart: true,
-                quantity: this.userData.cart[cartElementIndex].quantity,
-                selectedOption: {
-                  price: product.product_type[0].price,
-                  fake_price: product.product_type[0].fake_price,
-                  product_id: product.product_type[0].product_id,
-                },
-              };
-            } else if (cartElementIndex < 0) {
-              this.productsList[index] = {
-                ...product,
-                addToCart: false,
-                quantity: 0,
-                selectedOption: {
-                  price: product.product_type[0].price,
-                  fake_price: product.product_type[0].fake_price,
-                  product_id: product.product_type[0].product_id,
-                },
-              };
-            }
-          });
-        })
-      )
-      .subscribe(); */
+    this.products.map((product, index) => {
+      this.products[index] = {
+        ...this.products[index],
+        quantity: 0,
+        addToCart: false,
+      };
+    });
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/single/${id}`]);
-  }
-
-  /*
-  this method is reponsible for chnaging the user details in store
-  */
-  chnageCartDeatils() {
-    this.store.dispatch(
-      new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
-    );
   }
 }

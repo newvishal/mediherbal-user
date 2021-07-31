@@ -8,32 +8,18 @@
       <mat-card-title (click)="navigateToDeatils(product._id)">{{
         product.product_name | titlecase
       }}</mat-card-title>
-      <mat-card-subtitle (click)="navigateToDeatils(product._id)">{{
-        product.tag_line
-      }}</mat-card-subtitle>
-      <form *ngIf="product.selectedOption">
-        <mat-form-field appearance="fill">
-          <mat-label>Select Product Type</mat-label>
-          <select
-            matNativeControl
-            (change)="changeTag1($event.target.value, i)"
-          >
-            <option
-              *ngFor="let type of product.product_type"
-              [value]="type.product_id"
-            >
-              {{ type.name | titlecase }}
-            </option>
-          </select>
-        </mat-form-field>
-      </form>
-      <mat-card-content *ngIf="product.selectedOption">
+      <mat-card-subtitle (click)="navigateToDeatils(product._id)"
+        >{{ product.tag_line }}
         <p>
-          <span class="price">₹ {{ product.selectedOption.price }}</span
+          <b>Product Type :</b> {{ product.product_type | titlecase }}
+        </p></mat-card-subtitle
+      >
+
+      <mat-card-content>
+        <p>
+          <span class="price">₹ {{ product.price }}</span
           >&nbsp;
-          <span class="fake_price"
-            >₹ {{ product.selectedOption.fake_price }}</span
-          >
+          <span class="fake_price">₹ {{ product.fake_price }}</span>
         </p>
       </mat-card-content>
       <mat-card-actions>

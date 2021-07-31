@@ -20,37 +20,18 @@
           >star</mat-icon
         ></span
       >
-      <h4 *ngIf="productType === 'combo'">
+      <h4>
         <span class="price">₹ {{ ProductData.price }} </span>&nbsp;
         <span class="fake_price">₹ {{ ProductData.fake_price }} </span>
       </h4>
-      <h4 *ngIf="productType === 'single'">
-        <span class="price">₹ {{ ProductData.selectedOption.price }} </span
-        >&nbsp;
-        <span class="fake_price"
-          >₹ {{ ProductData.selectedOption.fake_price }}
-        </span>
-      </h4>
+
       <h4>
         {{ ProductData.product_purchasable ? "In Stock" : "Out of Stock" }}
       </h4>
       <div class="set-quantity">
-        <form *ngIf="productType === 'single'">
-          <mat-form-field appearance="fill">
-            <mat-label>Select Product Type</mat-label>
-            <select
-              matNativeControl
-              (change)="changeTag1($event.target.value, i)"
-            >
-              <option
-                *ngFor="let type of ProductData.product_type"
-                [value]="type.product_id"
-              >
-                {{ type.name | titlecase }}
-              </option>
-            </select>
-          </mat-form-field>
-        </form>
+        <div *ngIf="productType === 'single'">
+          <p>Product Type : {{ ProductData.product_type | titlecase }}</p>
+        </div>
         <p>Quantity</p>
         <section *ngIf="ProductData.addToCart" class="cart-section">
           <section (click)="removeQuantity()" class="remove-section">

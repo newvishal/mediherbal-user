@@ -6,6 +6,7 @@ import { pluck, take, tap } from 'rxjs/operators';
 import * as fromApp from '../../../../store/app.reducer';
 import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
+import { HomeService } from '../../service/home.service';
 
 @Component({
   selector: 'app-combo-product-slider',
@@ -19,123 +20,68 @@ export class ComboProductSliderComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<fromApp.AppState>,
-    private snackBar: SnakbarService
+    private snackBar: SnakbarService,
+    private homeService: HomeService
   ) {}
   ngOnChanges(): void {}
   addToCart(index) {
-    let cartItems: any[] = [];
-    cartItems = [...this.userData.cart];
-    if (this.productsList[index].quantity == 0) {
-      this.productsList[index].addToCart = true;
-    }
-    this.productsList[index].quantity = this.productsList[index].quantity + 1;
-
-    if (cartItems.length == 0) {
-      const data = {
-        product_id: this.productsList[index].id,
-
-        quantity: this.productsList[index].quantity,
-        product_type: 'comboProduct',
-      };
-
-      cartItems.push({ ...data });
-
-      this.userData = { ...this.userData, cart: [...cartItems] };
-
-      this.chnageCartDeatils();
-    } else {
-      let elementPresent = cartItems.findIndex(
-        (item, itemIndex) => item.product_id === this.productsList[index].id
-      );
-
-      if (elementPresent >= 0) {
-        cartItems[elementPresent] = {
-          ...cartItems[elementPresent],
-          quantity: cartItems[elementPresent].quantity + 1,
-        };
-
-        this.userData = { ...this.userData, cart: [...cartItems] };
-
-        this.chnageCartDeatils();
-      } else if (elementPresent < 0) {
-        const data = {
-          product_id: this.productsList[index].id,
-
-          quantity: this.productsList[index].quantity,
-          product_type: 'comboProduct',
-        };
-
-        cartItems.push({ ...data });
-        this.userData = { ...this.userData, cart: [...cartItems] };
-
-        this.chnageCartDeatils();
+    const data = {
+      combo_product_id: this.products[index]._id,
+      quantity: 1,
+    };
+    this.homeService.editComboProductToCart(data).subscribe(
+      (response) => {
+        if (!this.products[index].addToCart) {
+          this.products[index].addToCart = true;
+          this.products[index].quantity = this.products[index].quantity + 1;
+        } else {
+          this.products[index].quantity = this.products[index].quantity + 1;
+        }
+        this.products[index].quantity = response.data.quantity;
+      },
+      (err) => {
+        console.log(err.error.message);
       }
-    }
-    this.snackBar.showSnackBar('Item added to cart', 'success');
-  }
-  chnageCartDeatils() {
-    this.store.dispatch(
-      new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
     );
   }
   removeQuantity(index) {
-    let cartItems = [...this.userData.cart];
-    const selectedItemIndex = cartItems.findIndex(
-      (item) => item.product_id === this.productsList[index].id
-    );
-
-    if (this.productsList[index].quantity > 1) {
-      this.productsList[index].quantity = this.productsList[index].quantity - 1;
-      cartItems[selectedItemIndex] = {
-        ...cartItems[selectedItemIndex],
-        quantity: +cartItems[selectedItemIndex].quantity - 1,
+    if (this.products[index].quantity > 0) {
+      const data = {
+        combo_product_id: this.products[index]._id,
+        quantity: -1,
       };
-
-      this.userData = { ...this.userData, cart: cartItems };
-      this.chnageCartDeatils();
+      this.homeService.editComboProductToCart(data).subscribe(
+        (response) => {
+          if (this.products[index].quantity == 1) {
+            this.products[index].addToCart = false;
+            this.products[index].quantity = this.products[index].quantity - 1;
+          } else {
+            this.products[index].quantity = this.products[index].quantity - 1;
+          }
+          if (response.data) {
+            this.products[index].quantity = response.data.quantity;
+          } else {
+            this.products[index].quantity = 0;
+          }
+        },
+        (err) => {
+          console.log(err.error.message);
+        }
+      );
     } else {
-      this.productsList[index].quantity = 0;
-      this.productsList[index].addToCart = false;
-      cartItems.splice(selectedItemIndex, 1);
-
-      this.userData = { ...this.userData, cart: cartItems };
-
-      this.chnageCartDeatils();
+      this.products[index].addToCart = false;
+      this.products[index].quantity = 0;
     }
-    this.snackBar.showSnackBar('Item removed from cart', 'danger');
   }
+
   ngOnInit(): void {
-    /*   this.store
-      .select('AuthSection')
-      .pipe(
-        pluck('user'),
-
-        tap((userData) => {
-          this.userData = userData;
-          this.productsList = [];
-          let products = this.products;
-          products.map((product, index) => {
-            const cartElementIndex = this.userData.cart.findIndex(
-              (cartDetail) => cartDetail.product_id === product.id
-            );
-
-            if (cartElementIndex >= 0) {
-              this.productsList[index] = {
-                ...product,
-                addToCart: true,
-                quantity: this.userData.cart[cartElementIndex].quantity,
-              };
-            } else if (cartElementIndex < 0) {
-              this.productsList[index] = {
-                ...product,
-                addToCart: false,
-                quantity: 0,
-              };
-            }
-          });
-        })
-      )
-      .subscribe(); */
+    this.products.map((product, index) => {
+      this.products[index] = {
+        ...this.products[index],
+        quantity: 0,
+        addToCart: false,
+      };
+    });
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/combo/${id}`]);

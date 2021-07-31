@@ -30,12 +30,24 @@ export class HomeService {
   }
   getProductsById(id) {
     return this.http.get<{ status: boolean; message: string; data: any }>(
-      `${environment.base_url}products/get-product/${id}`
+      `${environment.base_url}products/${id}`
     );
   }
   getComboProductsById(id) {
     return this.http.get<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}combo-product/${id}`
+    );
+  }
+  editProductToCart(data) {
+    return this.http.patch<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}cart/product`,
+      data
+    );
+  }
+  editComboProductToCart(data) {
+    return this.http.patch<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}cart/combo-product`,
+      data
     );
   }
 }

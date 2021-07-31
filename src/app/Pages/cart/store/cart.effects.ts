@@ -43,8 +43,6 @@ export class CartEffects {
                       });
                     }),
                     tap((cartDetails) => {
-                      console.log(cartDetails);
-
                       updatedCartDetails.push({
                         ...cartDetails.cartData,
                         ...cartDetails.product_data,
@@ -61,7 +59,6 @@ export class CartEffects {
       );
     }),
     map((cartdeatils) => {
-      console.log(cartdeatils);
       return new fromCartAction.FetchCartSuccess(cartdeatils);
     })
   );
