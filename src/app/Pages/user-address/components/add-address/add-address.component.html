@@ -3,7 +3,7 @@
     <mat-icon (click)="cancelDopdown()">close</mat-icon>
   </div>
   <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
-    <div class="user_details_div" formGroupName="user_details">
+    <div class="user_details_div" formGroupName="address">
       <div class="address_heading_div">
         <span style="font-size: 20px">User Details</span>
       </div>
@@ -20,7 +20,7 @@
           <mat-label>Phone Number </mat-label>
           <input
             matInput
-            type="tel"
+            type="number"
             maxlength="10"
             minlength="10"
             formControlName="mobile_number"
@@ -28,7 +28,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div formGroupName="user_address">
+    <div formGroupName="address">
       <div class="address_heading_div">
         <span style="font-size: 20px">User Address</span>
       </div>

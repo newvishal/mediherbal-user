@@ -18,7 +18,7 @@ export class UserAddressService {
     );
   }
   deteleUserAddress(id) {
-    return this.http.get<{ status: boolean; message: string; data: any }>(
+    return this.http.delete<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}user/address/delete-address/${id}`
     );
   }

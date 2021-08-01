@@ -17,10 +17,12 @@ export class UserAddressComponent implements OnInit {
   ) {}
   userAddress: any[] = [];
   ngOnInit(): void {
+    this.getAddress();
+  }
+  getAddress() {
     this.userAddressService.fetchAllAddress().subscribe(
       (userAddess) => {
-        console.log(userAddess);
-        this.userAddress = userAddess.data.address;
+        this.userAddress = userAddess.data;
       },
       (err) => {
         if (err.error.err.message === 'Address not Found') {
@@ -29,8 +31,12 @@ export class UserAddressComponent implements OnInit {
       }
     );
   }
-
   addAddress() {
-    this.dialog.open(AddAddressComponent);
+    const dialogRef = this.dialog.open(AddAddressComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getAddress();
+      }
+    });
   }
 }

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { CartService } from '../cart/service/cart.service';
 import { UserDataService } from 'src/app/shared/service/userData.service';
+import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 
 @Component({
   selector: 'app-checkout',
@@ -27,7 +28,8 @@ export class CheckoutComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private cartService: CartService,
-    private UserDataService: UserDataService
+    private UserDataService: UserDataService,
+    private snackbar: SnakbarService
   ) {}
   userAddress: any[] = [];
   userCart;
@@ -61,8 +63,19 @@ export class CheckoutComponent implements OnInit {
     TotalPrice: 0,
   };
   ngOnInit(): void {
+    this.cartService.getCartDetail().subscribe((cartDetails) => {
+      if (cartDetails.data.length > 0) {
+        this.cartData = cartDetails.data;
+        this.calculateAmount();
+        this.userCart = {
+          cartData: this.cartData,
+          amountDetail: this.AmountDetails,
+        };
+      } else {
+        this.router.navigate(['/home/cart']);
+      }
+    });
     this.UserDataService.UserData.subscribe((userData) => {
-      console.log(userData);
       this.userData = userData;
 
       this.RAZORPAY_OPTIONS.prefill.email = this.userData.email;
@@ -73,26 +86,17 @@ export class CheckoutComponent implements OnInit {
 
     this.checkoutService.getUsersAddress().subscribe(
       (userAddress) => {
-        console.log(userAddress);
-
-        /*    this.selectedAddress = userAddress[0];
-          this.userAddress = userAddress.data; */
+        this.userAddress = userAddress.data;
+        if (userAddress.data.length > 0) {
+          this.selectedAddress = userAddress.data[0]._id;
+        }
       },
       (err) => {
-        console.log(err.error.err.message);
         if (err.error.err.message === 'Address not Found') {
           this.userAddress = [];
         }
       }
     );
-    this.cartService.getCartDetail().subscribe((cartDetails) => {
-      this.cartData = cartDetails.data;
-      this.calculateAmount();
-      this.userCart = {
-        cartData: this.cartData,
-        amountDetail: this.AmountDetails,
-      };
-    });
   }
   calculateAmount() {
     this.AmountDetails = {
@@ -132,8 +136,7 @@ export class CheckoutComponent implements OnInit {
   }
   clickToPay() {
     /*  this.RAZORPAY_OPTIONS.amount = 100 + '00'; */
-    this.RAZORPAY_OPTIONS.amount =
-      this.userCart.AmountDetails.TotalPrice + '00';
+    this.RAZORPAY_OPTIONS.amount = this.userCart.amountDetail.TotalPrice + '00';
     // binding this object to both success and dismiss handler
     this.RAZORPAY_OPTIONS['handler'] = this.razorPaySuccessHandler.bind(this);
 
@@ -146,30 +149,26 @@ export class CheckoutComponent implements OnInit {
   public razorPaySuccessHandler(response) {
     this.razorpayResponse = `Razorpay Response`;
     const data = {
-      order_createdby: this.userData.user.id,
       paymentId: response.razorpay_payment_id,
-      cart: this.userCart,
+      total_price: this.userCart.amountDetail.TotalPrice,
       address: this.selectedAddress,
-      order_date: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
-      order_status: 'Booked',
     };
-    this.checkoutService.placeOrder(data);
-
-    this.chnageCartDeatils();
-    this.showModal = true;
     this.cd.detectChanges();
-    this.router.navigate(['/home/order'], { replaceUrl: true });
+    this.checkoutService.placeOrder(data).subscribe(
+      (order) => {
+        this.snackbar.showSnackBar('Order created successfully !!', 'success');
+        this.showModal = true;
+        this.router.navigate(['/home/order'], { replaceUrl: true });
+      },
+      (err) => {
+        this.snackbar.showSnackBar('Place order unsuccessfull', 'danger');
+      }
+    );
   }
   changeSelectedUserAddress(event) {
     this.selectedAddress = event.value;
   }
-  chnageCartDeatils() {
-    this.userData = { ...this.userData.user, cart: [] };
 
-    this.store.dispatch(
-      new fromAuthSectionActions.ChangeUserCartDeatilsStart(this.userData)
-    );
-  }
   updateImageCombo(event, index) {
     this.userCart.cartData[index].combo_product_id.products_images[0] =
       'https://i.stack.imgur.com/y9DpT.jpg';

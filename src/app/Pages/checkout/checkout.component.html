@@ -26,13 +26,13 @@
           >
             <mat-radio-button
               class="example-radio-button"
-              [value]="o"
+              [value]="o._id"
               (change)="changeSelectedUserAddress($event)"
             >
               <h3>
                 <b
-                  >{{ o.user_details.first_name | titlecase }}&nbsp;{{
-                    o.user_details.last_name | titlecase
+                  >{{ o.first_name | titlecase }}&nbsp;{{
+                    o.last_name | titlecase
                   }}</b
                 >
               </h3>
@@ -40,15 +40,14 @@
               <h4
                 style="width: 100%; word-break: break-word; white-space: normal"
               >
-                <b>Address </b>:
-                {{ o.user_address.house_number }}&nbsp;,&nbsp;{{
-                  o.user_address.street_colony_name
-                }}&nbsp;,&nbsp;{{ o.user_address.city }}&nbsp;,&nbsp;{{
-                  o.user_address.pincode
-                }}&nbsp;,&nbsp;{{ o.user_address.state }}<br /><b>Mobile</b> :
-                {{ o.user_details.mobile_number }}
+                <b>Address </b>: {{ o.house_number }}&nbsp;,&nbsp;{{
+                  o.street_colony_name
+                }}&nbsp;,&nbsp;{{ o.city }}&nbsp;,&nbsp;{{
+                  o.pincode
+                }}&nbsp;,&nbsp;{{ o.state }}<br /><b>Mobile</b> :
+                {{ o.mobile_number }}
                 <br />
-                <b>Landmark </b>: {{ o.user_address.landmark }}
+                <b>Landmark </b>: {{ o.landmark }}
               </h4>
               <br />
               Delivery Available

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { UserAddressService } from '../../service/user-address.service';
 import { AddAddressComponent } from '../add-address/add-address.component';
 
@@ -10,28 +11,40 @@ import { AddAddressComponent } from '../add-address/add-address.component';
 })
 export class AddressCardComponent implements OnInit {
   @Input() useraddress;
-  @Input() addressIndex;
+  @Input() id;
+  @Output() refreshData = new EventEmitter<any>();
   constructor(
     private dialog: MatDialog,
-    private addressService: UserAddressService
+    private addressService: UserAddressService,
+    private snackBar: SnakbarService
   ) {}
 
   ngOnInit(): void {}
   editaddress() {
-    this.dialog.open(AddAddressComponent, {
+    const dialogRef = this.dialog.open(AddAddressComponent, {
       data: {
         address: this.useraddress,
-        addressIndex: this.addressIndex,
+        id: this.useraddress._id,
       },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.useraddress = result;
+        this.refreshData.emit();
+      }
     });
   }
   deleteAddress() {
-    this.addressService.deteleUserAddress(this.addressIndex).subscribe(
+    this.addressService.deteleUserAddress(this.id).subscribe(
       (response) => {
-        console.log(response);
+        this.refreshData.emit();
+        this.snackBar.showSnackBar(
+          'Address deleted successfully !!',
+          'success'
+        );
       },
       (err) => {
-        console.log(err);
+        this.snackBar.showSnackBar('Unknown error occured !!', 'danger');
       }
     );
   }

@@ -19,7 +19,8 @@
     >
       <app-address-card
         [useraddress]="address"
-        [addressIndex]="i"
+        [id]="address._id"
+        (refreshData)="getAddress()"
       ></app-address-card>
     </div>
   </div>

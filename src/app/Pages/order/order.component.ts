@@ -13,14 +13,21 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.orderService.getUserOrder().subscribe((orders) => {
-      this.orderList = orders;
+      console.log(orders.data);
+
+      this.orderList = orders.data;
     });
   }
   navigateToDeatils(id, type) {
-    if (type === 'products') {
-      this.router.navigate([`/product-detail/single/${id}`]);
-    } else if (type === 'comboProduct') {
-      this.router.navigate([`/product-detail/combo/${id}`]);
+    this.router.navigate([`/product-detail/${type}/${id}`]);
+  }
+  updateImage(mainIndex, type, index, $event) {
+    if (type === 'single') {
+      this.orderList[mainIndex].products[index].product_images[0] =
+        'https://i.stack.imgur.com/y9DpT.jpg';
+    } else if (type === 'combo') {
+      this.orderList[mainIndex].combo_products[index].products_images[0] =
+        'https://i.stack.imgur.com/y9DpT.jpg';
     }
   }
 }

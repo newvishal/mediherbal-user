@@ -4,7 +4,7 @@
       <div class="items">
         <mat-card
           style="margin-bottom: 3%"
-          *ngFor="let order of orderList; let index = index"
+          *ngFor="let order of orderList; let mainIndex = index"
         >
           <mat-card-header *ngIf="order.order_status === 'Booked'">
             <div mat-card-avatar class="booked"></div>
@@ -49,41 +49,51 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Total Amount : {{ order.cart.totalAmount.TotalPrice }}
+                Total Amount : {{ order.total_price }}
               </mat-panel-title>
               <mat-panel-description>
-                {{ order.cart.productList.length }} Items
+                {{ order.combo_products.length + order.products.length }} Items
               </mat-panel-description>
             </mat-expansion-panel-header>
             <mat-card-content
-              *ngFor="let item of order.cart.productList; let index = index"
+              *ngFor="let item of order.combo_products; let index = index"
             >
               <div class="item-detail">
                 <section
                   class="image-section"
-                  (click)="
-                    navigateToDeatils(
-                      item.cartData.product_id,
-                      item.cartData.product_type
-                    )
-                  "
+                  (click)="navigateToDeatils(item._id, 'combo')"
                 >
-                  <img [src]="item.product_data.products_images[0]" />
+                  <img
+                    (error)="updateImage(mainIndex, 'combo', index, $event)"
+                    [src]="item.products_images[0]"
+                  />
                 </section>
                 <section class="text-section">
-                  <h2>{{ item.product_data.product_name }}</h2>
-                  <h3>{{ item.product_data.tag_line }}</h3>
-                  <h3>{{ item.cartData.quantity }}</h3>
-                  <h3 *ngIf="item.cartData.product_type === 'products'">
-                    <span *ngFor="let type of item.product_data.product_type">
-                      <span
-                        *ngIf="
-                          type.product_id === item.cartData.selected_product_id
-                        "
-                      >
-                        {{ type.name }}
-                      </span>
-                    </span>
+                  <h2>{{ item.product_name }}</h2>
+                  <h3>{{ item.tag_line }}</h3>
+                  <!--  <h3>{{ item.cartData.quantity }}</h3> -->
+                </section>
+              </div>
+            </mat-card-content>
+            <mat-card-content
+              *ngFor="let item of order.products; let index = index"
+            >
+              <div class="item-detail">
+                <section
+                  class="image-section"
+                  (click)="navigateToDeatils(item._id, 'single')"
+                >
+                  <img
+                    (error)="updateImage(mainIndex, 'single', index, $event)"
+                    [src]="item.product_images[0]"
+                  />
+                </section>
+                <section class="text-section">
+                  <h2>{{ item.product_name }}</h2>
+                  <h3>{{ item.tag_line }}</h3>
+                  <!--    <h3>{{ item.cartData.quantity }}</h3> -->
+                  <h3>
+                    {{ item.product_type }}
                   </h3>
                 </section>
               </div>

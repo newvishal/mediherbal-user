@@ -28,6 +28,9 @@ export class CheckoutService {
     return this.store.select('AuthSection');
   }
   placeOrder(data) {
-    this.angularfireStore.collection('orders').add(data);
+    return this.http.post<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}order`,
+      data
+    );
   }
 }

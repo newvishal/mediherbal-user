@@ -5,7 +5,11 @@ import {
   FormGroupName,
   Validators,
 } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { state } from '../../city-data/state-city-list';
 import { UserAddressService } from '../../service/user-address.service';
@@ -21,7 +25,7 @@ export class AddAddressComponent implements OnInit {
   states: { state: string; cities: string[] }[] = [];
   constructor(
     private addressService: UserAddressService,
-    private dialog: MatDialog,
+    private dialog: MatDialogRef<AddAddressComponent>,
     @Inject(MAT_DIALOG_DATA) public editAddressData: any,
     private snackBar: SnakbarService
   ) {}
@@ -35,63 +39,52 @@ export class AddAddressComponent implements OnInit {
     }
 
     if (this.editAddressData) {
-      //this.editAddressData.address['user_details'].first_name
       this.addressForm = new FormGroup({
-        user_details: new FormGroup({
-          first_name: new FormControl(
-            this.editAddressData.address['user_details'].first_name,
-            [Validators.required]
-          ),
-          last_name: new FormControl(
-            this.editAddressData.address['user_details'].last_name,
-            [Validators.required]
-          ),
-          mobile_number: new FormControl(
-            this.editAddressData.address['user_details'].mobile_number,
-            [Validators.required]
-          ),
-        }),
-        user_address: new FormGroup({
+        address: new FormGroup({
           house_number: new FormControl(
-            this.editAddressData.address['user_address'].house_number,
+            this.editAddressData.address.house_number,
             [Validators.required]
           ),
           street_colony_name: new FormControl(
-            this.editAddressData.address['user_address'].street_colony_name,
+            this.editAddressData.address.street_colony_name,
             [Validators.required]
           ),
-          landmark: new FormControl(
-            this.editAddressData.address['user_address'].landmark,
-            [Validators.required]
-          ),
-          state: new FormControl(
-            this.editAddressData.address['user_address'].state,
-            [Validators.required]
-          ),
-          city: new FormControl(
-            this.editAddressData.address['user_address'].city,
-            [Validators.required]
-          ),
-          pincode: new FormControl(
-            this.editAddressData.address['user_address'].pincode,
+          landmark: new FormControl(this.editAddressData.address.landmark, [
+            Validators.required,
+          ]),
+          state: new FormControl(this.editAddressData.address.state, [
+            Validators.required,
+          ]),
+          city: new FormControl(this.editAddressData.address.city, [
+            Validators.required,
+          ]),
+          pincode: new FormControl(this.editAddressData.address.pincode, [
+            Validators.required,
+          ]),
+          first_name: new FormControl(this.editAddressData.address.first_name, [
+            Validators.required,
+          ]),
+          last_name: new FormControl(this.editAddressData.address.last_name, [
+            Validators.required,
+          ]),
+          mobile_number: new FormControl(
+            this.editAddressData.address.mobile_number,
             [Validators.required]
           ),
         }),
       });
     } else if (this.editAddressData == null) {
       this.addressForm = new FormGroup({
-        user_details: new FormGroup({
-          first_name: new FormControl('', [Validators.required]),
-          last_name: new FormControl('', [Validators.required]),
-          mobile_number: new FormControl('', [Validators.required]),
-        }),
-        user_address: new FormGroup({
+        address: new FormGroup({
           house_number: new FormControl('', [Validators.required]),
           street_colony_name: new FormControl('', [Validators.required]),
           landmark: new FormControl('', [Validators.required]),
           state: new FormControl('', [Validators.required]),
           city: new FormControl('', [Validators.required]),
           pincode: new FormControl('', [Validators.required]),
+          first_name: new FormControl('', [Validators.required]),
+          last_name: new FormControl('', [Validators.required]),
+          mobile_number: new FormControl('', [Validators.required]),
         }),
       });
     }
@@ -100,37 +93,36 @@ export class AddAddressComponent implements OnInit {
     if (this.editAddressData) {
       this.addressService
         .editUserAddressInfo(
-          this.addressForm.value,
-          this.editAddressData.addressIndex
+          this.addressForm.value.address,
+          this.editAddressData.id
         )
         .subscribe(
           (editResponse) => {
-            console.log(editResponse);
+            this.dialog.close(editResponse);
           },
           (err) => {
-            console.log(err);
+            this.dialog.close();
           }
         );
-      this.dialog.closeAll();
     } else if (this.editAddressData == null) {
-      this.addressService.addnewAddress(this.addressForm.value).subscribe(
-        (response) => {
-          console.log(response);
-
-          this.snackBar.showSnackBar(
-            'Address added successfully !!',
-            'success'
-          );
-        },
-        (err) => {
-          console.log(err);
-          this.snackBar.showSnackBar('Something Went Wrong', 'success');
-        }
-      );
-      this.dialog.closeAll();
+      this.addressService
+        .addnewAddress(this.addressForm.value.address)
+        .subscribe(
+          (response) => {
+            this.dialog.close(response);
+            this.snackBar.showSnackBar(
+              'Address added successfully !!',
+              'success'
+            );
+          },
+          (err) => {
+            this.dialog.close();
+            this.snackBar.showSnackBar('Something Went Wrong', 'success');
+          }
+        );
     }
   }
   cancelDopdown() {
-    this.dialog.closeAll();
+    this.dialog.close();
   }
 }
