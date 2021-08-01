@@ -10,4 +10,7 @@ export class ProductCardSliderComponent implements OnInit, OnChanges {
   constructor() {}
   ngOnChanges() {}
   ngOnInit(): void {}
+  updateUrl(event, index) {
+    this.images[index] = 'https://i.stack.imgur.com/y9DpT.jpg';
+  }
 }

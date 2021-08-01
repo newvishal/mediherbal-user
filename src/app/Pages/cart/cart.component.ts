@@ -162,11 +162,15 @@ export class CartComponent implements OnInit {
     this.router.navigate([`/product-detail/${type}/${id}`]);
   }
   navigateToCheckout() {
-    this.checkoutService.setUserCart({
-      cartData: this.cartData,
-      amountDetail: this.AmountDetails,
-    });
     this.router.navigate(['/home/checkout']);
+  }
+  updateImageCombo(event, index) {
+    this.cartData[index].combo_product_id.products_images[0] =
+      'https://i.stack.imgur.com/y9DpT.jpg';
+  }
+  updateImageProduct(event, index) {
+    this.cartData[0].product_id.product_images[0] =
+      'https://i.stack.imgur.com/y9DpT.jpg';
   }
 }
 @Component({

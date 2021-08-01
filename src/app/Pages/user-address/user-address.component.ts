@@ -17,14 +17,17 @@ export class UserAddressComponent implements OnInit {
   ) {}
   userAddress: any[] = [];
   ngOnInit(): void {
-    this.userAddressService
-      .fetchAllAddress()
-      .pipe(
-        tap((userAddess) => {
-          this.userAddress = userAddess;
-        })
-      )
-      .subscribe();
+    this.userAddressService.fetchAllAddress().subscribe(
+      (userAddess) => {
+        console.log(userAddess);
+        this.userAddress = userAddess.data.address;
+      },
+      (err) => {
+        if (err.error.err.message === 'Address not Found') {
+          this.userAddress = [];
+        }
+      }
+    );
   }
 
   addAddress() {

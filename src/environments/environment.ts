@@ -6,14 +6,13 @@ export const environment = {
   production: false,
   base_url: 'https://manish-mediherbal-1981.herokuapp.com/',
   firebase: {
-    apiKey: 'AIzaSyDTHNKzjUP_gXnMqdYQUA5l2IHKeGogDN8',
-    authDomain: 'mediherbal-fa27a.firebaseapp.com',
-    databaseURL: 'https://mediherbal-fa27a-default-rtdb.firebaseio.com',
-    projectId: 'mediherbal-fa27a',
-    storageBucket: 'mediherbal-fa27a.appspot.com',
-    messagingSenderId: '521845001517',
-    appId: '1:521845001517:web:9d65aa2f2cf9186b1357a4',
-    measurementId: 'G-SNT89WXD6D',
+    apiKey: 'AIzaSyDiXio31XreiLzQOGItHAHIh6h1R2JI0RI',
+    authDomain: 'mediherbal-e7901.firebaseapp.com',
+    projectId: 'mediherbal-e7901',
+    storageBucket: 'mediherbal-e7901.appspot.com',
+    messagingSenderId: '129354040723',
+    appId: '1:129354040723:web:2b505947b0488aebd8d466',
+    measurementId: 'G-NW4MVGMJDF',
   },
 };
 

@@ -2,12 +2,13 @@
   <div class="inner-div" *ngIf="ProductData">
     <section class="image-section">
       <section class="full-image">
-        <img [src]="imageShown" />
+        <img (error)="updateUrl($event)" [src]="imageShown" />
       </section>
       <section class="imagesList">
         <img
           (mouseover)="changeImage(image)"
-          *ngFor="let image of ProductData.products_images"
+          *ngFor="let image of ProductData.products_images; let index = index"
+          (error)="updateArrayUrl($event, index)"
           [src]="image"
         />
       </section>

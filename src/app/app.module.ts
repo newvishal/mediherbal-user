@@ -76,7 +76,7 @@ import { PolicyService } from './Pages/policy/service/policy.service';
       useClass: AuthInterceptor,
       multi: true,
     },
-    { provide: BUCKET, useValue: 'gs://mediherbal-fa27a.appspot.com' },
+    { provide: BUCKET, useValue: 'gs://mediherbal-e7901.appspot.com' },
     PolicyService,
   ],
   bootstrap: [AppComponent],

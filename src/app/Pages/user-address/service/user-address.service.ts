@@ -1,80 +1,31 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { pipe } from 'rxjs';
-import { pluck, take, tap } from 'rxjs/operators';
-import * as fromApp from '../../../../app/store/app.reducer';
-import * as fromAuthActions from '../../../auth/store/Auth.Actions';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UserAddressService {
-  constructor(private store: Store<fromApp.AppState>) {}
+  constructor(private http: HttpClient) {}
   addnewAddress(useraddress) {
-    this.store
-      .select('AuthSection')
-      .pipe(
-        pluck('user'),
-        take(1),
-        tap((userDeatils) => {
-          let userDetails = { ...userDeatils };
-          let address = userDeatils.address ? [...userDeatils.address] : [];
-          address.push({
-            ...useraddress,
-          });
-          let updatedDetails = { ...userDetails, address: [...address] };
-
-          this.store.dispatch(
-            new fromAuthActions.ChangeUserCartDeatilsStart(updatedDetails)
-          );
-        })
-      )
-      .subscribe();
+    return this.http.post<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/address/add-address`,
+      useraddress
+    );
   }
   fetchAllAddress() {
-    return this.store
-      .select('AuthSection')
-      .pipe(pluck('user'), pluck('address'));
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/address/fetch-address`
+    );
   }
-  deteleUserAddress(index) {
-    this.store
-      .select('AuthSection')
-      .pipe(
-        pluck('user'),
-        take(1),
-        tap((userDeatils) => {
-          let userDetails = { ...userDeatils };
-          let address = userDeatils.address ? [...userDeatils.address] : [];
-          if (address.length > 0) {
-            address.splice(index, 1);
-            let updatedDetails = { ...userDetails, address: [...address] };
-
-            this.store.dispatch(
-              new fromAuthActions.ChangeUserCartDeatilsStart(updatedDetails)
-            );
-          }
-        })
-      )
-      .subscribe();
+  deteleUserAddress(id) {
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/address/delete-address/${id}`
+    );
   }
-  editUserAddressInfo(updatedAddress, index) {
-    this.store
-      .select('AuthSection')
-      .pipe(
-        pluck('user'),
-        take(1),
-        tap((userDeatils) => {
-          let userDetails = { ...userDeatils };
-          let address = userDeatils.address ? [...userDeatils.address] : [];
-
-          address[index] = updatedAddress;
-
-          let updatedDetails = { ...userDetails, address: [...address] };
-
-          this.store.dispatch(
-            new fromAuthActions.ChangeUserCartDeatilsStart(updatedDetails)
-          );
-        })
-      )
-      .subscribe();
+  editUserAddressInfo(updatedAddress, id) {
+    return this.http.patch<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}user/address/edit-address/${id}`,
+      updatedAddress
+    );
   }
 }

@@ -26,6 +26,13 @@ export class AddressCardComponent implements OnInit {
     });
   }
   deleteAddress() {
-    this.addressService.deteleUserAddress(this.addressIndex);
+    this.addressService.deteleUserAddress(this.addressIndex).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }

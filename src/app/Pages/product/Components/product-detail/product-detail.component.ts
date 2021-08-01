@@ -187,4 +187,11 @@ export class ProductDetailComponent implements OnInit {
       }
     }
   }
+  updateUrl(event) {
+    this.imageShown = 'https://i.stack.imgur.com/y9DpT.jpg';
+  }
+  updateArrayUrl(event, index) {
+    this.ProductData.products_images[index] =
+      'https://i.stack.imgur.com/y9DpT.jpg';
+  }
 }

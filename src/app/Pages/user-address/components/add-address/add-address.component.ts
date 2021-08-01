@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { state } from '../../city-data/state-city-list';
 import { UserAddressService } from '../../service/user-address.service';
 
@@ -21,7 +22,8 @@ export class AddAddressComponent implements OnInit {
   constructor(
     private addressService: UserAddressService,
     private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public editAddressData: any
+    @Inject(MAT_DIALOG_DATA) public editAddressData: any,
+    private snackBar: SnakbarService
   ) {}
 
   ngOnInit(): void {
@@ -96,13 +98,35 @@ export class AddAddressComponent implements OnInit {
   }
   onSubmit() {
     if (this.editAddressData) {
-      this.addressService.editUserAddressInfo(
-        this.addressForm.value,
-        this.editAddressData.addressIndex
-      );
+      this.addressService
+        .editUserAddressInfo(
+          this.addressForm.value,
+          this.editAddressData.addressIndex
+        )
+        .subscribe(
+          (editResponse) => {
+            console.log(editResponse);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
       this.dialog.closeAll();
     } else if (this.editAddressData == null) {
-      this.addressService.addnewAddress(this.addressForm.value);
+      this.addressService.addnewAddress(this.addressForm.value).subscribe(
+        (response) => {
+          console.log(response);
+
+          this.snackBar.showSnackBar(
+            'Address added successfully !!',
+            'success'
+          );
+        },
+        (err) => {
+          console.log(err);
+          this.snackBar.showSnackBar('Something Went Wrong', 'success');
+        }
+      );
       this.dialog.closeAll();
     }
   }

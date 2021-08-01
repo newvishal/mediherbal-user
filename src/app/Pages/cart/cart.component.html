@@ -21,7 +21,10 @@
                 class="image-section"
                 (click)="navigateToDeatils(item.combo_product_id._id, 'combo')"
               >
-                <img [src]="item.combo_product_id.products_images[0]" />
+                <img
+                  (error)="updateImageCombo($event, index)"
+                  [src]="item.combo_product_id.products_images[0]"
+                />
               </section>
 
               <section class="text-section">
@@ -71,7 +74,10 @@
                 class="image-section"
                 (click)="navigateToDeatils(item.product_id._id, 'single')"
               >
-                <img [src]="item.product_id.product_images[0]" />
+                <img
+                  (error)="updateImageProduct($event, index)"
+                  [src]="item.product_id.product_images[0]"
+                />
               </section>
               <section class="text-section">
                 <h2>{{ item.product_id.product_name }}</h2>
