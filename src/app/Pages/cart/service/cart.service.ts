@@ -1,15 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { map, pluck, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import * as fromApp from '../../../../app/store/app.reducer';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   constructor(
     private angularFireStore: AngularFirestore,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private http: HttpClient
   ) {}
   CartDeatilsSubject = new BehaviorSubject(null);
   fetchCart() {
@@ -118,5 +121,15 @@ export class CartService {
         })
       )
       .subscribe();
+  }
+  getCartDetail() {
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}cart`
+    );
+  }
+  deleteProductFromCart(id) {
+    return this.http.delete<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}cart/${id}`
+    );
   }
 }

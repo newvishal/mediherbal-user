@@ -8,6 +8,7 @@ import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { ProductService } from 'src/app/Pages/product/Service/product.service';
 import { HomeService } from '../../service/home.service';
+import { CartService } from 'src/app/Pages/cart/service/cart.service';
 
 @Component({
   selector: 'app-product-slider',
@@ -23,7 +24,8 @@ export class ProductSliderComponent implements OnInit {
     private router: Router,
     private store: Store<fromApp.AppState>,
     private snackBar: SnakbarService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private cartService: CartService
   ) {}
   ngOnChanges(): void {}
 
@@ -41,9 +43,7 @@ export class ProductSliderComponent implements OnInit {
       (response) => {
         if (!this.products[index].addToCart) {
           this.products[index].addToCart = true;
-          this.products[index].quantity = this.products[index].quantity + 1;
-        } else {
-          this.products[index].quantity = this.products[index].quantity + 1;
+          this.snackBar.showSnackBar('Item added to cart', 'success');
         }
         this.products[index].quantity = response.data.quantity;
       },
@@ -60,16 +60,12 @@ export class ProductSliderComponent implements OnInit {
       };
       this.homeService.editProductToCart(data).subscribe(
         (response) => {
-          if (this.products[index].quantity == 1) {
-            this.products[index].addToCart = false;
-            this.products[index].quantity = this.products[index].quantity - 1;
-          } else {
-            this.products[index].quantity = this.products[index].quantity - 1;
-          }
           if (response.data) {
             this.products[index].quantity = response.data.quantity;
           } else {
             this.products[index].quantity = 0;
+            this.products[index].addToCart = false;
+            this.snackBar.showSnackBar('Item removed from cart', 'danger');
           }
         },
         (err) => {
@@ -89,6 +85,21 @@ export class ProductSliderComponent implements OnInit {
         quantity: 0,
         addToCart: false,
       };
+    });
+    this.cartService.getCartDetail().subscribe((cart) => {
+      cart.data.map((item) => {
+        if (item.product_type === 'product') {
+          this.products.map((product, index) => {
+            if (product._id === item.product_id._id) {
+              this.products[index] = {
+                ...this.products[index],
+                quantity: item.quantity,
+                addToCart: true,
+              };
+            }
+          });
+        }
+      });
     });
   }
   navigateToDeatils(id) {

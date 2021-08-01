@@ -3,49 +3,72 @@
   <h3>Are you sure you want to remove this item from your cart ?</h3>
   <div class="items">
     <mat-card style="margin-bottom: 3%">
-      <mat-card-content>
+      <mat-card-content *ngIf="data.product_type === 'combo-product'">
         <div class="item-detail">
-          <section class="image-section">
-            <img [src]="data.product_data.products_images[0]" />
+          <section
+            class="image-section"
+            (click)="navigateToDeatils(data.combo_product_id._id, 'combo')"
+          >
+            <img [src]="data.combo_product_id.products_images[0]" />
+          </section>
+
+          <section class="text-section">
+            <h2>{{ data.combo_product_id.product_name }}</h2>
+            <h3>{{ data.combo_product_id.tag_line }}</h3>
+            <h3>{{ data.quantity }}</h3>
+          </section>
+
+          <section class="amount-section">
+            <section>
+              <mat-icon
+                (click)="deleteProduct(index, data.ct_id._id)"
+                style="cursor: pointer"
+                color="warn"
+                >close</mat-icon
+              >
+            </section>
+
+            <span>
+              <span class="price">₹ {{ data.combo_product_id.price }}</span>
+              &nbsp;
+              <span class="fake_price"
+                >₹ {{ data.combo_product_id.fake_price }}</span
+              ></span
+            >
+          </section>
+        </div>
+      </mat-card-content>
+      <mat-card-content *ngIf="data.product_type === 'product'">
+        <div class="item-detail">
+          <section
+            class="image-section"
+            (click)="navigateToDeatils(data.product_id._id, 'single')"
+          >
+            <img [src]="data.product_id.product_images[0]" />
           </section>
           <section class="text-section">
-            <h2>{{ data.product_data.product_name }}</h2>
-            <h3>{{ data.product_data.tag_line }}</h3>
-            <h3>{{ data.cartData.quantity }}</h3>
-            <h3 *ngIf="data.cartData.product_type === 'products'">
-              <span *ngFor="let type of data.product_data.product_type">
-                <span
-                  *ngIf="
-                    type.product_id === data.cartData.selected_product_id
-                  "
-                >
-                  {{ type.name }}
-                </span>
-              </span>
+            <h2>{{ data.product_id.product_name }}</h2>
+            <h3>{{ data.product_id.tag_line }}</h3>
+            <h3>
+              <b> Product Type: </b>
+              {{ data.product_id.product_type }}
             </h3>
+            <h3>{{ data.quantity }}</h3>
           </section>
           <section class="amount-section">
             <section>
-              <mat-icon style="cursor: pointer" color="warn">close</mat-icon>
+              <mat-icon
+                (click)="deleteProduct(index, data._id)"
+                style="cursor: pointer"
+                color="warn"
+                >close</mat-icon
+              >
             </section>
-            <span *ngIf="data.cartData.product_type === 'products'">
-              <span *ngFor="let type of data.product_data.product_type">
-                <span
-                  *ngIf="
-                    type.product_id === data.cartData.selected_product_id
-                  "
-                >
-                  <span class="price">{{ type.price }}</span>
-                  &nbsp;
-                  <span class="fake_price">{{ type.fake_price }}</span></span
-                >
-              </span>
-            </span>
-            <span *ngIf="data.cartData.product_type === 'comboProduct'">
-              <span class="price">{{ data.product_data.price }}</span>
+            <span>
+              <span class="price">₹ {{ data.product_id.price }}</span>
               &nbsp;
               <span class="fake_price"
-                >{{ data.product_data.fake_price }}</span
+                >₹ {{ data.product_id.fake_price }}</span
               ></span
             >
           </section>

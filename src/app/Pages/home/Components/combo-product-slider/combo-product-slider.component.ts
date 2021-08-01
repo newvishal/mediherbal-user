@@ -1,12 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/auth/interface/user.interface';
-import { Store } from '@ngrx/store';
-import { pluck, take, tap } from 'rxjs/operators';
-import * as fromApp from '../../../../store/app.reducer';
-import * as fromAuthSectionActions from '../../../../auth/store/Auth.Actions';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { HomeService } from '../../service/home.service';
+import { CartService } from 'src/app/Pages/cart/service/cart.service';
 
 @Component({
   selector: 'app-combo-product-slider',
@@ -19,9 +16,9 @@ export class ComboProductSliderComponent implements OnInit {
   userData: User = null;
   constructor(
     private router: Router,
-    private store: Store<fromApp.AppState>,
     private snackBar: SnakbarService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private cartService: CartService
   ) {}
   ngOnChanges(): void {}
   addToCart(index) {
@@ -33,9 +30,7 @@ export class ComboProductSliderComponent implements OnInit {
       (response) => {
         if (!this.products[index].addToCart) {
           this.products[index].addToCart = true;
-          this.products[index].quantity = this.products[index].quantity + 1;
-        } else {
-          this.products[index].quantity = this.products[index].quantity + 1;
+          this.snackBar.showSnackBar('Item added to cart', 'success');
         }
         this.products[index].quantity = response.data.quantity;
       },
@@ -52,16 +47,12 @@ export class ComboProductSliderComponent implements OnInit {
       };
       this.homeService.editComboProductToCart(data).subscribe(
         (response) => {
-          if (this.products[index].quantity == 1) {
-            this.products[index].addToCart = false;
-            this.products[index].quantity = this.products[index].quantity - 1;
-          } else {
-            this.products[index].quantity = this.products[index].quantity - 1;
-          }
           if (response.data) {
             this.products[index].quantity = response.data.quantity;
           } else {
             this.products[index].quantity = 0;
+            this.products[index].addToCart = false;
+            this.snackBar.showSnackBar('Item removed from cart', 'danger');
           }
         },
         (err) => {
@@ -81,6 +72,21 @@ export class ComboProductSliderComponent implements OnInit {
         quantity: 0,
         addToCart: false,
       };
+    });
+    this.cartService.getCartDetail().subscribe((cart) => {
+      cart.data.map((item) => {
+        if (item.product_type === 'combo-product') {
+          this.products.map((product, index) => {
+            if (product._id === item.combo_product_id._id) {
+              this.products[index] = {
+                ...this.products[index],
+                quantity: item.quantity,
+                addToCart: true,
+              };
+            }
+          });
+        }
+      });
     });
   }
   navigateToDeatils(id) {

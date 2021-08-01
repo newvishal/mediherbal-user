@@ -7,6 +7,7 @@ import * as fromAuthSectionActions from '../../auth/store/Auth.Actions';
 import { ProductInterface } from '../Interface/product.interface';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { HomeService } from '../home/service/home.service';
+import { CartService } from '../cart/service/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +20,8 @@ export class ProductComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
     private homeService: HomeService,
-    private snackBar: SnakbarService
+    private snackBar: SnakbarService,
+    private cartService: CartService
   ) {}
   productType;
   ProductList;
@@ -37,8 +39,22 @@ export class ProductComponent implements OnInit {
                 ...this.ProductList[index],
                 quantity: 0,
                 addToCart: false,
-                showLoader: false,
               };
+            });
+            this.cartService.getCartDetail().subscribe((cart) => {
+              cart.data.map((item) => {
+                if (item.product_type === 'product') {
+                  this.ProductList.map((product, index) => {
+                    if (product._id === item.product_id._id) {
+                      this.ProductList[index] = {
+                        ...this.ProductList[index],
+                        quantity: item.quantity,
+                        addToCart: true,
+                      };
+                    }
+                  });
+                }
+              });
             });
           },
           (err) => {
@@ -57,8 +73,22 @@ export class ProductComponent implements OnInit {
                 ...this.ProductList[index],
                 quantity: 0,
                 addToCart: false,
-                showLoader: false,
               };
+            });
+            this.cartService.getCartDetail().subscribe((cart) => {
+              cart.data.map((item) => {
+                if (item.product_type === 'combo-product') {
+                  this.ProductList.map((product, index) => {
+                    if (product._id === item.combo_product_id._id) {
+                      this.ProductList[index] = {
+                        ...this.ProductList[index],
+                        quantity: item.quantity,
+                        addToCart: true,
+                      };
+                    }
+                  });
+                }
+              });
             });
           },
           (err) => {
@@ -70,7 +100,6 @@ export class ProductComponent implements OnInit {
   }
   addToCart(index) {
     if (this.productType === 'single') {
-      this.ProductList[index].showLoader = true;
       const data = {
         product_id: this.ProductList[index]._id,
         quantity: 1,
@@ -79,22 +108,15 @@ export class ProductComponent implements OnInit {
         (response) => {
           if (!this.ProductList[index].addToCart) {
             this.ProductList[index].addToCart = true;
-            this.ProductList[index].quantity =
-              this.ProductList[index].quantity + 1;
-          } else {
-            this.ProductList[index].quantity =
-              this.ProductList[index].quantity + 1;
+            this.snackBar.showSnackBar('Item added to cart', 'success');
           }
           this.ProductList[index].quantity = response.data.quantity;
-          this.ProductList[index].showLoader = false;
         },
         (err) => {
           console.log(err.error.message);
-          this.ProductList[index].showLoader = false;
         }
       );
     } else if (this.productType === 'combo') {
-      this.ProductList[index].showLoader = true;
       const data = {
         combo_product_id: this.ProductList[index]._id,
         quantity: 1,
@@ -103,18 +125,12 @@ export class ProductComponent implements OnInit {
         (response) => {
           if (!this.ProductList[index].addToCart) {
             this.ProductList[index].addToCart = true;
-            this.ProductList[index].quantity =
-              this.ProductList[index].quantity + 1;
-          } else {
-            this.ProductList[index].quantity =
-              this.ProductList[index].quantity + 1;
+            this.snackBar.showSnackBar('Item added to cart', 'success');
           }
           this.ProductList[index].quantity = response.data.quantity;
-          this.ProductList[index].showLoader = false;
         },
         (err) => {
           console.log(err.error.message);
-          this.ProductList[index].showLoader = false;
         }
       );
     }
@@ -122,31 +138,22 @@ export class ProductComponent implements OnInit {
   removeQuantity(index) {
     if (this.productType === 'single') {
       if (this.ProductList[index].quantity > 0) {
-        this.ProductList[index].showLoader = true;
         const data = {
           product_id: this.ProductList[index]._id,
           quantity: -1,
         };
         this.homeService.editProductToCart(data).subscribe(
           (response) => {
-            if (this.ProductList[index].quantity == 1) {
-              this.ProductList[index].addToCart = false;
-              this.ProductList[index].quantity =
-                this.ProductList[index].quantity - 1;
-            } else {
-              this.ProductList[index].quantity =
-                this.ProductList[index].quantity - 1;
-            }
             if (response.data) {
               this.ProductList[index].quantity = response.data.quantity;
             } else {
+              this.ProductList[index].addToCart = false;
               this.ProductList[index].quantity = 0;
+              this.snackBar.showSnackBar('Item removed from cart', 'danger');
             }
-            this.ProductList[index].showLoader = false;
           },
           (err) => {
             console.log(err.error.message);
-            this.ProductList[index].showLoader = false;
           }
         );
       } else {
@@ -155,31 +162,22 @@ export class ProductComponent implements OnInit {
       }
     } else if (this.productType === 'combo') {
       if (this.ProductList[index].quantity > 0) {
-        this.ProductList[index].showLoader = true;
         const data = {
           combo_product_id: this.ProductList[index]._id,
           quantity: -1,
         };
         this.homeService.editComboProductToCart(data).subscribe(
           (response) => {
-            if (this.ProductList[index].quantity == 1) {
-              this.ProductList[index].addToCart = false;
-              this.ProductList[index].quantity =
-                this.ProductList[index].quantity - 1;
-            } else {
-              this.ProductList[index].quantity =
-                this.ProductList[index].quantity - 1;
-            }
             if (response.data) {
               this.ProductList[index].quantity = response.data.quantity;
             } else {
               this.ProductList[index].quantity = 0;
+              this.ProductList[index].addToCart = false;
+              this.snackBar.showSnackBar('Item removed from cart', 'danger');
             }
-            this.ProductList[index].showLoader = false;
           },
           (err) => {
             console.log(err.error.message);
-            this.ProductList[index].showLoader = false;
           }
         );
       } else {

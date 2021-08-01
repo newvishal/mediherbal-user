@@ -1,18 +1,12 @@
 <div class="outer-div">
   <div class="inner-div" *ngIf="cartData.length > 0">
     <section class="item-section">
-      <!--    <mat-card *ngIf="cartData.length > 0">
-        <mat-card-title
-          >Check delivery availability in your area</mat-card-title
-        >
-        <mat-card-content>List</mat-card-content>
-      </mat-card> -->
       <section class="heading">
         <h2>My Cart ({{ cartData.length }} Items)</h2>
         <h2>
           Total :
           <span>
-            <span class="price">{{ AmountDetails.TotalPrice }}</span>
+            <span class="price">₹ {{ AmountDetails.TotalPrice }}</span>
           </span>
         </h2>
       </section>
@@ -21,73 +15,109 @@
           style="margin-bottom: 3%"
           *ngFor="let item of cartData; let index = index"
         >
-          <mat-card-content>
+          <mat-card-content *ngIf="item.product_type === 'combo-product'">
             <div class="item-detail">
               <section
                 class="image-section"
-                (click)="
-                  navigateToDeatils(
-                    item.cartData.product_id,
-                    item.cartData.product_type
-                  )
-                "
+                (click)="navigateToDeatils(item.combo_product_id._id, 'combo')"
               >
-                <img [src]="item.product_data.products_images[0]" />
+                <img [src]="item.combo_product_id.products_images[0]" />
               </section>
+
               <section class="text-section">
-                <h2>{{ item.product_data.product_name }}</h2>
-                <h3>{{ item.product_data.tag_line }}</h3>
-                <h3>{{ item.cartData.quantity }}</h3>
-                <h3 *ngIf="item.cartData.product_type === 'products'">
-                  <span *ngFor="let type of item.product_data.product_type">
-                    <span
-                      *ngIf="
-                        type.product_id === item.cartData.selected_product_id
-                      "
-                    >
-                      {{ type.name }}
-                    </span>
-                  </span>
-                </h3>
+                <h2>{{ item.combo_product_id.product_name }}</h2>
+                <h3>{{ item.combo_product_id.tag_line }}</h3>
+                <h3>{{ item.quantity }}</h3>
+                <p>Quantity</p>
+                <section *ngIf="item.addToCart" class="cart-section">
+                  <section
+                    (click)="removeComboQuantity(index)"
+                    class="remove-section"
+                  >
+                    <mat-icon>remove</mat-icon>
+                  </section>
+                  <section class="quantity-section">
+                    <span style="padding: 2%">{{ item.quantity }}</span>
+                  </section>
+                  <section (click)="addComboToCart(index)" class="add-section">
+                    <mat-icon>add</mat-icon>
+                  </section>
+                </section>
               </section>
+
               <section class="amount-section">
                 <section>
                   <mat-icon
-                    (click)="removeQuantity(index)"
+                    (click)="deleteProduct(index, item._id)"
                     style="cursor: pointer"
                     color="warn"
                     >close</mat-icon
                   >
                 </section>
-                <span *ngIf="item.cartData.product_type === 'products'">
-                  <span *ngFor="let type of item.product_data.product_type">
-                    <span
-                      *ngIf="
-                        type.product_id === item.cartData.selected_product_id
-                      "
-                    >
-                      <span class="price">{{ type.price }}</span>
-                      &nbsp;
-                      <span class="fake_price">{{
-                        type.fake_price
-                      }}</span></span
-                    >
-                  </span>
-                </span>
-                <span *ngIf="item.cartData.product_type === 'comboProduct'">
-                  <span class="price">{{ item.product_data.price }}</span>
+
+                <span>
+                  <span class="price">₹ {{ item.combo_product_id.price }}</span>
                   &nbsp;
-                  <span class="fake_price">{{
-                    item.product_data.fake_price
-                  }}</span></span
+                  <span class="fake_price"
+                    >₹ {{ item.combo_product_id.fake_price }}</span
+                  ></span
                 >
               </section>
             </div>
           </mat-card-content>
-          <!--   <hr />
-          <mat-card-actions>
-            <button mat-raised-button color="warn">Remove Item</button>
-          </mat-card-actions> -->
+          <mat-card-content *ngIf="item.product_type === 'product'">
+            <div class="item-detail">
+              <section
+                class="image-section"
+                (click)="navigateToDeatils(item.product_id._id, 'single')"
+              >
+                <img [src]="item.product_id.product_images[0]" />
+              </section>
+              <section class="text-section">
+                <h2>{{ item.product_id.product_name }}</h2>
+                <h3>{{ item.product_id.tag_line }}</h3>
+                <h3>
+                  <b> Product Type: </b>
+                  {{ item.product_id.product_type }}
+                </h3>
+                <p>Quantity</p>
+                <section *ngIf="item.addToCart" class="cart-section">
+                  <section
+                    (click)="removeProductQuantity(index)"
+                    class="remove-section"
+                  >
+                    <mat-icon>remove</mat-icon>
+                  </section>
+                  <section class="quantity-section">
+                    <span style="padding: 2%">{{ item.quantity }}</span>
+                  </section>
+                  <section
+                    (click)="addProductToCart(index)"
+                    class="add-section"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </section>
+                </section>
+              </section>
+              <section class="amount-section">
+                <section>
+                  <mat-icon
+                    (click)="deleteProduct(index, item._id)"
+                    style="cursor: pointer"
+                    color="warn"
+                    >close</mat-icon
+                  >
+                </section>
+                <span>
+                  <span class="price">₹ {{ item.product_id.price }}</span>
+                  &nbsp;
+                  <span class="fake_price"
+                    >₹ {{ item.product_id.fake_price }}</span
+                  ></span
+                >
+              </section>
+            </div>
+          </mat-card-content>
         </mat-card>
       </div>
     </section>
@@ -108,20 +138,22 @@
               style="width: 100%; display: flex; justify-content: space-between"
             >
               <h3>Total MRP</h3>
-              <h3>{{ AmountDetails.TotalMRP }}</h3>
+              <h3>₹ {{ AmountDetails.TotalMRP }}</h3>
             </section>
             <section
               style="width: 100%; display: flex; justify-content: space-between"
             >
               <h3>Discount On MRP</h3>
-              <h3>{{ AmountDetails.TotalMRP - AmountDetails.TotalPrice }}</h3>
+              <h3>₹ {{ AmountDetails.TotalMRP - AmountDetails.TotalPrice }}</h3>
             </section>
             <hr />
             <section
               style="width: 100%; display: flex; justify-content: space-between"
             >
               <h3 style="font-weight: bold">Total Amount</h3>
-              <h3 style="font-weight: bold">{{ AmountDetails.TotalPrice }}</h3>
+              <h3 style="font-weight: bold">
+                ₹ {{ AmountDetails.TotalPrice }}
+              </h3>
             </section>
           </div>
           <hr />

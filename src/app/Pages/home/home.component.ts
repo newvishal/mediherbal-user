@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
-import { ComboProductInterface } from '../Interface/combo-products.interface';
-import { ProductInterface } from '../Interface/product.interface';
-import { ComboProductSliderComponent } from './Components/combo-product-slider/combo-product-slider.component';
 import { HomeService } from './service/home.service';
 
 @Component({
@@ -23,6 +20,7 @@ export class HomeComponent implements OnInit {
   comboProducts = [];
   ngOnInit(): void {
     /* this method return data observable Service */
+
     this.homeService.getProducts().subscribe(
       (products) => {
         this.products = products.data;
