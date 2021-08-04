@@ -9,6 +9,7 @@ import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { ProductService } from 'src/app/Pages/product/Service/product.service';
 import { HomeService } from '../../service/home.service';
 import { CartService } from 'src/app/Pages/cart/service/cart.service';
+import { UserDataService } from 'src/app/shared/service/userData.service';
 
 @Component({
   selector: 'app-product-slider',
@@ -25,7 +26,8 @@ export class ProductSliderComponent implements OnInit {
     private store: Store<fromApp.AppState>,
     private snackBar: SnakbarService,
     private homeService: HomeService,
-    private cartService: CartService
+    private cartService: CartService,
+    private userDataService: UserDataService
   ) {}
   ngOnChanges(): void {}
 
@@ -39,18 +41,13 @@ export class ProductSliderComponent implements OnInit {
       product_id: this.products[index]._id,
       quantity: 1,
     };
-    this.homeService.editProductToCart(data).subscribe(
-      (response) => {
-        if (!this.products[index].addToCart) {
-          this.products[index].addToCart = true;
-          this.snackBar.showSnackBar('Item added to cart', 'success');
-        }
-        this.products[index].quantity = response.data.quantity;
-      },
-      (err) => {
-        console.log(err.error.message);
+    this.homeService.editProductToCart(data).subscribe((response) => {
+      if (!this.products[index].addToCart) {
+        this.products[index].addToCart = true;
+        this.snackBar.showSnackBar('Item added to cart', 'success');
       }
-    );
+      this.products[index].quantity = response.data.quantity;
+    });
   }
   removeQuantity(index) {
     if (this.products[index].quantity > 0) {
@@ -58,20 +55,15 @@ export class ProductSliderComponent implements OnInit {
         product_id: this.products[index]._id,
         quantity: -1,
       };
-      this.homeService.editProductToCart(data).subscribe(
-        (response) => {
-          if (response.data) {
-            this.products[index].quantity = response.data.quantity;
-          } else {
-            this.products[index].quantity = 0;
-            this.products[index].addToCart = false;
-            this.snackBar.showSnackBar('Item removed from cart', 'danger');
-          }
-        },
-        (err) => {
-          console.log(err.error.message);
+      this.homeService.editProductToCart(data).subscribe((response) => {
+        if (response.data) {
+          this.products[index].quantity = response.data.quantity;
+        } else {
+          this.products[index].quantity = 0;
+          this.products[index].addToCart = false;
+          this.snackBar.showSnackBar('Item removed from cart', 'danger');
         }
-      );
+      });
     } else {
       this.products[index].addToCart = false;
       this.products[index].quantity = 0;
@@ -86,21 +78,23 @@ export class ProductSliderComponent implements OnInit {
         addToCart: false,
       };
     });
-    this.cartService.getCartDetail().subscribe((cart) => {
-      cart.data.map((item) => {
-        if (item.product_type === 'product') {
-          this.products.map((product, index) => {
-            if (product._id === item.product_id._id) {
-              this.products[index] = {
-                ...this.products[index],
-                quantity: item.quantity,
-                addToCart: true,
-              };
-            }
-          });
-        }
+    if (this.userDataService.getUserData()) {
+      this.cartService.getCartDetail().subscribe((cart) => {
+        cart.data.map((item) => {
+          if (item.product_type === 'product') {
+            this.products.map((product, index) => {
+              if (product._id === item.product_id._id) {
+                this.products[index] = {
+                  ...this.products[index],
+                  quantity: item.quantity,
+                  addToCart: true,
+                };
+              }
+            });
+          }
+        });
       });
-    });
+    }
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/single/${id}`]);

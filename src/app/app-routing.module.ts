@@ -24,7 +24,6 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
@@ -60,6 +59,7 @@ const routes: Routes = [
       },
       {
         path: 'user-address',
+
         loadChildren: () =>
           import('./Pages/user-address/user-address.module').then(
             (m) => m.UserAddressModule
@@ -67,6 +67,7 @@ const routes: Routes = [
       },
       {
         path: 'checkout',
+
         loadChildren: () =>
           import('./Pages/checkout/checkout.module').then(
             (m) => m.CheckoutModule
@@ -74,6 +75,7 @@ const routes: Routes = [
       },
       {
         path: 'order',
+
         loadChildren: () =>
           import('./Pages/order/order.module').then((m) => m.OrderModule),
       },

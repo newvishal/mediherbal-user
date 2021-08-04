@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
     const userData = JSON.parse(localStorage.getItem('userData'));
     if (userData) {
       this.userDataService.setUserData(userData);
-    } else {
-      this.router.navigate(['/login']);
     }
   }
   title = 'mediherbal';

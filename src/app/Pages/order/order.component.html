@@ -6,7 +6,7 @@
           style="margin-bottom: 3%"
           *ngFor="let order of orderList; let mainIndex = index"
         >
-          <mat-card-header *ngIf="order.order_status === 'Booked'">
+          <mat-card-header *ngIf="order.order_status === 'booked'">
             <div mat-card-avatar class="booked"></div>
             <mat-card-title>
               <mat-chip-list>
@@ -16,11 +16,9 @@
               ></mat-card-title
             >
 
-            <mat-card-subtitle
-              >on {{ order.order_date | date }}</mat-card-subtitle
-            >
+            <mat-card-subtitle>on {{ order.order_date }}</mat-card-subtitle>
           </mat-card-header>
-          <mat-card-header *ngIf="order.order_status === 'Shipped'">
+          <mat-card-header *ngIf="order.order_status === 'shipped'">
             <div mat-card-avatar class="shipped"></div>
             <mat-card-title>
               <mat-chip-list>
@@ -29,11 +27,9 @@
                 </mat-chip></mat-chip-list
               ></mat-card-title
             >
-            <mat-card-subtitle
-              >on {{ order.shipping_date | shortDate }}</mat-card-subtitle
-            >
+            <!-- <mat-card-subtitle>on {{ order.shipping_date }}</mat-card-subtitle> -->
           </mat-card-header>
-          <mat-card-header *ngIf="order.order_status === 'Delivered'">
+          <mat-card-header *ngIf="order.order_status === 'delivered'">
             <div mat-card-avatar class="deliverd"></div>
             <mat-card-title>
               <mat-chip-list>
@@ -42,9 +38,7 @@
                 </mat-chip></mat-chip-list
               ></mat-card-title
             >
-            <mat-card-subtitle
-              >on {{ order.delivery_date | shortDate }}</mat-card-subtitle
-            >
+            <!--   <mat-card-subtitle>on {{ order.delivery_date }}</mat-card-subtitle> -->
           </mat-card-header>
           <mat-expansion-panel>
             <mat-expansion-panel-header>

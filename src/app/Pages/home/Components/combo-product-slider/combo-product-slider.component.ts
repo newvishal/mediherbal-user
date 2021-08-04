@@ -4,6 +4,7 @@ import { User } from 'src/app/auth/interface/user.interface';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { HomeService } from '../../service/home.service';
 import { CartService } from 'src/app/Pages/cart/service/cart.service';
+import { UserDataService } from 'src/app/shared/service/userData.service';
 
 @Component({
   selector: 'app-combo-product-slider',
@@ -18,7 +19,8 @@ export class ComboProductSliderComponent implements OnInit {
     private router: Router,
     private snackBar: SnakbarService,
     private homeService: HomeService,
-    private cartService: CartService
+    private cartService: CartService,
+    private userDataService: UserDataService
   ) {}
   ngOnChanges(): void {}
   addToCart(index) {
@@ -73,21 +75,24 @@ export class ComboProductSliderComponent implements OnInit {
         addToCart: false,
       };
     });
-    this.cartService.getCartDetail().subscribe((cart) => {
-      cart.data.map((item) => {
-        if (item.product_type === 'combo-product') {
-          this.products.map((product, index) => {
-            if (product._id === item.combo_product_id._id) {
-              this.products[index] = {
-                ...this.products[index],
-                quantity: item.quantity,
-                addToCart: true,
-              };
-            }
-          });
-        }
+
+    if (this.userDataService.getUserData()) {
+      this.cartService.getCartDetail().subscribe((cart) => {
+        cart.data.map((item) => {
+          if (item.product_type === 'combo-product') {
+            this.products.map((product, index) => {
+              if (product._id === item.combo_product_id._id) {
+                this.products[index] = {
+                  ...this.products[index],
+                  quantity: item.quantity,
+                  addToCart: true,
+                };
+              }
+            });
+          }
+        });
       });
-    });
+    }
   }
   navigateToDeatils(id) {
     this.router.navigate([`/product-detail/combo/${id}`]);

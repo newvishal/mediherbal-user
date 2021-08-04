@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { pluck, take } from 'rxjs/operators';
@@ -7,11 +7,14 @@ import * as fromApp from '../../../store/app.reducer';
 import * as fromHomeAction from '../store/home.action';
 @Injectable()
 export class HomeService {
-  constructor(private http: HttpClient) {}
+  httpClient: HttpClient;
+  constructor(private http: HttpClient, private httpbackEnd: HttpBackend) {
+    this.httpClient = new HttpClient(httpbackEnd);
+  }
   getProducts() {
     let params = new HttpParams();
     params = params.append('purchasable', 'true');
-    return this.http.get<{ status: boolean; message: string; data: any }>(
+    return this.httpClient.get<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}products/get-product`,
       {
         params: params,
@@ -21,7 +24,7 @@ export class HomeService {
   getComboProducts() {
     let params = new HttpParams();
     params = params.append('purchasable', 'true');
-    return this.http.get<{ status: boolean; message: string; data: any }>(
+    return this.httpClient.get<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}combo-product`,
       {
         params: params,
@@ -29,12 +32,12 @@ export class HomeService {
     );
   }
   getProductsById(id) {
-    return this.http.get<{ status: boolean; message: string; data: any }>(
+    return this.httpClient.get<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}products/${id}`
     );
   }
   getComboProductsById(id) {
-    return this.http.get<{ status: boolean; message: string; data: any }>(
+    return this.httpClient.get<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}combo-product/${id}`
     );
   }

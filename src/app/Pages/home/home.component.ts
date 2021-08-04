@@ -23,18 +23,22 @@ export class HomeComponent implements OnInit {
 
     this.homeService.getProducts().subscribe(
       (products) => {
+        console.log(products);
+
         this.products = products.data;
       },
       (err) => {
-        this.snackbarService.showSnackBar(err.error.message, 'danger');
+        this.snackbarService.showSnackBar('', 'danger');
       }
     );
     this.homeService.getComboProducts().subscribe(
       (comboProduct) => {
+        console.log(comboProduct);
+
         this.comboProducts = comboProduct.data;
       },
       (err) => {
-        this.snackbarService.showSnackBar(err.error.message, 'danger');
+        this.snackbarService.showSnackBar('', 'danger');
       }
     );
   }

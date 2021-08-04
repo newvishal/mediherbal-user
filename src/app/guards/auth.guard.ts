@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivateChild {
     | UrlTree {
     return this.store.select('AuthSection').pipe(
       map((AuthState) => {
-        return AuthState.user ? true : this.router.createUrlTree(['/login']);
+        return AuthState.user ? true : true;
       })
     );
   }

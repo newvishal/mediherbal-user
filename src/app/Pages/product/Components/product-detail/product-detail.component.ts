@@ -8,6 +8,7 @@ import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { ProductService } from '../../Service/product.service';
 import { HomeService } from 'src/app/Pages/home/service/home.service';
 import { CartService } from 'src/app/Pages/cart/service/cart.service';
+import { UserDataService } from 'src/app/shared/service/userData.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,7 +21,8 @@ export class ProductDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private store: Store<fromApp.AppState>,
     private snackBar: SnakbarService,
-    private cartService: CartService
+    private cartService: CartService,
+    private userDataService: UserDataService
   ) {}
   ProductData;
   data;
@@ -42,19 +44,22 @@ export class ProductDetailComponent implements OnInit {
               addToCart: false,
               products_images: this.ProductData.product_images,
             };
-            this.cartService.getCartDetail().subscribe((cart) => {
-              cart.data.map((item) => {
-                if (item.product_type === 'product') {
-                  if (this.ProductData._id === item.product_id._id) {
-                    this.ProductData = {
-                      ...this.ProductData,
-                      quantity: item.quantity,
-                      addToCart: true,
-                    };
+
+            if (this.userDataService.getUserData()) {
+              this.cartService.getCartDetail().subscribe((cart) => {
+                cart.data.map((item) => {
+                  if (item.product_type === 'product') {
+                    if (this.ProductData._id === item.product_id._id) {
+                      this.ProductData = {
+                        ...this.ProductData,
+                        quantity: item.quantity,
+                        addToCart: true,
+                      };
+                    }
                   }
-                }
+                });
               });
-            });
+            }
             this.imageShown = this.ProductData.products_images[0];
           },
           (err) => {
@@ -73,19 +78,22 @@ export class ProductDetailComponent implements OnInit {
               quantity: 0,
               addToCart: false,
             };
-            this.cartService.getCartDetail().subscribe((cart) => {
-              cart.data.map((item) => {
-                if (item.product_type === 'combo-product') {
-                  if (this.ProductData._id === item.combo_product_id._id) {
-                    this.ProductData = {
-                      ...this.ProductData,
-                      quantity: item.quantity,
-                      addToCart: true,
-                    };
+
+            if (this.userDataService.getUserData()) {
+              this.cartService.getCartDetail().subscribe((cart) => {
+                cart.data.map((item) => {
+                  if (item.product_type === 'combo-product') {
+                    if (this.ProductData._id === item.combo_product_id._id) {
+                      this.ProductData = {
+                        ...this.ProductData,
+                        quantity: item.quantity,
+                        addToCart: true,
+                      };
+                    }
                   }
-                }
+                });
               });
-            });
+            }
             this.imageShown = this.ProductData.products_images[0];
           },
           (err) => {

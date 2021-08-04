@@ -8,6 +8,7 @@ import { ProductInterface } from '../Interface/product.interface';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { HomeService } from '../home/service/home.service';
 import { CartService } from '../cart/service/cart.service';
+import { UserDataService } from 'src/app/shared/service/userData.service';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +22,8 @@ export class ProductComponent implements OnInit {
     private store: Store<fromApp.AppState>,
     private homeService: HomeService,
     private snackBar: SnakbarService,
-    private cartService: CartService
+    private cartService: CartService,
+    private userDataService: UserDataService
   ) {}
   productType;
   ProductList;
@@ -41,21 +43,24 @@ export class ProductComponent implements OnInit {
                 addToCart: false,
               };
             });
-            this.cartService.getCartDetail().subscribe((cart) => {
-              cart.data.map((item) => {
-                if (item.product_type === 'product') {
-                  this.ProductList.map((product, index) => {
-                    if (product._id === item.product_id._id) {
-                      this.ProductList[index] = {
-                        ...this.ProductList[index],
-                        quantity: item.quantity,
-                        addToCart: true,
-                      };
-                    }
-                  });
-                }
+
+            if (this.userDataService.getUserData()) {
+              this.cartService.getCartDetail().subscribe((cart) => {
+                cart.data.map((item) => {
+                  if (item.product_type === 'product') {
+                    this.ProductList.map((product, index) => {
+                      if (product._id === item.product_id._id) {
+                        this.ProductList[index] = {
+                          ...this.ProductList[index],
+                          quantity: item.quantity,
+                          addToCart: true,
+                        };
+                      }
+                    });
+                  }
+                });
               });
-            });
+            }
           },
           (err) => {
             this.snackBar.showSnackBar(err.error.message, 'danger');
@@ -75,21 +80,24 @@ export class ProductComponent implements OnInit {
                 addToCart: false,
               };
             });
-            this.cartService.getCartDetail().subscribe((cart) => {
-              cart.data.map((item) => {
-                if (item.product_type === 'combo-product') {
-                  this.ProductList.map((product, index) => {
-                    if (product._id === item.combo_product_id._id) {
-                      this.ProductList[index] = {
-                        ...this.ProductList[index],
-                        quantity: item.quantity,
-                        addToCart: true,
-                      };
-                    }
-                  });
-                }
+
+            if (this.userDataService.getUserData()) {
+              this.cartService.getCartDetail().subscribe((cart) => {
+                cart.data.map((item) => {
+                  if (item.product_type === 'combo-product') {
+                    this.ProductList.map((product, index) => {
+                      if (product._id === item.combo_product_id._id) {
+                        this.ProductList[index] = {
+                          ...this.ProductList[index],
+                          quantity: item.quantity,
+                          addToCart: true,
+                        };
+                      }
+                    });
+                  }
+                });
               });
-            });
+            }
           },
           (err) => {
             this.snackBar.showSnackBar(err.error.message, 'danger');
