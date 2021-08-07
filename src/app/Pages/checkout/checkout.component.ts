@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit {
   RAZORPAY_OPTIONS = {
     key: 'rzp_test_zatIrPrlDfenM3',
     amount: '',
-    name: 'Mediherbal',
+    name: 'Mediherbals',
     order_id: '',
     description: 'Pay for your order',
     image: '/assets/Images/Logo/onlyLogo.jpg',
