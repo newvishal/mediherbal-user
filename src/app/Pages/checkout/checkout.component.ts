@@ -41,7 +41,7 @@ export class CheckoutComponent implements OnInit {
   userData;
   UserDataSubscription: Subscription;
   RAZORPAY_OPTIONS = {
-    key: 'rzp_test_B2nHBKAHakk7vV',
+    key: 'rzp_test_zatIrPrlDfenM3',
     amount: '',
     name: 'Mediherbal',
     order_id: '',
