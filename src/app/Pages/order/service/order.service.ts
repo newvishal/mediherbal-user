@@ -23,4 +23,10 @@ export class OrderService {
       data
     );
   }
+  cancelOrder(id) {
+    return this.http.put<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}order/cancel-order/${id}`,
+      {}
+    );
+  }
 }

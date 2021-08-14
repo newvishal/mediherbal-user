@@ -63,27 +63,17 @@ export class CheckoutComponent implements OnInit {
     TotalPrice: 0,
   };
   ngOnInit(): void {
-    this.cartService.getCartDetail().subscribe((cartDetails) => {
-      if (cartDetails.data.length > 0) {
-        this.cartData = cartDetails.data;
-        this.calculateAmount();
-        this.userCart = {
-          cartData: this.cartData,
-          amountDetail: this.AmountDetails,
-        };
-      } else {
-        this.router.navigate(['/home/cart']);
+    this.getCartDetail();
+
+    this.getUserData();
+    this.getLocation();
+    this.checkoutService.paymentStatus.subscribe((res) => {
+      if (res.status) {
+        this.router.navigate(['/home/order'], { replaceUrl: true });
       }
     });
-    this.UserDataService.UserData.subscribe((userData) => {
-      this.userData = userData;
-
-      this.RAZORPAY_OPTIONS.prefill.email = this.userData.email;
-      this.RAZORPAY_OPTIONS.prefill.contact = this.userData.phone_number;
-      this.RAZORPAY_OPTIONS.prefill.name =
-        this.userData.first_name + ' ' + this.userData.last_name;
-    });
-
+  }
+  getLocation() {
     this.checkoutService.getUsersAddress().subscribe(
       (userAddress) => {
         this.userAddress = userAddress.data;
@@ -97,6 +87,30 @@ export class CheckoutComponent implements OnInit {
         }
       }
     );
+  }
+  getUserData() {
+    this.UserDataService.UserData.subscribe((userData) => {
+      this.userData = userData;
+
+      this.RAZORPAY_OPTIONS.prefill.email = this.userData.email;
+      this.RAZORPAY_OPTIONS.prefill.contact = this.userData.phone_number;
+      this.RAZORPAY_OPTIONS.prefill.name =
+        this.userData.first_name + ' ' + this.userData.last_name;
+    });
+  }
+  getCartDetail() {
+    this.cartService.getCartDetail().subscribe((cartDetails) => {
+      if (cartDetails.data.length > 0) {
+        this.cartData = cartDetails.data;
+        this.calculateAmount();
+        this.userCart = {
+          cartData: this.cartData,
+          amountDetail: this.AmountDetails,
+        };
+      } else {
+        this.router.navigate(['/home/cart']);
+      }
+    });
   }
   calculateAmount() {
     this.AmountDetails = {
@@ -132,9 +146,16 @@ export class CheckoutComponent implements OnInit {
     });
   }
   addAddress() {
-    this.dialog.open(AddAddressComponent);
+    const dialogref = this.dialog.open(AddAddressComponent);
+    dialogref.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getLocation();
+      }
+    });
   }
   clickToPay() {
+    this.checkoutService.updatePaymentStatus({ status: 0, mssg: '' });
+
     /*  this.RAZORPAY_OPTIONS.amount = 100 + '00'; */
     this.RAZORPAY_OPTIONS.amount = this.userCart.amountDetail.TotalPrice + '00';
     // binding this object to both success and dismiss handler
@@ -158,7 +179,11 @@ export class CheckoutComponent implements OnInit {
       (order) => {
         this.snackbar.showSnackBar('Order created successfully !!', 'success');
         this.showModal = true;
-        this.router.navigate(['/home/order'], { replaceUrl: true });
+
+        this.checkoutService.updatePaymentStatus({
+          status: 1,
+          mssg: 'Payment Successfull !',
+        });
       },
       (err) => {
         this.snackbar.showSnackBar('Place order unsuccessfull', 'danger');

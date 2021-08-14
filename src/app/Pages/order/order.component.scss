@@ -8,9 +8,10 @@
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
+  flex-direction: column;
 }
 .item-section {
-  width: 75%;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -93,7 +94,11 @@ hr {
   }
 }
 .booked {
-  background-image: url("https://cdn0.iconfinder.com/data/icons/common-shopping-1/48/Sed-01-512.png");
+  background-image: url("https://png.pngtree.com/element_our/png_detail/20181227/eco-bag-vector-icon-png_294541.jpg");
+  background-size: cover;
+}
+.cancel {
+  background-image: url("https://media.istockphoto.com/vectors/red-rubber-stamp-icon-on-transparent-background-vector-id833779546?b=1&k=6&m=833779546&s=170667a&w=0&h=pohHRe2r-LED0KKcEcgSESjSh7__ythz-qXnR2RcMeU=");
   background-size: cover;
 }
 .shipped {
@@ -103,4 +108,17 @@ hr {
 .deliverd {
   background-image: url("https://thumbs.dreamstime.com/b/delivered-rubber-stamp-illustration-isolated-white-background-delivered-stamp-124829897.jpg");
   background-size: cover;
+}
+
+.refunded {
+  background-image: url("https://www.digamberfinance.com/wp-content/uploads/2018/12/Untitled-6.png");
+  background-size: cover;
+}
+.outForDelivery {
+  background-image: url("https://clipartart.com/images/moto-delivery-clipart-2.jpg");
+  background-size: cover;
+}
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: none;
+  border: 1px solid #eaeaec;
 }

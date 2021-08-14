@@ -158,8 +158,18 @@
           </div>
           <hr />
         </mat-card-content>
+        <div style="width: 100%; text-align: center">
+          <p *ngIf="!selectedAddress" style="color: red">
+            * Select/Add address to continue
+          </p>
+        </div>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="clickToPay()">
+          <button
+            [disabled]="!selectedAddress"
+            mat-raised-button
+            color="primary"
+            (click)="clickToPay()"
+          >
             Pay
           </button>
         </mat-card-actions>

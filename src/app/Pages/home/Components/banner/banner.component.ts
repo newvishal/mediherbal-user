@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { HomeService } from '../../service/home.service';
 
 @Component({
   selector: 'app-banner',
@@ -7,7 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BannerComponent implements OnInit {
   @Input() images;
-  constructor() {}
+  bannerData;
+  constructor(private homeService: HomeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.homeService.getBannerData().subscribe((res) => {
+      this.bannerData = res.data;
+    });
+  }
 }

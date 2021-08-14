@@ -15,6 +15,9 @@ export class CheckoutService {
     private angularfireStore: AngularFirestore,
     private http: HttpClient
   ) {}
+
+  paymentSubject = new BehaviorSubject({ status: 0, mssg: '' });
+  paymentStatus = this.paymentSubject.asObservable();
   userCart = new BehaviorSubject(null);
   getUsersAddress() {
     return this.http.get<{ status: boolean; message: string; data: any }>(
@@ -32,5 +35,8 @@ export class CheckoutService {
       `${environment.base_url}order`,
       data
     );
+  }
+  updatePaymentStatus(data) {
+    this.paymentSubject.next(data);
   }
 }

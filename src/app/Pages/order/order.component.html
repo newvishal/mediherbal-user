@@ -1,22 +1,59 @@
 <div class="outer-div">
   <div class="inner-div" *ngIf="orderList.length > 0">
+    <section class="item-section" style="margin-bottom: 20px">
+      <h2>Your Orders</h2>
+    </section>
     <section class="item-section">
       <div class="items">
         <mat-card
           style="margin-bottom: 3%"
           *ngFor="let order of orderList; let mainIndex = index"
         >
-          <mat-card-header *ngIf="order.order_status === 'booked'">
+          <mat-card-header
+            *ngIf="order.order_status === 'booked'"
+            style="display: flex"
+          >
             <div mat-card-avatar class="booked"></div>
-            <mat-card-title>
-              <mat-chip-list>
-                <mat-chip selected color="secondary">
-                  Booked
-                </mat-chip></mat-chip-list
-              ></mat-card-title
+            <div
+              style="
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: column;
+              "
             >
+              <mat-card-title>
+                <mat-chip-list>
+                  <mat-chip selected color="primary">
+                    Booked
+                  </mat-chip></mat-chip-list
+                ></mat-card-title
+              >
 
-            <mat-card-subtitle>on {{ order.order_date }}</mat-card-subtitle>
+              <mat-card-subtitle
+                >on {{ order.order_date | date }}</mat-card-subtitle
+              >
+              <mat-card-subtitle
+                >Thank you for placing your order !</mat-card-subtitle
+              >
+            </div>
+            <div
+              style="
+                align-items: center;
+                display: flex;
+                justify-content: flex-end;
+                right: 20px;
+                position: absolute;
+                top: 10px;
+              "
+            >
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="cancelOrder(order._id)"
+              >
+                Cancel Order
+              </button>
+            </div>
           </mat-card-header>
           <mat-card-header *ngIf="order.order_status === 'shipped'">
             <div mat-card-avatar class="shipped"></div>
@@ -27,7 +64,18 @@
                 </mat-chip></mat-chip-list
               ></mat-card-title
             >
-            <!-- <mat-card-subtitle>on {{ order.shipping_date }}</mat-card-subtitle> -->
+            <mat-card-subtitle>Your order is on your way</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-header *ngIf="order.order_status === 'out for delivery'">
+            <div mat-card-avatar class="outForDelivery"></div>
+            <mat-card-title>
+              <mat-chip-list>
+                <mat-chip selected color="accent">
+                  Out For Delivery
+                </mat-chip></mat-chip-list
+              ></mat-card-title
+            >
+            <mat-card-subtitle>Your order is on your way</mat-card-subtitle>
           </mat-card-header>
           <mat-card-header *ngIf="order.order_status === 'delivered'">
             <div mat-card-avatar class="deliverd"></div>
@@ -38,7 +86,37 @@
                 </mat-chip></mat-chip-list
               ></mat-card-title
             >
-            <!--   <mat-card-subtitle>on {{ order.delivery_date }}</mat-card-subtitle> -->
+            <mat-card-subtitle
+              >Your order has been delivered , please rate and review the
+              products.</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-header *ngIf="order.order_status === 'cancel'">
+            <div mat-card-avatar class="cancel"></div>
+            <mat-card-title>
+              <mat-chip-list>
+                <mat-chip selected color="warn">
+                  Order Cancelled
+                </mat-chip></mat-chip-list
+              ></mat-card-title
+            >
+            <mat-card-subtitle
+              >Your amount will be refunded within 5-7 days</mat-card-subtitle
+            >
+          </mat-card-header>
+          <mat-card-header *ngIf="order.order_status === 'refunded'">
+            <div mat-card-avatar class="refunded"></div>
+            <mat-card-title>
+              <mat-chip-list>
+                <mat-chip selected color="primary">
+                  Order Refunded
+                </mat-chip></mat-chip-list
+              ></mat-card-title
+            >
+            <mat-card-subtitle
+              >Your order payment amount is refunded
+              successfully</mat-card-subtitle
+            >
           </mat-card-header>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -55,17 +133,17 @@
               <div class="item-detail">
                 <section
                   class="image-section"
-                  (click)="navigateToDeatils(item._id, 'combo')"
+                  (click)="navigateToDeatils(item.comboproduct_id._id, 'combo')"
                 >
                   <img
                     (error)="updateImage(mainIndex, 'combo', index, $event)"
-                    [src]="item.products_images[0]"
+                    [src]="item.comboproduct_id.products_images[0]"
                   />
                 </section>
                 <section class="text-section">
-                  <h2>{{ item.product_name }}</h2>
-                  <h3>{{ item.tag_line }}</h3>
-                  <!--  <h3>{{ item.cartData.quantity }}</h3> -->
+                  <h2>{{ item.comboproduct_id.product_name }}</h2>
+                  <h3>{{ item.comboproduct_id.tag_line }}</h3>
+                  <h3>{{ item.quantity }}</h3>
                 </section>
               </div>
             </mat-card-content>
@@ -75,20 +153,47 @@
               <div class="item-detail">
                 <section
                   class="image-section"
-                  (click)="navigateToDeatils(item._id, 'single')"
+                  (click)="navigateToDeatils(item.product_id._id, 'single')"
                 >
                   <img
                     (error)="updateImage(mainIndex, 'single', index, $event)"
-                    [src]="item.product_images[0]"
+                    [src]="item.product_id.product_images[0]"
                   />
                 </section>
                 <section class="text-section">
-                  <h2>{{ item.product_name }}</h2>
-                  <h3>{{ item.tag_line }}</h3>
-                  <!--    <h3>{{ item.cartData.quantity }}</h3> -->
+                  <h2>{{ item.product_id.product_name }}</h2>
+                  <h3>{{ item.product_id.tag_line }}</h3>
+                  <h3>{{ item.quantity }}</h3>
                   <h3>
-                    {{ item.product_type }}
+                    {{ item.product_id.product_type }}
                   </h3>
+                </section>
+              </div>
+            </mat-card-content>
+          </mat-expansion-panel>
+          <mat-expansion-panel style="margin-top: 20px">
+            <mat-expansion-panel-header>
+              <mat-panel-title> Address </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-card-content>
+              <div class="item-detail">
+                <section class="text-section">
+                  <h3>
+                    Name : {{ order.address.first_name }}
+                    {{ order.address.last_name }}
+                  </h3>
+                  <h3>House Number : {{ order.address.house_number }}</h3>
+                  <h3>House Street : {{ order.address.street_colony_name }}</h3>
+                  <h3>Landmark : {{ order.address.landmark }}</h3>
+                  <h3>
+                    City :
+                    {{ order.address.city }}
+                  </h3>
+                  <h3>
+                    State :
+                    {{ order.address.state }}
+                  </h3>
+                  <h3>Pincode : {{ order.address.pincode }}</h3>
                 </section>
               </div>
             </mat-card-content>

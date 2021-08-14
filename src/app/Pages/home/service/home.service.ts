@@ -53,4 +53,9 @@ export class HomeService {
       data
     );
   }
+  getBannerData() {
+    return this.httpClient.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}banner`
+    );
+  }
 }

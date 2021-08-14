@@ -36,6 +36,7 @@ import { LoaderComponent } from './shared/Components/loader/loader.component';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { BUCKET } from '@angular/fire/storage';
 import { PolicyService } from './Pages/policy/service/policy.service';
+import { DeleteConfirmationComponent } from './shared/Components/delete-confirmation/delete-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { PolicyService } from './Pages/policy/service/policy.service';
     FooterComponent,
     PolicyComponent,
     LoaderComponent,
+    DeleteConfirmationComponent,
   ],
   imports: [
     HttpClientModule,
