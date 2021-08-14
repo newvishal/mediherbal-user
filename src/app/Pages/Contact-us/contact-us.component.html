@@ -66,16 +66,25 @@
       <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
         <h1 style="text-align: center">Get In Touch</h1>
         <mat-form-field appearance="outline" color="accent">
-          <mat-label>Name</mat-label>
+          <mat-label>First Name</mat-label>
           <input
             type="text"
             matInput
-            formControlName="full_name"
-            placeholder="Enter Full Name"
+            formControlName="first_name"
+            placeholder="Enter First Name"
           />
           <mat-icon color="primary" matSuffix>person</mat-icon>
         </mat-form-field>
-
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Last Name</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="last_name"
+            placeholder="Enter Last Name"
+          />
+          <mat-icon color="primary" matSuffix>person</mat-icon>
+        </mat-form-field>
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Email</mat-label>
           <input
@@ -86,12 +95,22 @@
           />
           <mat-icon color="primary" matSuffix>email</mat-icon>
         </mat-form-field>
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Phone number</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="phone_number"
+            placeholder="Phone number"
+          />
+          <mat-icon color="primary" matSuffix>call</mat-icon>
+        </mat-form-field>
 
         <mat-form-field appearance="outline" color="accent">
           <mat-label>Message</mat-label>
           <textarea
             matInput
-            formControlName="message"
+            formControlName="query"
             placeholder="Your Message"
             type="text"
           ></textarea>
@@ -108,11 +127,5 @@
         </section>
       </form>
     </section>
-  </div>
-  <div class="map-section">
-    <img
-      style="border-radius: 20px"
-      src="http://www.mapaplan.com/travel-map/london-top-tourist-attractions-map/high-resolution/london-top-tourist-attractions-map-09-google-maps-mashup-high-resolution.jpg"
-    />
   </div>
 </div>
