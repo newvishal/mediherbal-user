@@ -20,12 +20,14 @@
   display: flex;
   margin-top: 5%;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   h1 {
     font-size: 30px;
   }
 }
 .heading {
-  width: 100%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
 }
@@ -37,4 +39,19 @@
 a {
   text-decoration: none;
   color: black;
+}
+.haeding-products {
+  font-size: 30px;
+  font-weight: 600;
+}
+.hr_div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  hr {
+    width: 90%;
+    height: 1px;
+    background: rgb(158, 161, 158);
+    border-radius: 20px;
+  }
 }
