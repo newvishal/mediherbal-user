@@ -29,12 +29,8 @@ export class ContactUsComponent implements OnInit {
       phone_number: new FormControl('', [Validators.required]),
     });
   }
-  /*
-  @description:this method is executed in submit of the signup form
-  */
 
   onSubmit() {
-    console.log(this.contactUsForm.value);
     this.contactService.addUsersAddress(this.contactUsForm.value).subscribe(
       (result) => {
         this.snackbarService.showSnackBar(result.message, 'success');

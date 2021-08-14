@@ -19,11 +19,12 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private homeService: HomeService,
     private activatedRoute: ActivatedRoute,
-    private store: Store<fromApp.AppState>,
+    private productService: ProductService,
     private snackBar: SnakbarService,
     private cartService: CartService,
     private userDataService: UserDataService
   ) {}
+  interviewAdded = false;
   ProductData;
   data;
   showImage;
@@ -31,6 +32,12 @@ export class ProductDetailComponent implements OnInit {
   productType;
   userData;
   ngOnInit(): void {
+    this.getData();
+    this.productService.refreshData.subscribe((res) => {
+      this.getData();
+    });
+  }
+  getData() {
     this.activatedRoute.params.subscribe((res) => {
       if (res.type === 'single') {
         this.productType = 'single';
@@ -45,6 +52,7 @@ export class ProductDetailComponent implements OnInit {
               products_images: this.ProductData.product_images,
             };
 
+            this.checkReview();
             if (this.userDataService.getUserData()) {
               this.cartService.getCartDetail().subscribe((cart) => {
                 cart.data.map((item) => {
@@ -78,7 +86,7 @@ export class ProductDetailComponent implements OnInit {
               quantity: 0,
               addToCart: false,
             };
-
+            this.checkReview();
             if (this.userDataService.getUserData()) {
               this.cartService.getCartDetail().subscribe((cart) => {
                 cart.data.map((item) => {
@@ -102,6 +110,15 @@ export class ProductDetailComponent implements OnInit {
         );
       }
     });
+  }
+  checkReview() {
+    if (this.userDataService.getUserData()) {
+      this.ProductData.reviews.map((review) => {
+        if (review.user_id._id === this.userDataService.getUserData()._id) {
+          this.interviewAdded = true;
+        }
+      });
+    }
   }
   changeImage(link) {
     this.imageShown = link;

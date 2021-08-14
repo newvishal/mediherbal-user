@@ -1,0 +1,49 @@
+<body>
+  <section id="testimonials">
+    <div class="testimonial-heading">
+      <span>Comments</span>
+      <h4>Clients Says</h4>
+    </div>
+
+    <div class="testimonial-box-container">
+      <div class="testimonial-box" *ngFor="let review of reviews">
+        <div class="box-top">
+          <div class="profile">
+            <div class="profile-img">
+              <img
+                [src]="
+                  review.user_id.user_image
+                    ? review.user_id.user_image
+                    : 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png'
+                "
+              />
+            </div>
+            <div class="name-user">
+              <strong
+                >{{ review.user_id.first_name | titlecase }}
+                {{ review.user_id.last_name | titlecase }}</strong
+              >
+              <span>@{{ review.user_id.email }}</span>
+            </div>
+          </div>
+          <div class="reviews">
+            <i
+              class="fas fa-star"
+              *ngFor="let star of [].constructor(review.review_points)"
+            ></i>
+            <i
+              class="far fa-star"
+              *ngFor="let star of [].constructor(5 - review.review_points)"
+            ></i>
+          </div>
+        </div>
+        <!--Comments---------------------------------------->
+        <div class="client-comment">
+          <p>
+            {{ review.review_comments | titlecase }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>

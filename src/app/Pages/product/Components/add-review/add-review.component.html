@@ -1,0 +1,45 @@
+<mat-card style="margin-top: 20px">
+  <mat-card-header>
+    <mat-card-title> Please add your review </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="reviewForm" (submit)="saveReview()">
+      <span>
+        Rate :
+        <span class="reviews">
+          <i
+            *ngFor="let star of [1, 2, 3, 4, 5]; index as index"
+            (click)="changeStarValue(index)"
+            class="fas fa-star"
+            [ngClass]="{
+              highlight: index < reviewForm.get('review_points').value
+            }"
+          ></i>
+        </span>
+      </span>
+      <mat-form-field
+        appearance="outline"
+        style="width: 100%; margin-top: 20px"
+      >
+        <mat-label>comment</mat-label>
+        <textarea
+          type="text"
+          matInput
+          formControlName="review_comments"
+          placeholder="Comment"
+        ></textarea>
+        <mat-icon color="primary" matSuffix>message </mat-icon>
+      </mat-form-field>
+      <div style="width: 100%; display: flex; justify-content: flex-end">
+        <button
+          mat-raised-button
+          [disabled]="reviewForm.invalid"
+          color="primary"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

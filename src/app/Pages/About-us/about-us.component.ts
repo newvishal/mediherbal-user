@@ -15,9 +15,7 @@ export class AboutUsComponent implements OnInit {
       (response) => {
         this.aboutUsData = response.data[0];
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 }

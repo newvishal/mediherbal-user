@@ -7,10 +7,18 @@ import { ProductRoutingModule } from './product-routing.module';
 import { ProductService } from './Service/product.service';
 import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
 import { ImageSliderComponent } from './Components/image-slider/image-slider.component';
+import { ReviewsComponent } from './Components/rating-reviews/reviews.component';
+import { AddReviewComponent } from './Components/add-review/add-review.component';
 
 @NgModule({
   imports: [SharedModule, MaterialModule, ProductRoutingModule, NgbModule],
-  declarations: [ProductComponent, ProductDetailComponent, ImageSliderComponent],
+  declarations: [
+    ProductComponent,
+    ProductDetailComponent,
+    ImageSliderComponent,
+    ReviewsComponent,
+    AddReviewComponent,
+  ],
   providers: [ProductService],
 })
 export class ProductModule {}

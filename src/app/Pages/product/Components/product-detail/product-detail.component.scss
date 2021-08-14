@@ -13,6 +13,9 @@
   border-radius: 20px;
   margin-bottom: 10%;
 }
+.review {
+  width: 70%;
+}
 .remove-section {
   width: 30%;
   background: green;
@@ -152,6 +155,9 @@ h4 {
     align-items: flex-start;
     flex-direction: column;
   }
+  .review {
+    width: 95%;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -159,16 +165,28 @@ h4 {
   .image-section {
     overflow: hidden;
   }
+  .review {
+    width: 95%;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+  .review {
+    width: 70%;
+  }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .review {
+    width: 70%;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+  .review {
+    width: 70%;
+  }
 }

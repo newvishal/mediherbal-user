@@ -1,5 +1,5 @@
-<div class="outer-div">
-  <div class="inner-div" *ngIf="ProductData">
+<div class="outer-div" *ngIf="ProductData">
+  <div class="inner-div">
     <section class="image-section">
       <section class="full-image">
         <img (error)="updateUrl($event)" [src]="imageShown" />
@@ -106,5 +106,10 @@
       </div>
     </section>
   </div>
-  <div></div>
+  <div class="review" *ngIf="!interviewAdded">
+    <app-add-review></app-add-review>
+  </div>
+  <div *ngIf="ProductData.reviews.length > 0">
+    <app-reviews [reviews]="ProductData.reviews"></app-reviews>
+  </div>
 </div>
