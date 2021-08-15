@@ -49,6 +49,9 @@ export class OrderComponent implements OnInit {
   navigateToList() {
     this.router.navigate([`/home/order`]);
   }
+  viewInvoice(id) {
+    this.router.navigate([`/home/order/order-detail/${id}`]);
+  }
   navigateToDeatils(id, type) {
     this.router.navigate([`/product-detail/${type}/${id}`]);
   }

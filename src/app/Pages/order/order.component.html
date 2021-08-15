@@ -77,19 +77,49 @@
             >
             <mat-card-subtitle>Your order is on your way</mat-card-subtitle>
           </mat-card-header>
-          <mat-card-header *ngIf="order.order_status === 'delivered'">
+          <mat-card-header
+            *ngIf="order.order_status === 'delivered'"
+            style="display: flex"
+          >
             <div mat-card-avatar class="deliverd"></div>
-            <mat-card-title>
-              <mat-chip-list>
-                <mat-chip selected color="primary">
-                  Delivered
-                </mat-chip></mat-chip-list
-              ></mat-card-title
+            <div
+              style="
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: column;
+              "
             >
-            <mat-card-subtitle
-              >Your order has been delivered , please rate and review the
-              products.</mat-card-subtitle
+              <mat-card-title>
+                <mat-chip-list>
+                  <mat-chip selected color="primary">
+                    Delivered
+                  </mat-chip></mat-chip-list
+                ></mat-card-title
+              >
+
+              <mat-card-subtitle
+                >Your order has been delivered , please rate and review the
+                products.</mat-card-subtitle
+              >
+            </div>
+            <div
+              style="
+                align-items: center;
+                display: flex;
+                justify-content: flex-end;
+                right: 20px;
+                position: absolute;
+                top: 10px;
+              "
             >
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="viewInvoice(order._id)"
+              >
+                Invoice
+              </button>
+            </div>
           </mat-card-header>
           <mat-card-header *ngIf="order.order_status === 'cancel'">
             <div mat-card-avatar class="cancel"></div>

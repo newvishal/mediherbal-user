@@ -17,6 +17,11 @@ export class OrderService {
       `${environment.base_url}order`
     );
   }
+  getUserByIdOrder(id) {
+    return this.http.get<{ status: boolean; message: string; data: any }>(
+      `${environment.base_url}order/user/${id}`
+    );
+  }
   createOrder(data) {
     return this.http.post<{ status: boolean; message: string; data: any }>(
       `${environment.base_url}order`,

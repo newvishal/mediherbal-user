@@ -1,1 +1,628 @@
-<p>order-detail works!</p>
+<div *ngIf="orderDetail">
+  <!-- Header -->
+  <table
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    align="center"
+    class="fullTable"
+    bgcolor="#f6fff8"
+  >
+    <tr>
+      <td height="20"></td>
+    </tr>
+    <tr>
+      <td>
+        <table
+          width="600"
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          align="center"
+          class="fullTable"
+          bgcolor="#ffffff"
+          style="border-radius: 10px 10px 0 0; margin-top: 70px"
+        >
+          <tr class="hiddenMobile">
+            <td height="40"></td>
+          </tr>
+          <tr class="visibleMobile">
+            <td height="30"></td>
+          </tr>
+
+          <tr>
+            <td>
+              <table
+                width="480"
+                border="0"
+                cellpadding="0"
+                cellspacing="0"
+                align="center"
+                class="fullPadding"
+              >
+                <tbody>
+                  <tr>
+                    <td>
+                      <table
+                        width="220"
+                        border="0"
+                        cellpadding="0"
+                        cellspacing="0"
+                        align="left"
+                        class="col"
+                      >
+                        <tbody>
+                          <tr>
+                            <td align="left">
+                              <img
+                                src="\assets\Images\Logo\Logo.jpg"
+                                width="100"
+                                height="80"
+                                alt="logo"
+                                border="0"
+                              />
+                            </td>
+                          </tr>
+                          <tr class="hiddenMobile">
+                            <td height="40"></td>
+                          </tr>
+                          <tr class="visibleMobile">
+                            <td height="20"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="
+                                font-size: 12px;
+                                color: #5b5b5b;
+                                font-family: 'Open Sans', sans-serif;
+                                line-height: 18px;
+                                vertical-align: top;
+                                text-align: left;
+                              "
+                            >
+                              Hello,
+                              {{ orderDetail?.address?.first_name | titlecase }}
+                              &nbsp;
+                              {{ orderDetail?.address?.last_name | titlecase }}.
+                              <br />
+                              Thank you for shopping from our store and for your
+                              order.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table
+                        width="220"
+                        border="0"
+                        cellpadding="0"
+                        cellspacing="0"
+                        align="right"
+                        class="col"
+                      >
+                        <tbody>
+                          <tr class="visibleMobile">
+                            <td height="20"></td>
+                          </tr>
+                          <tr>
+                            <td height="5"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="
+                                font-size: 21px;
+                                color: rgb(85, 179, 48);
+                                letter-spacing: -1px;
+                                font-family: 'Open Sans', sans-serif;
+                                line-height: 1;
+                                vertical-align: top;
+                                text-align: right;
+                              "
+                            >
+                              Invoice
+                            </td>
+                          </tr>
+                          <tr></tr>
+                          <tr class="hiddenMobile">
+                            <td height="50"></td>
+                          </tr>
+                          <tr class="visibleMobile">
+                            <td height="20"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              style="
+                                font-size: 12px;
+                                color: #5b5b5b;
+                                font-family: 'Open Sans', sans-serif;
+                                line-height: 18px;
+                                vertical-align: top;
+                                text-align: right;
+                              "
+                            >
+                              <small>{{ orderDetail.order_date | date }}</small>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!-- /Header -->
+  <!-- Order Details -->
+  <table
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    align="center"
+    class="fullTable"
+    bgcolor="#f6fff8"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            width="600"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            align="center"
+            class="fullTable"
+            bgcolor="#ffffff"
+          >
+            <tbody>
+              <tr></tr>
+              <tr class="hiddenMobile">
+                <td height="60"></td>
+              </tr>
+              <tr class="visibleMobile">
+                <td height="40"></td>
+              </tr>
+              <tr>
+                <td>
+                  <table
+                    width="480"
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    align="center"
+                    class="fullPadding"
+                  >
+                    <tbody>
+                      <tr>
+                        <th
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #5b5b5b;
+                            font-weight: normal;
+                            line-height: 1;
+                            vertical-align: top;
+                            padding: 0 10px 7px 0;
+                            text-align: left;
+                          "
+                          width="52%"
+                        >
+                          Item
+                        </th>
+                        <th
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #5b5b5b;
+                            font-weight: normal;
+                            line-height: 1;
+                            vertical-align: top;
+                            padding: 0 0 7px;
+                            text-align: center;
+                          "
+                        >
+                          Quantity
+                        </th>
+                        <th
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #1e2b33;
+                            font-weight: normal;
+                            line-height: 1;
+                            vertical-align: top;
+                            padding: 0 0 7px;
+                            text-align: right;
+                          "
+                        >
+                          Subtotal
+                        </th>
+                      </tr>
+                      <tr>
+                        <td
+                          height="1"
+                          style="background: #bebebe"
+                          colspan="4"
+                        ></td>
+                      </tr>
+                      <tr>
+                        <td height="10" colspan="4"></td>
+                      </tr>
+                      <tr *ngFor="let product of orderDetail?.products">
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: rgb(85, 179, 48);
+                            line-height: 18px;
+                            vertical-align: top;
+                            padding: 10px 0;
+                          "
+                          class="article"
+                        >
+                          {{ product?.product_id?.product_name | titlecase }}
+                        </td>
+
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #646a6e;
+                            line-height: 18px;
+                            vertical-align: top;
+                            padding: 10px 0;
+                            text-align: center;
+                          "
+                        >
+                          {{ product?.quantity }}
+                        </td>
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #1e2b33;
+                            line-height: 18px;
+                            vertical-align: top;
+                            padding: 10px 0;
+                            text-align: right;
+                          "
+                        >
+                          ₹{{ product?.product_id?.price }}
+                        </td>
+                      </tr>
+                      <!--    <tr>
+                        <td
+                          height="1"
+                          colspan="4"
+                          style="border-bottom: 1px solid #e4e4e4"
+                        ></td>
+                      </tr> -->
+                      <tr
+                        *ngFor="let comboProduct of orderDetail?.combo_products"
+                      >
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: rgb(85, 179, 48);
+                            line-height: 18px;
+                            vertical-align: top;
+                            padding: 10px 0;
+                          "
+                          class="article"
+                        >
+                          {{
+                            comboProduct?.comboproduct_id?.product_name
+                              | titlecase
+                          }}
+                        </td>
+
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #646a6e;
+                            line-height: 18px;
+                            vertical-align: top;
+                            padding: 10px 0;
+                            text-align: center;
+                          "
+                        >
+                          {{ comboProduct?.quantity }}
+                        </td>
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #1e2b33;
+                            line-height: 18px;
+                            vertical-align: top;
+                            padding: 10px 0;
+                            text-align: right;
+                          "
+                        >
+                          ₹{{ comboProduct?.comboproduct_id?.price }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          height="1"
+                          colspan="4"
+                          style="border-bottom: 1px solid #e4e4e4"
+                        ></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td height="20"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- /Order Details -->
+  <!-- Total -->
+  <table
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    align="center"
+    class="fullTable"
+    bgcolor="#f6fff8"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            width="600"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            align="center"
+            class="fullTable"
+            bgcolor="#ffffff"
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <!-- Table Total -->
+                  <table
+                    width="480"
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    align="center"
+                    class="fullPadding"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #000;
+                            line-height: 22px;
+                            vertical-align: top;
+                            text-align: right;
+                          "
+                        >
+                          <strong>Grand Total (Incl.Tax)</strong>
+                        </td>
+                        <td
+                          style="
+                            font-size: 12px;
+                            font-family: 'Open Sans', sans-serif;
+                            color: #000;
+                            line-height: 22px;
+                            vertical-align: top;
+                            text-align: right;
+                          "
+                        >
+                          <strong> ₹{{ orderDetail?.total_price }}</strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- /Table Total -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- /Total -->
+  <!-- Information -->
+  <table
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    align="center"
+    class="fullTable"
+    bgcolor="#f6fff8"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <table
+            width="600"
+            border="0"
+            cellpadding="0"
+            cellspacing="0"
+            align="center"
+            class="fullTable"
+            bgcolor="#ffffff"
+          >
+            <tbody>
+              <tr></tr>
+              <tr class="hiddenMobile">
+                <td height="60"></td>
+              </tr>
+              <tr class="visibleMobile">
+                <td height="40"></td>
+              </tr>
+              <tr>
+                <td>
+                  <table
+                    width="480"
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    align="center"
+                    class="fullPadding"
+                  >
+                    <tbody>
+                      <tr>
+                        <td>
+                          <table
+                            width="220"
+                            border="0"
+                            cellpadding="0"
+                            cellspacing="0"
+                            align="left"
+                            class="col"
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  style="
+                                    font-size: 11px;
+                                    font-family: 'Open Sans', sans-serif;
+                                    color: #5b5b5b;
+                                    line-height: 1;
+                                    vertical-align: top;
+                                  "
+                                >
+                                  <strong>BILLING INFORMATION</strong>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td width="100%" height="10"></td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style="
+                                    font-size: 12px;
+                                    font-family: 'Open Sans', sans-serif;
+                                    color: #5b5b5b;
+                                    line-height: 20px;
+                                    vertical-align: top;
+                                  "
+                                >
+                                  {{
+                                    orderDetail?.address?.first_name
+                                      | titlecase
+                                  }}&nbsp;
+                                  {{
+                                    orderDetail?.address?.last_name | titlecase
+                                  }}<br />
+                                  {{
+                                    orderDetail?.address?.house_number
+                                      | titlecase
+                                  }}
+                                  &nbsp;
+                                  {{
+                                    orderDetail?.address?.street_colony_name
+                                      | titlecase
+                                  }}<br />
+                                  {{ orderDetail?.address?.city | titlecase }}
+                                  &nbsp;
+                                  {{ orderDetail?.address?.state | titlecase
+                                  }}<br />
+                                  {{ orderDetail?.address?.pincode }} &nbsp;
+                                  India<br />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr class="hiddenMobile">
+                <td height="60"></td>
+              </tr>
+              <tr class="visibleMobile">
+                <td height="30"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- /Information -->
+  <table
+    width="100%"
+    border="0"
+    cellpadding="0"
+    cellspacing="0"
+    align="center"
+    class="fullTable"
+    bgcolor="#f6fff8"
+  >
+    <tr>
+      <td>
+        <table
+          width="600"
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          align="center"
+          class="fullTable"
+          bgcolor="#ffffff"
+          style="border-radius: 0 0 10px 10px"
+        >
+          <tr>
+            <td>
+              <table
+                width="480"
+                border="0"
+                cellpadding="0"
+                cellspacing="0"
+                align="center"
+                class="fullPadding"
+              >
+                <tbody>
+                  <tr>
+                    <td
+                      style="
+                        font-size: 12px;
+                        color: #5b5b5b;
+                        font-family: 'Open Sans', sans-serif;
+                        line-height: 18px;
+                        vertical-align: top;
+                        text-align: left;
+                      "
+                    >
+                      Have a nice day.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr class="spacer">
+            <td height="50"></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td height="20"></td>
+    </tr>
+  </table>
+</div>
