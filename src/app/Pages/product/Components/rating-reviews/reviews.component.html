@@ -2,7 +2,7 @@
   <section id="testimonials">
     <div class="testimonial-heading">
       <span>Comments</span>
-      <h4>Clients Says</h4>
+      <h4>Customer Says</h4>
     </div>
 
     <div class="testimonial-box-container">
@@ -26,18 +26,18 @@
               <span>@{{ review.user_id.email }}</span>
             </div>
           </div>
-          <div class="reviews">
-            <i
-              class="fas fa-star"
-              *ngFor="let star of [].constructor(review.review_points)"
-            ></i>
-            <i
-              class="far fa-star"
-              *ngFor="let star of [].constructor(5 - review.review_points)"
-            ></i>
-          </div>
         </div>
         <!--Comments---------------------------------------->
+        <div class="reviews">
+          <i
+            class="fas fa-star"
+            *ngFor="let star of [].constructor(review.review_points)"
+          ></i>
+          <i
+            class="far fa-star"
+            *ngFor="let star of [].constructor(5 - review.review_points)"
+          ></i>
+        </div>
         <div class="client-comment">
           <p>
             {{ review.review_comments | titlecase }}

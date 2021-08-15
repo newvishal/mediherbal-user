@@ -97,7 +97,8 @@ li {
   display: flex;
   img {
     height: 500px;
-    object-fit: fill;
+    width: 100%;
+    object-fit: cover;
     border: 1px solid lightgrey;
     /*   height: 550px !important; */
   }

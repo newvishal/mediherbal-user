@@ -1,0 +1,24 @@
+<div class="outer-div">
+  <div class="inner-div">
+    <div style="width: 90%">
+      <mat-card>
+        <mat-card-title> <h1>Account Settings</h1></mat-card-title>
+
+        <app-user-information
+          style="width: 100%; display: flex; justify-content: center"
+        ></app-user-information>
+        <mat-card-content>
+          <mat-tab-group>
+            <mat-tab label="Your Orders"
+              ><app-order [limit]="2"></app-order>
+            </mat-tab>
+            <mat-tab label="Your Addresses">
+              <app-user-address></app-user-address>
+            </mat-tab>
+            <mat-tab label="Security"><app-security></app-security> </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

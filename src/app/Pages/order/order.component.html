@@ -179,21 +179,23 @@
               <div class="item-detail">
                 <section class="text-section">
                   <h3>
-                    Name : {{ order.address.first_name }}
-                    {{ order.address.last_name }}
+                    Name : {{ order?.address?.first_name }}
+                    {{ order?.address?.last_name }}
                   </h3>
-                  <h3>House Number : {{ order.address.house_number }}</h3>
-                  <h3>House Street : {{ order.address.street_colony_name }}</h3>
-                  <h3>Landmark : {{ order.address.landmark }}</h3>
+                  <h3>House Number : {{ order?.address?.house_number }}</h3>
+                  <h3>
+                    House Street : {{ order?.address?.street_colony_name }}
+                  </h3>
+                  <h3>Landmark : {{ order?.address?.landmark }}</h3>
                   <h3>
                     City :
-                    {{ order.address.city }}
+                    {{ order?.address?.city }}
                   </h3>
                   <h3>
                     State :
-                    {{ order.address.state }}
+                    {{ order?.address?.state }}
                   </h3>
-                  <h3>Pincode : {{ order.address.pincode }}</h3>
+                  <h3>Pincode : {{ order?.address?.pincode }}</h3>
                 </section>
               </div>
             </mat-card-content>
@@ -201,8 +203,16 @@
         </mat-card>
       </div>
     </section>
+    <section *ngIf="limit" class="item-section" style="margin-bottom: 20px">
+      <button (click)="navigateToList()" mat-raised-button color="accent">
+        <span style="color: black !important"> See More</span>
+      </button>
+    </section>
   </div>
   <div class="inner-div" *ngIf="orderList.length == 0">
-    <img style="width: 100%" src="\assets\Images\cart\Empty-Cart.jpg" />
+    <img
+      style="width: 100%; max-height: 100vh"
+      src="\assets\Images\cart\Empty-Order.png"
+    />
   </div>
 </div>

@@ -7,6 +7,6 @@ import { AddressCardComponent } from './components/address-card/address-card.com
 
 @NgModule({
   imports: [SharedModule, MaterialModule, UserAddressRoutingModule],
-  declarations: [UserAddressComponent, AddressCardComponent],
+  declarations: [],
 })
 export class UserAddressModule {}

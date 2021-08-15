@@ -9,7 +9,7 @@ import { OrderDetailComponent } from './Components/order-detail/order-detail.com
 
 @NgModule({
   imports: [SharedModule, MaterialModule, OrdrerRoutingModule],
-  declarations: [OrderComponent, OrderDetailComponent],
+  declarations: [OrderDetailComponent],
   providers: [OrderService],
 })
 export class OrderModule {}

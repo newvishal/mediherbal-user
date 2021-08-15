@@ -37,6 +37,7 @@ import { AuthInterceptor } from './interceptor/auth-interceptor';
 import { BUCKET } from '@angular/fire/storage';
 import { PolicyService } from './Pages/policy/service/policy.service';
 import { DeleteConfirmationComponent } from './shared/Components/delete-confirmation/delete-confirmation.component';
+import { AccountsModule } from './Pages/Account/account.module';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { DeleteConfirmationComponent } from './shared/Components/delete-confirma
     ProductModule,
     CartModule,
     OrderModule,
+    AccountsModule,
   ],
   providers: [
     {

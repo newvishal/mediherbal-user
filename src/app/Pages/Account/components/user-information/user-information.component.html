@@ -1,0 +1,69 @@
+<div class="main-div" *ngIf="userData">
+  <mat-card style="width: 100%">
+    <div class="data-section">
+      <div class="image-section">
+        <div class="inner-image">
+          <mat-progress-bar
+            mode="buffer"
+            *ngIf="imageLoader"
+          ></mat-progress-bar>
+          <div class="image-container" *ngIf="!imageLoader">
+            <img
+              style="
+                width: 120px;
+                border-radius: 50%;
+                height: 120px;
+                overflow: hidden;
+              "
+              class="no-shadow no-border"
+              [src]="
+                userData?.user_image
+                  ? userData?.user_image
+                  : 'https://expertphotography.b-cdn.net/wp-content/uploads/2018/10/cool-profile-pictures-retouching-1.jpg'
+              "
+            />
+            <input
+              type="file"
+              hidden
+              #image
+              accept="image/png, image/gif, image/jpeg"
+              placeholder="Select Image"
+              required
+              (change)="ImageSelected($event)"
+            />
+
+            <button
+              type="button"
+              class="top-right"
+              (click)="image.click()"
+              style="background: transparent; border: none"
+            >
+              <mat-icon color="primary" (click)="editInformation()"
+                >edit</mat-icon
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="text-section">
+        <h2>
+          {{ userData.first_name | titlecase }}
+          {{ userData.last_name | titlecase }}
+        </h2>
+        <h3 *ngIf="userData.email">
+          <mat-icon color="primary">email</mat-icon><b>Email :</b>
+          {{ userData.email }}
+        </h3>
+        <h3 *ngIf="userData.phone_number">
+          <mat-icon color="primary">phone</mat-icon><b>Phone :</b>
+          {{ userData.phone_number }}
+        </h3>
+        <h3 *ngIf="userData.number_of_times_order_placed">
+          <mat-icon color="primary">shopping_bag</mat-icon
+          ><b>Total Orders Placed :</b>
+          {{ userData.number_of_times_order_placed }}
+        </h3>
+      </div>
+    </div>
+  </mat-card>
+</div>

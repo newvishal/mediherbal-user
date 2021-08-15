@@ -12,7 +12,7 @@
       </button>
     </section>
   </div>
-  <div class="user-address-div">
+  <div class="user-address-div" *ngIf="userAddress.length > 0">
     <div
       *ngFor="let address of userAddress; let i = index"
       style="width: 80%; margin-bottom: 2%"
@@ -23,5 +23,11 @@
         (refreshData)="getAddress()"
       ></app-address-card>
     </div>
+  </div>
+  <div class="user-address-div" *ngIf="userAddress.length == 0">
+    <img
+      style="width: 100%; max-height: 100vh"
+      src="\assets\Images\cart\delivery.png"
+    />
   </div>
 </div>

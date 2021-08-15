@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/shared/Components/delete-confirmation/delete-confirmation.component';
@@ -13,6 +13,7 @@ import { OrderService } from './service/order.service';
 })
 export class OrderComponent implements OnInit {
   orderList = [];
+  @Input() limit;
   constructor(
     private orderService: OrderService,
     private router: Router,
@@ -25,8 +26,19 @@ export class OrderComponent implements OnInit {
   }
   getOrderList() {
     this.orderService.getUserOrder().subscribe((orders) => {
-      this.orderList = orders.data;
+      if (this.limit) {
+        orders.data.map((order, index) => {
+          if (index < 2) {
+            this.orderList.push(order);
+          }
+        });
+      } else {
+        this.orderList = orders.data;
+      }
     });
+  }
+  navigateToList() {
+    this.router.navigate([`/home/order`]);
   }
   navigateToDeatils(id, type) {
     this.router.navigate([`/product-detail/${type}/${id}`]);

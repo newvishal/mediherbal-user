@@ -16,10 +16,11 @@ export class AppComponent implements OnInit {
     private userDataService: UserDataService,
     private router: Router
   ) {}
+  userData;
   ngOnInit() {
-    const userData = JSON.parse(localStorage.getItem('userData'));
-    if (userData) {
-      this.userDataService.setUserData(userData);
+    this.userData = JSON.parse(localStorage.getItem('userData'));
+    if (this.userData) {
+      this.userDataService.setUserData(this.userData);
     }
   }
   title = 'mediherbal';

@@ -1,0 +1,41 @@
+<div class="outer-div">
+  <div class="inner-div">
+    <!--    Form Section starts  -->
+    <div class="form-section">
+      <div class="inner-form-div">
+        <section><h3>Change Password</h3></section>
+        <section style="margin-top: 5%">
+          <!--    Signup Form starts  -->
+
+          <form
+            [formGroup]="passwordChangeForm"
+            (ngSubmit)="onchangePassword()"
+          >
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Password</mat-label>
+              <input
+                type="password"
+                matInput
+                formControlName="password"
+                placeholder="Enter Password"
+              />
+              <mat-icon color="primary" matSuffix>lock</mat-icon>
+            </mat-form-field>
+
+            <section>
+              <button
+                [disabled]="passwordChangeForm.invalid"
+                color="primary"
+                type="submit"
+                mat-raised-button
+              >
+                Continue
+              </button>
+            </section>
+          </form>
+          <!--    Signup Form ends  -->
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

@@ -36,8 +36,10 @@
             <mat-form-field appearance="outline" color="accent">
               <mat-label>Phone Number</mat-label>
               <input
-                type="tel"
+                type="text"
                 matInput
+                minlength="10"
+                maxlength="15"
                 formControlName="phone_number"
                 placeholder="Enter Phone Number"
               />
