@@ -15,7 +15,9 @@ export class SecurityComponent implements OnInit {
   /*
   @description:From Variable
   */
-  showPassword = false;
+
+  passwordType = 'password';
+  confirmPasswordType = 'password';
   passwordChangeForm: FormGroup;
   userId;
   constructor(
@@ -32,17 +34,42 @@ export class SecurityComponent implements OnInit {
   ngOnInit(): void {
     this.passwordChangeForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
+      confirm_password: new FormControl('', [Validators.required]),
     });
+    this.passwordChangeForm.markAsPristine();
   }
-  /*
-  @description:this method is executed in submit of the signup form
-  */
-
+  showPassword() {
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+    } else {
+      this.passwordType = 'password';
+    }
+  }
+  showConfirmPassword() {
+    if (this.confirmPasswordType === 'password') {
+      this.confirmPasswordType = 'text';
+    } else {
+      this.confirmPasswordType = 'password';
+    }
+  }
+  onChangesValue() {
+    this.passwordChangeForm
+      .get('confirm_password')
+      .valueChanges.subscribe((res) => {
+        if (res === this.passwordChangeForm.get('password').value) {
+          this.passwordChangeForm.get('confirm_password').setErrors(null);
+        } else {
+          this.passwordChangeForm
+            .get('confirm_password')
+            .setErrors({ notMatch: true });
+        }
+      });
+  }
   onchangePassword() {
     this.loader.openDialog();
     this.authService
       .changePassword(
-        this.passwordChangeForm.value,
+        { password: this.passwordChangeForm.value.password },
         this.UserDataService.getUserData()._id
       )
       .subscribe(

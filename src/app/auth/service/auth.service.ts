@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { User } from '../interface/user.interface';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   httpClient: HttpClient;
   constructor(private http: HttpClient, private httpbackEnd: HttpBackend) {
     this.httpClient = new HttpClient(httpbackEnd);
   }
+  active_user = new BehaviorSubject(null);
   userSingup(UserData: User) {
     const finalData: User = {
       ...UserData,

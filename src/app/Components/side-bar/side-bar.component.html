@@ -1,7 +1,19 @@
 <mat-nav-list role="list" style="padding: 0 !important">
-  <!--  <img style="width: 100%" src="\assets\Images\Logo\Logo.jpg" /> -->
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    "
+    routerLink="/home"
+  >
+    <img style="width: 100px" src="\assets\Images\Logo\Logo.jpg" />
+  </div>
 
-  <mat-list-item
+  <!--  <mat-list-item
     style="background-color: rgb(30, 54, 28)"
     role="listitem"
     routerLink="/home"
@@ -10,21 +22,15 @@
       <mat-icon style="color: white">account_circle</mat-icon>
       <span class="nav-caption">Users</span>
     </a></mat-list-item
-  >
-  <mat-list-item
-    role="listitem"
-    routerLink="/home/account"
-    [routerLinkActive]="'is-active'"
-    ><a (click)="sidenavclose()">
-      <mat-icon color="dark">account_circle</mat-icon>
-      <span class="nav-caption">Account Settings</span>
-    </a></mat-list-item
-  >
+  > -->
+
   <mat-list-item
     role="listitem"
     routerLink="/home"
     [routerLinkActive]="'is-active'"
-    ><a (click)="sidenavclose()">
+    [routerLinkActiveOptions]="{ exact: true }"
+    (click)="sidenavclose()"
+    ><a>
       <mat-icon color="dark">home</mat-icon>
       <span class="nav-caption">Home</span>
     </a></mat-list-item
@@ -32,21 +38,14 @@
   <mat-list-item
     role="listitem"
     routerLink="/home/about-us"
+    (click)="sidenavclose()"
     [routerLinkActive]="'is-active'"
-    ><a (click)="sidenavclose()">
+    ><a>
       <mat-icon color="dark">groups</mat-icon>
       <span class="nav-caption">About Us</span>
     </a></mat-list-item
   >
-  <mat-list-item
-    role="listitem"
-    routerLink="/home/contact"
-    [routerLinkActive]="'is-active'"
-    ><a (click)="sidenavclose()">
-      <mat-icon color="dark">call</mat-icon>
-      <span class="nav-caption">Contact Us</span>
-    </a></mat-list-item
-  >
+
   <mat-list-item role="listitem" (click)="showItems = !showItems"
     ><a>
       <mat-icon *ngIf="showItems" color="dark">expand_less</mat-icon>
@@ -79,17 +78,28 @@
     ></mat-list-item
   >
   <mat-list-item
-    role="listitem"
-    routerLink="/admin/products"
-    [routerLinkActive]="'is-active'"
+    *ngIf="userData"
     (click)="sidenavclose()"
-    ><a
-      ><mat-icon color="dark">help_outline</mat-icon>
-      <span class="nav-caption">FAQs</span></a
-    ></mat-list-item
+    role="listitem"
+    routerLink="/home/account"
+    [routerLinkActive]="'is-active'"
+    ><a>
+      <mat-icon color="dark">account_circle</mat-icon>
+      <span class="nav-caption">Account Settings</span>
+    </a></mat-list-item
   >
-
+  <mat-list-item
+    (click)="sidenavclose()"
+    role="listitem"
+    routerLink="/home/contact"
+    [routerLinkActive]="'is-active'"
+    ><a>
+      <mat-icon color="dark">call</mat-icon>
+      <span class="nav-caption">Contact Us</span>
+    </a></mat-list-item
+  >
   <hr />
+
   <mat-list-item
     role="listitem"
     routerLink="/policy/TermsAndConditions"
@@ -110,10 +120,21 @@
       <span class="nav-caption">Privacy Policy</span></a
     ></mat-list-item
   >
-  <div class="bottom" (click)="logout()">
-    <button mat-icon-button>
-      <mat-icon color="dark">directions_run</mat-icon>
+  <div class="bottom" (click)="logout()" *ngIf="userData">
+    <button mat-icon-button color="primary">
+      <mat-icon color="primary">logout</mat-icon>
     </button>
     <span class="nav-caption">Logout</span>
+  </div>
+  <div
+    (click)="sidenavclose()"
+    class="bottom"
+    routerLink="/login"
+    *ngIf="!userData"
+  >
+    <button mat-icon-button color="primary">
+      <mat-icon color="primary">login</mat-icon>
+    </button>
+    <span class="nav-caption">Login</span>
   </div>
 </mat-nav-list>

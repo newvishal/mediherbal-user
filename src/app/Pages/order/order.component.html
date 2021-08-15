@@ -1,7 +1,7 @@
 <div class="outer-div">
   <div class="inner-div" *ngIf="orderList.length > 0">
-    <section class="item-section" style="margin-bottom: 20px">
-      <h2>Your Orders</h2>
+    <section *ngIf="!limit" class="item-section" style="margin: 20px">
+      <h1>Your Orders</h1>
     </section>
     <section class="item-section">
       <div class="items">

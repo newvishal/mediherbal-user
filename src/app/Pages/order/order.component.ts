@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/shared/Components/delete-confirmation/delete-confirmation.component';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { RemoveItemConfirmation } from '../cart/cart.component';
 import { OrderService } from './service/order.service';
@@ -18,24 +19,32 @@ export class OrderComponent implements OnInit {
     private orderService: OrderService,
     private router: Router,
     private snackBar: SnakbarService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loader: LoaderService
   ) {}
 
   ngOnInit(): void {
     this.getOrderList();
   }
   getOrderList() {
-    this.orderService.getUserOrder().subscribe((orders) => {
-      if (this.limit) {
-        orders.data.map((order, index) => {
-          if (index < 2) {
-            this.orderList.push(order);
-          }
-        });
-      } else {
-        this.orderList = orders.data;
+    this.loader.openDialog();
+    this.orderService.getUserOrder().subscribe(
+      (orders) => {
+        if (this.limit) {
+          orders.data.map((order, index) => {
+            if (index < 2) {
+              this.orderList.push(order);
+            }
+          });
+        } else {
+          this.orderList = orders.data;
+        }
+        this.loader.closeDialog();
+      },
+      (err) => {
+        this.loader.closeDialog();
       }
-    });
+    );
   }
   navigateToList() {
     this.router.navigate([`/home/order`]);

@@ -9,6 +9,7 @@ import { ProductService } from '../../Service/product.service';
 import { HomeService } from 'src/app/Pages/home/service/home.service';
 import { CartService } from 'src/app/Pages/cart/service/cart.service';
 import { UserDataService } from 'src/app/shared/service/userData.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +23,8 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService,
     private snackBar: SnakbarService,
     private cartService: CartService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private loader: LoaderService
   ) {}
   interviewAdded = false;
   ProductData;
@@ -38,6 +40,7 @@ export class ProductDetailComponent implements OnInit {
     });
   }
   getData() {
+    this.loader.openDialog();
     this.activatedRoute.params.subscribe((res) => {
       if (res.type === 'single') {
         this.productType = 'single';
@@ -69,9 +72,11 @@ export class ProductDetailComponent implements OnInit {
               });
             }
             this.imageShown = this.ProductData.products_images[0];
+            this.loader.closeDialog();
           },
           (err) => {
             this.snackBar.showSnackBar(err.error.message, 'danger');
+            this.loader.closeDialog();
           }
         );
       }
@@ -103,9 +108,11 @@ export class ProductDetailComponent implements OnInit {
               });
             }
             this.imageShown = this.ProductData.products_images[0];
+            this.loader.closeDialog();
           },
           (err) => {
             this.snackBar.showSnackBar(err.error.message, 'danger');
+            this.loader.closeDialog();
           }
         );
       }

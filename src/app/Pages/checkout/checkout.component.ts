@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { CartService } from '../cart/service/cart.service';
 import { UserDataService } from 'src/app/shared/service/userData.service';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-checkout',
@@ -29,7 +30,8 @@ export class CheckoutComponent implements OnInit {
     private datePipe: DatePipe,
     private cartService: CartService,
     private UserDataService: UserDataService,
-    private snackbar: SnakbarService
+    private snackbar: SnakbarService,
+    private loader: LoaderService
   ) {}
   userAddress: any[] = [];
   userCart;
@@ -63,10 +65,8 @@ export class CheckoutComponent implements OnInit {
     TotalPrice: 0,
   };
   ngOnInit(): void {
+    this.loader.openDialog();
     this.getCartDetail();
-
-    this.getUserData();
-    this.getLocation();
     this.checkoutService.paymentStatus.subscribe((res) => {
       if (res.status) {
         this.router.navigate(['/home/order'], { replaceUrl: true });
@@ -80,11 +80,13 @@ export class CheckoutComponent implements OnInit {
         if (userAddress.data.length > 0) {
           this.selectedAddress = userAddress.data[0]._id;
         }
+        this.loader.closeDialog();
       },
       (err) => {
         if (err.error.err.message === 'Address not Found') {
           this.userAddress = [];
         }
+        this.loader.closeDialog();
       }
     );
   }
@@ -96,21 +98,30 @@ export class CheckoutComponent implements OnInit {
       this.RAZORPAY_OPTIONS.prefill.contact = this.userData.phone_number;
       this.RAZORPAY_OPTIONS.prefill.name =
         this.userData.first_name + ' ' + this.userData.last_name;
+
+      this.getLocation();
     });
   }
   getCartDetail() {
-    this.cartService.getCartDetail().subscribe((cartDetails) => {
-      if (cartDetails.data.length > 0) {
-        this.cartData = cartDetails.data;
-        this.calculateAmount();
-        this.userCart = {
-          cartData: this.cartData,
-          amountDetail: this.AmountDetails,
-        };
-      } else {
-        this.router.navigate(['/home/cart']);
+    this.cartService.getCartDetail().subscribe(
+      (cartDetails) => {
+        if (cartDetails.data.length > 0) {
+          this.cartData = cartDetails.data;
+          this.calculateAmount();
+          this.userCart = {
+            cartData: this.cartData,
+            amountDetail: this.AmountDetails,
+          };
+        } else {
+          this.router.navigate(['/home/cart']);
+        }
+
+        this.getUserData();
+      },
+      (err) => {
+        this.loader.closeDialog();
       }
-    });
+    );
   }
   calculateAmount() {
     this.AmountDetails = {

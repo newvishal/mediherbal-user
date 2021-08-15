@@ -1,14 +1,16 @@
 ngb-carousel {
-  max-width: 100%;
+  width: 100%;
 }
 
 ngb-carousel img {
   width: 100%;
-  height: 500px;
+  height: 400px;
   outline: none;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 .carousel-caption {
-  top: 60%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: black;

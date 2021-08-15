@@ -24,6 +24,15 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private loader: LoaderService
   ) {}
+
+  passwordType = 'password';
+  showPasswordType() {
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+    } else {
+      this.passwordType = 'password';
+    }
+  }
   /*
   initializing the loginForm by form group
   */
@@ -41,6 +50,7 @@ export class LoginComponent implements OnInit {
     this.loader.openDialog();
     this.authService.userLogin(this.loginForm.value).subscribe(
       (loginResponse) => {
+        this.authService.active_user.next(loginResponse.data);
         this.UserDataService.setUserData(loginResponse.data);
         this.snackbarService.showSnackBar(loginResponse.message, 'success');
         this.router.navigate(['/home'], { replaceUrl: true });

@@ -1,11 +1,14 @@
 <div class="outer-div">
-  <div style="width: 100%">
-    <app-banner [images]="images"></app-banner>
+  <div class="banner-class">
+    <app-banner class="banner-component" [images]="images"></app-banner>
   </div>
   <div class="product-section" *ngIf="products.length > 0">
     <div class="heading">
       <section>
-        <h2 class="haeding-products">Products</h2>
+        <h2 class="haeding-products">
+          <mat-icon color="primary" style="margin-right: 10px">spa</mat-icon
+          >Products
+        </h2>
       </section>
       <section>
         <h3>
@@ -23,7 +26,10 @@
   <div class="product-section" *ngIf="comboProducts.length > 0">
     <div class="heading">
       <section>
-        <h2 class="haeding-products">Combo Products</h2>
+        <h2 class="haeding-products">
+          <mat-icon color="primary" style="margin-right: 10px">spa</mat-icon
+          >Combo Products
+        </h2>
       </section>
       <section>
         <h3>

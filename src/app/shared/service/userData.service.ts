@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserDataService {
-  constructor() {}
+  constructor(private auth: AuthService) {}
   UserData = new BehaviorSubject<any>(null);
   setUserData(userData) {
     this.UserData.next(userData);
@@ -15,7 +16,8 @@ export class UserDataService {
     return JSON.parse(localStorage.getItem('userData'));
   }
   logout() {
-    this.UserData.next(null);
     localStorage.removeItem('userData');
+    this.auth.active_user.next(null);
+    this.UserData.next(null);
   }
 }

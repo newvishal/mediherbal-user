@@ -57,14 +57,53 @@
             <mat-form-field appearance="outline" color="accent">
               <mat-label>Password</mat-label>
               <input
-                type="password"
+                [type]="passwordType"
                 matInput
                 formControlName="password"
                 placeholder="Enter Password"
               />
-              <mat-icon color="primary" matSuffix>lock</mat-icon>
+              <mat-icon
+                matSuffix
+                (click)="showPasswordType()"
+                *ngIf="passwordType === 'password'"
+              >
+                lock
+              </mat-icon>
+              <mat-icon
+                matSuffix
+                (click)="showPasswordType()"
+                *ngIf="passwordType === 'text'"
+              >
+                lock_open
+              </mat-icon>
             </mat-form-field>
-
+            <mat-form-field appearance="outline" color="accent">
+              <mat-label>Confirm Password</mat-label>
+              <input
+                [type]="confirmPasswordType"
+                matInput
+                formControlName="confirm"
+                placeholder="Enter Password"
+              />
+              <mat-icon
+                matSuffix
+                (click)="showConfirmPassword()"
+                *ngIf="confirmPasswordType === 'password'"
+              >
+                lock
+              </mat-icon>
+              <mat-icon
+                matSuffix
+                (click)="showConfirmPassword()"
+                *ngIf="confirmPasswordType === 'text'"
+              >
+                lock_open
+              </mat-icon>
+              <mat-hint
+                *ngIf="passwordChangeForm.controls['confirm'].errors?.notMatch"
+                >Password Does Not match
+              </mat-hint>
+            </mat-form-field>
             <section>
               <p>
                 Don't have an account ?

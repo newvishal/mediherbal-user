@@ -1,7 +1,11 @@
 <div class="outer-div">
   <div class="header-div">
+    <!--   <h1><mat-icon>spa</mat-icon></h1> -->
     <h1 *ngIf="productType === 'combo'">Combo &nbsp;</h1>
     <h1>Products</h1>
+  </div>
+  <div class="hr_div">
+    <hr />
   </div>
   <div class="parent">
     <div class="child" *ngFor="let product of ProductList; let i = index">
@@ -15,57 +19,59 @@
           [images]="product.product_images"
         ></app-image-slider>
         <br />
-        <mat-card-title (click)="navigateToDeatils(product._id)">{{
-          product.product_name | titlecase
-        }}</mat-card-title>
-        <mat-card-subtitle (click)="navigateToDeatils(product._id)"
-          >{{ product.tag_line }}
-          <p *ngIf="productType === 'single'">
-            <b>Product Type :</b> {{ product.product_type | titlecase }}
-          </p>
-          <div *ngIf="productType === 'combo'">
-            <b>Products :</b>
-            <span
-              *ngFor="let type of product.products; let index = index"
-              value="type"
-            >
-              {{ type?.product_name | titlecase }} ({{
-                type?.product_type | titlecase
-              }})<span *ngIf="index + 1 != product.products.length">|</span>
-            </span>
-          </div>
-        </mat-card-subtitle>
+        <div class="padding">
+          <mat-card-title (click)="navigateToDeatils(product._id)">{{
+            product.product_name | titlecase
+          }}</mat-card-title>
+          <mat-card-subtitle (click)="navigateToDeatils(product._id)"
+            >{{ product.tag_line }}
+            <p *ngIf="productType === 'single'">
+              <b>Product Type :</b> {{ product.product_type | titlecase }}
+            </p>
+            <div *ngIf="productType === 'combo'">
+              <b>Products :</b>
+              <span
+                *ngFor="let type of product.products; let index = index"
+                value="type"
+              >
+                {{ type?.product_name | titlecase }} ({{
+                  type?.product_type | titlecase
+                }})<span *ngIf="index + 1 != product.products.length">|</span>
+              </span>
+            </div>
+          </mat-card-subtitle>
 
-        <mat-card-content>
-          <p>
-            <span class="price">₹ {{ product.price }}</span
-            >&nbsp;
-            <span class="fake_price">₹ {{ product.fake_price }}</span>
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <div class="button-section">
-            <button
-              color="primary"
-              mat-raised-button
-              *ngIf="!product.addToCart"
-              (click)="addToCart(i)"
-            >
-              Add To Cart &nbsp; <mat-icon>shopping_cart</mat-icon>
-            </button>
-            <section class="add-to-cart-section" *ngIf="product.addToCart">
-              <section class="remove-section" (click)="removeQuantity(i)">
-                <mat-icon>remove</mat-icon>
+          <mat-card-content>
+            <p>
+              <span class="price">₹ {{ product.price }}</span
+              >&nbsp;
+              <span class="fake_price">₹ {{ product.fake_price }}</span>
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="button-section">
+              <button
+                color="primary"
+                mat-raised-button
+                *ngIf="!product.addToCart"
+                (click)="addToCart(i)"
+              >
+                Add To Cart &nbsp; <mat-icon>shopping_cart</mat-icon>
+              </button>
+              <section class="add-to-cart-section" *ngIf="product.addToCart">
+                <section class="remove-section" (click)="removeQuantity(i)">
+                  <mat-icon>remove</mat-icon>
+                </section>
+                <section class="quantity-section">
+                  <span style="padding: 2%">{{ product.quantity }}</span>
+                </section>
+                <section class="add-section" (click)="addToCart(i)">
+                  <mat-icon>add</mat-icon>
+                </section>
               </section>
-              <section class="quantity-section">
-                <span style="padding: 2%">{{ product.quantity }}</span>
-              </section>
-              <section class="add-section" (click)="addToCart(i)">
-                <mat-icon>add</mat-icon>
-              </section>
-            </section>
-          </div>
-        </mat-card-actions>
+            </div>
+          </mat-card-actions>
+        </div>
       </mat-card>
     </div>
   </div>

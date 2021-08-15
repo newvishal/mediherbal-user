@@ -17,32 +17,42 @@
   width: 70%;
 }
 .remove-section {
-  width: 30%;
   background: green;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .quantity-section {
   width: 40%;
   display: flex;
+  font-size: 20px;
   justify-content: center;
   align-items: center;
-  /*   padding: 0.1%; */
-  border: 1px solid green;
 }
 .add-section {
-  width: 30%;
   background: green;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+mat-card-actions {
+  margin-bottom: 0 !important;
 }
 
 .imagesList {

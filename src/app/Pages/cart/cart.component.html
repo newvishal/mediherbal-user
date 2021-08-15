@@ -31,7 +31,7 @@
                 <h2>{{ item.combo_product_id.product_name }}</h2>
                 <h3>{{ item.combo_product_id.tag_line }}</h3>
                 <h3>{{ item.quantity }}</h3>
-                <p>Quantity</p>
+                <span>Quantity : </span>
                 <section *ngIf="item.addToCart" class="cart-section">
                   <section
                     (click)="removeComboQuantity(index)"
@@ -54,7 +54,7 @@
                     (click)="deleteProduct(index, item._id)"
                     style="cursor: pointer"
                     color="warn"
-                    >close</mat-icon
+                    >delete</mat-icon
                   >
                 </section>
 
@@ -111,7 +111,7 @@
                     (click)="deleteProduct(index, item._id)"
                     style="cursor: pointer"
                     color="warn"
-                    >close</mat-icon
+                    >delete</mat-icon
                   >
                 </section>
                 <span>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { HomeService } from './service/home.service';
 
@@ -10,7 +11,8 @@ import { HomeService } from './service/home.service';
 export class HomeComponent implements OnInit {
   constructor(
     private homeService: HomeService,
-    private snackbarService: SnakbarService
+    private snackbarService: SnakbarService,
+    private loader: LoaderService
   ) {}
   images = ['', 2, 5].map((n) => `/assets/Images/About Us/about${n}.jpg`);
   editCombo = [];
@@ -19,21 +21,23 @@ export class HomeComponent implements OnInit {
   products = [];
   comboProducts = [];
   ngOnInit(): void {
-    /* this method return data observable Service */
-
+    this.loader.openDialog();
     this.homeService.getProducts().subscribe(
       (products) => {
         this.products = products.data;
+        this.homeService.getComboProducts().subscribe(
+          (comboProduct) => {
+            this.comboProducts = comboProduct.data;
+            this.loader.closeDialog();
+          },
+          (err) => {
+            this.loader.closeDialog();
+            this.snackbarService.showSnackBar('', 'danger');
+          }
+        );
       },
       (err) => {
-        this.snackbarService.showSnackBar('', 'danger');
-      }
-    );
-    this.homeService.getComboProducts().subscribe(
-      (comboProduct) => {
-        this.comboProducts = comboProduct.data;
-      },
-      (err) => {
+        this.loader.closeDialog();
         this.snackbarService.showSnackBar('', 'danger');
       }
     );

@@ -9,6 +9,7 @@ import { BannerComponent } from './Components/banner/banner.component';
 import { ProductSliderComponent } from './Components/product-slider/product-slider.component';
 import { ProductCardSliderComponent } from './Components/product-card-slider/product-card-slider.component';
 import { ComboProductSliderComponent } from './Components/combo-product-slider/combo-product-slider.component';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   imports: [SharedModule, MaterialModule, HomeRoutingModule, NgbModule],

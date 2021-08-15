@@ -9,6 +9,7 @@ import {
 } from '@angular/material/dialog';
 import { CheckoutService } from '../checkout/service/checkout.service';
 import { HomeService } from '../home/service/home.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-cart',
@@ -22,7 +23,8 @@ export class CartComponent implements OnInit {
     private homeService: HomeService,
     private router: Router,
     public dialog: MatDialog,
-    private checkoutService: CheckoutService
+    private checkoutService: CheckoutService,
+    private loader: LoaderService
   ) {}
   cartData = [];
   userData;
@@ -31,10 +33,17 @@ export class CartComponent implements OnInit {
     TotalPrice: 0,
   };
   ngOnInit(): void {
-    this.cartSerice.getCartDetail().subscribe((cartDetails) => {
-      this.cartData = cartDetails.data;
-      this.calculateAmount();
-    });
+    this.loader.openDialog();
+    this.cartSerice.getCartDetail().subscribe(
+      (cartDetails) => {
+        this.cartData = cartDetails.data;
+        this.calculateAmount();
+        this.loader.closeDialog();
+      },
+      (err) => {
+        this.loader.closeDialog();
+      }
+    );
   }
   calculateAmount() {
     this.AmountDetails = {

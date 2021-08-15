@@ -9,6 +9,7 @@ import { SnakbarService } from 'src/app/shared/Service/snakBar.service';
 import { HomeService } from '../home/service/home.service';
 import { CartService } from '../cart/service/cart.service';
 import { UserDataService } from 'src/app/shared/service/userData.service';
+import { LoaderService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-product',
@@ -23,13 +24,15 @@ export class ProductComponent implements OnInit {
     private homeService: HomeService,
     private snackBar: SnakbarService,
     private cartService: CartService,
-    private userDataService: UserDataService
+    private userDataService: UserDataService,
+    private loader: LoaderService
   ) {}
   productType;
   ProductList;
   data;
   userData;
   ngOnInit(): void {
+    this.loader.openDialog();
     this.activatedRoute.params.subscribe((res) => {
       if (res.type === 'single') {
         this.productType = 'single';
@@ -61,8 +64,10 @@ export class ProductComponent implements OnInit {
                 });
               });
             }
+            this.loader.closeDialog();
           },
           (err) => {
+            this.loader.closeDialog();
             this.snackBar.showSnackBar(err.error.message, 'danger');
           }
         );
@@ -98,8 +103,10 @@ export class ProductComponent implements OnInit {
                 });
               });
             }
+            this.loader.closeDialog();
           },
           (err) => {
+            this.loader.closeDialog();
             this.snackBar.showSnackBar(err.error.message, 'danger');
           }
         );

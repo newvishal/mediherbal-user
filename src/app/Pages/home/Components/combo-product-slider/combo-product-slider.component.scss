@@ -13,7 +13,9 @@ mat-card-subtitle {
 .price {
   font-size: 20px;
 }
-
+.padding {
+  padding: 16px;
+}
 .outer-div {
   display: flex;
 }
@@ -24,6 +26,7 @@ mat-card-subtitle {
 }
 mat-card {
   width: 250px;
+  padding: 0 !important;
 }
 .btn-section {
   width: 100%;
@@ -40,29 +43,40 @@ mat-card {
   border-radius: 20px;
 }
 .remove-section {
-  width: 30%;
   background: green;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .quantity-section {
   width: 40%;
   display: flex;
+  font-size: 20px;
   justify-content: center;
   align-items: center;
-  border: 1px solid green;
 }
 .add-section {
-  width: 30%;
   background: green;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+mat-card-actions {
+  margin-bottom: 0 !important;
 }

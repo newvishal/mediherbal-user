@@ -38,6 +38,7 @@ import { BUCKET } from '@angular/fire/storage';
 import { PolicyService } from './Pages/policy/service/policy.service';
 import { DeleteConfirmationComponent } from './shared/Components/delete-confirmation/delete-confirmation.component';
 import { AccountsModule } from './Pages/Account/account.module';
+import { LayoutComponent } from './Pages/home/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AccountsModule } from './Pages/Account/account.module';
     PolicyComponent,
     LoaderComponent,
     DeleteConfirmationComponent,
+    LayoutComponent,
   ],
   imports: [
     HttpClientModule,

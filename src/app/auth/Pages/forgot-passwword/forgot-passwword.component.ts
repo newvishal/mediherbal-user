@@ -30,12 +30,30 @@ export class ForgotPasswwordComponent implements OnInit {
   /*
   initializing the forgotPasswordForm by form group
   */
+
+  passwordType = 'password';
+  confirmPasswordType = 'password';
+  showPasswordType() {
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+    } else {
+      this.passwordType = 'password';
+    }
+  }
+  showConfirmPassword() {
+    if (this.confirmPasswordType === 'password') {
+      this.confirmPasswordType = 'text';
+    } else {
+      this.confirmPasswordType = 'password';
+    }
+  }
   ngOnInit(): void {
     this.forgotPasswordForm = new FormGroup({
       email: new FormControl('', [Validators.required]),
     });
     this.passwordChangeForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
+      confirm: new FormControl('', [Validators.required]),
     });
     this.activatedRout.queryParams.subscribe((res) => {
       if (res.id) {
@@ -44,11 +62,20 @@ export class ForgotPasswwordComponent implements OnInit {
         this.showPassword = false;
       }
     });
+    this.onChanges();
   }
   /*
   @description:this method is executed in submit of the signup form
   */
-
+  onChanges() {
+    this.passwordChangeForm.get('confirm').valueChanges.subscribe((res) => {
+      if (res === this.passwordChangeForm.get('password').value) {
+        this.passwordChangeForm.get('confirm').setErrors(null);
+      } else {
+        this.passwordChangeForm.get('confirm').setErrors({ notMatch: true });
+      }
+    });
+  }
   onSubmit() {
     this.loader.openDialog();
     this.authService
@@ -57,6 +84,7 @@ export class ForgotPasswwordComponent implements OnInit {
         (forgotResponse) => {
           this.snackbarService.showSnackBar(forgotResponse.message, 'success');
           this.userId = forgotResponse.data._id;
+          this.forgotPasswordForm.reset();
           this.router.navigate(['/forgot-password'], {
             queryParams: {
               id: forgotResponse.data._id,
@@ -74,13 +102,17 @@ export class ForgotPasswwordComponent implements OnInit {
   onchangePassword() {
     this.loader.openDialog();
     this.authService
-      .changePassword(this.passwordChangeForm.value, this.userId)
+      .changePassword(
+        { password: this.passwordChangeForm.value.password },
+        this.userId
+      )
       .subscribe(
         (changePasswordResponse) => {
           this.snackbarService.showSnackBar(
             changePasswordResponse.message,
             'success'
           );
+          this.passwordChangeForm.reset();
           this.router.navigate(['/login'], {
             replaceUrl: true,
           });
